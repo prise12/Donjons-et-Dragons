@@ -1,0 +1,184 @@
+
+
+@startuml
+'https://plantuml.com/class-diagram
+scale 1
+
+package DED{
+
+    package Element {
+
+        abstract Objet
+        {
+
+            + coordonées : Tuple
+            + toString() : String
+
+        }
+
+        class Obstacles extends Objet
+        {
+            + m_nom : String
+        }
+
+        abstract Equipement extends Objet
+        {
+            + m_estRecuperer : Boolean
+            + recupererObjet() : Objet
+            + toString() : String
+
+        }
+
+        abstract class Arme extends Equipement
+        {
+                + m_nom : String
+                + m_degat : Interger
+                + m_portée : Interger
+                + toString() : String
+        }
+
+        enum TypeArme extends Arme
+        {
+            CAC
+            GUERRECAP
+            DISTANCE
+        }
+
+        abstract class Armure extends Equipement
+        {
+                +<<create>> Armure()
+                +m_nom : String
+                + m_classe : Interger
+                + toString() : String
+        }
+
+        enum TypeArmure    extends Armure
+        {
+            LOURDE
+            LEGERE
+        }
+
+    }
+
+    package Entite {
+            interface Entitee
+            {
+
+            }
+
+            class Personnages implements Entitee
+            {
+                +<<create>> Personnage(nom : String)
+                +<<create>> Caracteristiques(carac: dictionary)
+            }
+
+            abstract class Race
+            {
+                +<<create>> Race (race:String)
+
+            }
+
+            class Humain extends Race
+            {
+                +<<create>> Humain(monstres : String)
+                +m_vie  : Integer
+                +m_dexterite: Integer
+                +m_force : Integer
+                +m_vitesse : Integer
+                +m_initiative : Integer
+            }
+
+            class Halfelins extends Race
+            {
+                +<<create>> Halfelins(race : String)
+                +m_vie  : Integer
+                +m_dexterite: Integer
+                +m_force : Integer
+                +m_vitesse : Integer
+                +m_initiative : Integer
+            }
+
+            class Elfes extends Race
+            {
+                +<<create>> Elfes(monstres : String)
+                +m_vie  : Integer
+                +m_dexterite: Integer
+                +m_force : Integer
+                +m_vitesse : Integer
+                +m_initiative : Integer
+            }
+
+            class Nains extends Race
+            {
+                +<<create>> Nains (monstres : String)
+                +m_vie  : Integer
+                +m_dexterite: Integer
+                +m_force : Integer
+                +m_vitesse : Integer
+                +m_initiative : Integer
+            }
+
+            class Classe
+            {
+                +<<create>> Classe(classe: String)
+            }
+
+            class Clercs extends Classe
+            {
+                +<<create>> Clercs(classe : String)
+                +m_vie : Integer
+
+            }
+
+            class Guerriers extends Classe
+            {
+                +<<create>> Guerriers(classe : String)
+                +m_vie : Integer
+            }
+
+            class Magiciens extends Classe
+            {
+                +<<create>> Magiciens(classe : String)
+                +m_vie : Integer
+            }
+
+            class Roublards extends Classe
+            {
+                +<<create>> Roublards(classe : String)
+                +m_vie : Integer
+            }
+
+            class Monstres implements Entitee
+            {
+                +<<create>> Monstre(nom : String)
+            }
+
+            class Espece
+            {
+                +m_vie  : Integer
+                +m_dexterite: Integer
+                +m_force : Integer
+                +m_vitesse : Integer
+                +m_initiative : Integer
+            }
+
+    }
+    class Donjon
+    {
+        + m_tabObjet : Array
+        + m_tabEntitee : Array
+    }
+
+}
+
+
+Donjon o--> Objet : > coordonées
+Donjon o--> Entitee: > coordonées
+Personnages *--> Race
+Personnages *--> Classe
+Monstres *--> Espece
+
+
+
+
+@enduml
