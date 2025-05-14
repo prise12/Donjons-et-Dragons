@@ -58,6 +58,7 @@ package DED{
                 + defense(Integer attaque)
                 + getCoordonées() : Couple
                 + setCoordonées(Couple coordonées)
+                + getNom() : string
             }
 
             class Personnages implements Entitee
