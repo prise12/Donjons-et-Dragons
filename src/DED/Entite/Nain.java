@@ -1,4 +1,8 @@
 package DED.Entite;
 
-public class Nain {
+public class Nain extends Race {
+
+    public Nain(String nom, Integer vie, Integer force, Integer dexterite, Integer vitesse, Integer initiative) {
+        super(nom, "Nain", vie, force, dexterite, vitesse, initiative);
+    }
 }

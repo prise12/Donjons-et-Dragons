@@ -296,7 +296,7 @@ La structure du dépôt git doit être la suivante :
 ├── README.md
 ├── .gitignore
 ├── src/
-    ├── DED.Entite.Main.java
+    ├── Main.java
     ├── ...
 ├── uml/
     ├── semaine1.puml

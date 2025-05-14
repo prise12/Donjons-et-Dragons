@@ -8,9 +8,9 @@ public class Race extends Personnage{
     protected Integer m_vitesse;
     protected Integer m_initiative;
 
-    public Race(String race, Integer vie, Integer force, Integer dexterite, Integer vitesse, Integer initiative)
+    public Race(String nom, String race, Integer vie, Integer force, Integer dexterite, Integer vitesse, Integer initiative)
     {
-        super(m_race);
+        super(nom);
         this.m_race = race;
         this.m_vie = vie;
         this.m_force = force;

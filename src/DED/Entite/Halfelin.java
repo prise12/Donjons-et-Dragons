@@ -1,4 +1,7 @@
 package DED.Entite;
 
-public class Halfelin extdends{
+public class Halfelin extends Race{
+    public Halfelin(String nom, Integer vie, Integer force, Integer dexterite, Integer vitesse, Integer initiative) {
+        super(nom, "Halfelin", vie, force, dexterite, vitesse, initiative);
+    }
 }
