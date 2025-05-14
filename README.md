@@ -43,10 +43,10 @@ Chaque joueur à l'exception du Maître du Jeu incarne un personnage.
 Chaque personnage est défini par:
 - un nom
 - une race parmi:
-  - Humain
-  - Nain
-  - Elfe
-  - Halfelin
+  - DED.Entite.Humain
+  - DED.Entite.Nain
+  - DED.DED.Entite.Entite.Elfe
+  - DED.Entite.Halfelin
 - une classe parmi:
   - Guerrier
   - Clerc
@@ -207,16 +207,16 @@ En cas de victoire, les personnages regagnent l'intégralité de leur vie et pas
 ```console
 ********************************************************************************
 Donjon 2:
-                                    Caelynn (Elfe magicienne)              
+                                    Caelynn (DED.DED.Entite.Entite.Elfe magicienne)              
 
 ********************************************************************************
 Tour 3:
    And   Andry (Naine Clerc, 15/16)
    X(    Demogorgon (25/45)
-   Dar   Darvin (Humain Guerrier, 13/20)
--> Cae   Caelynn (Elfe Magicienne, 10/12)
+   Dar   Darvin (DED.Entite.Humain Guerrier, 13/20)
+-> Cae   Caelynn (DED.DED.Entite.Entite.Elfe Magicienne, 10/12)
    X^    Dragon bleu (35/50)
-   Alt   Alton (Halfelin Roublard, 14/16)
+   Alt   Alton (DED.Entite.Halfelin Roublard, 14/16)
 
       A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W
    *-----------------------------------------------------------------------*
@@ -296,7 +296,7 @@ La structure du dépôt git doit être la suivante :
 ├── README.md
 ├── .gitignore
 ├── src/
-    ├── Main.java
+    ├── DED.Entite.Main.java
     ├── ...
 ├── uml/
     ├── semaine1.puml
