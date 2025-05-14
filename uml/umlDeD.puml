@@ -9,12 +9,12 @@ package DED{
 
 
         class Equipement {
-            + m_coordonées : Couple
+            + m_coordonées : (Integer[])
             + m_nom : String
             + m_personnage : Personnages
             + recupererObjet(Personnages peronnage)
             + DesequiperObjet()
-            + getCoordonées() : Couple
+            + getCoordonées() : (Integer[])
             + toString() : String
 
         }
@@ -53,10 +53,10 @@ package DED{
             interface Entitee
             {
                 + m_nom : String
-                + m_coordonées : Couple
+                + m_coordonées : (Integer[])
                 + attaquer(Entite entite)
                 + defense(Integer attaque)
-                + getCoordonées() : Couple
+                + getCoordonées() : (Integer[])
                 + setCoordonées(Couple coordonées)
                 + getNom() : string
             }
