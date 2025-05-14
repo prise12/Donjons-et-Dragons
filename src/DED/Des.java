@@ -2,7 +2,7 @@ package DED;
 
 import java.util.Random;
 
-public class De {
+public class Des {
     private static final Random jetD = new Random();
 
     // Lance un dé à X faces
@@ -11,7 +11,7 @@ public class De {
     }
 
     // Lance plusieurs dés et additionne le résultat
-    public static int lancerMultiple(int nbDes, int faces) {
+    public static int lancerMulti(int nbDes, int faces) {
         int total = 0;
         for (int i = 0; i < nbDes; i++) {
             total += lancer(faces);
@@ -20,7 +20,7 @@ public class De {
     }
 
 
-    public static int lancerAvecBonus(int nbDes, int faces, int bonus) {
-        return lancerMultiple(nbDes, faces) + bonus;
+    public static int lancerBonus(int nbDes, int faces, int bonus) {
+        return lancerMulti(nbDes, faces) + bonus;
     }
 }

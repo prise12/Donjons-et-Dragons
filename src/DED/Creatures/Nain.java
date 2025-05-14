@@ -1,8 +1,18 @@
 package DED.Creatures;
 
+import DED.Des;
+
 public class Nain extends Race {
 
-    public Nain(String nom, Integer vie, Integer force, Integer dexterite, Integer vitesse, Integer initiative) {
-        super(nom, "Nain", vie, force, dexterite, vitesse, initiative);
+    public Nain(String nom){
+        super(
+                nom,
+                "Nain",
+                12,
+                Des.lancerBonus(4, 4, 9),
+                Des.lancerBonus(4, 4, 3),
+                Des.lancerBonus(4, 4, 3),
+                Des.lancerBonus(4, 4, 3)
+        );
     }
 }

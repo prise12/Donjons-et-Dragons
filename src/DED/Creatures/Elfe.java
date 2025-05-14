@@ -1,8 +1,18 @@
 package DED.Creatures;
 
+import DED.Des;
+
 public class Elfe extends Race{
 
-    public Elfe(String nom, Integer vie, Integer force, Integer dexterite, Integer vitesse, Integer initiative) {
-        super(nom, "Elfe", vie, force, dexterite, vitesse, initiative);
+    public Elfe(String nom){
+        super(
+                nom,
+                "Elfe",
+                12,
+                Des.lancerBonus(4, 4, 3),
+                Des.lancerBonus(4, 4, 9),
+                Des.lancerBonus(4, 4, 3),
+                Des.lancerBonus(4, 4, 3)
+        );
     }
 }
