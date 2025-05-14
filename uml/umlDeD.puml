@@ -5,8 +5,10 @@ scale 1
 package DED{
 
     class Des{
-    m_nblancer : Integer
-    m_nbface : Integer
+    + lancer(int faces)
+    + lancerMultiple(int nbDes, int faces)
+    + lancerAvecBonus(int nbDes, int faces, int bonus)
+
     }
 
 
