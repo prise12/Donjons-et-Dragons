@@ -4,6 +4,14 @@ scale 1
 
 package DED{
 
+    class Des{
+    + lancer(int faces)
+    + lancerMultiple(int nbDes, int faces)
+    + lancerAvecBonus(int nbDes, int faces, int bonus)
+
+    }
+
+
     package Objets {
 
 
@@ -49,7 +57,7 @@ package DED{
 
     }
 
-    package Entite {
+    package Creatures {
             interface Entitee
             {
                 + m_nom : String
@@ -156,7 +164,6 @@ package DED{
 
     class Donjon
     {
-
         + m_tabObjet : (Objet[])
         + m_tabEntitee : (Entitee[])
         + afficherDonjon(Interger nMap) :
@@ -171,6 +178,9 @@ Donjon o--> Entitee: > coordonées
 Personnages *--> Race
 Personnages *--> Classe
 Monstres *--> Espece
+Des *-> Personnages
+Des *-> Race
+Des *-> Monstres
 
 
 

@@ -1,4 +1,4 @@
-package DED.Entite;
+package DED.Creatures;
 
 public class Race extends Personnage{
     protected String m_race;
