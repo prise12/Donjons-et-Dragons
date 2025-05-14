@@ -1,37 +1,27 @@
-
-
 @startuml
 'https://plantuml.com/class-diagram
 scale 1
 
 package DED{
 
-    package Element {
+    package Objets {
 
-        abstract Objet
-        {
 
-            + coordonées : Tuple
-            + toString() : String
 
-        }
-
-        class Obstacles extends Objet
-        {
+        class Equipement {
+            + m_coordonées : Couple
             + m_nom : String
-        }
-
-        abstract Equipement extends Objet
-        {
-            + m_estRecuperer : Boolean
-            + recupererObjet() : Objet
+            + m_personnage : Personnages
+            + recupererObjet(Personnages peronnage)
+            + DesequiperObjet()
+            + getCoordonées() : Couple
             + toString() : String
 
         }
 
-        abstract class Arme extends Equipement
+        class Arme extends Equipement
         {
-                + m_nom : String
+
                 + m_degat : Interger
                 + m_portée : Interger
                 + toString() : String
@@ -40,14 +30,13 @@ package DED{
         enum TypeArme extends Arme
         {
             CAC
-            GUERRECAP
+            GUERRECAC
             DISTANCE
         }
 
-        abstract class Armure extends Equipement
+        class Armure extends Equipement
         {
-                +<<create>> Armure()
-                +m_nom : String
+                + <<create>> Armure()
                 + m_classe : Interger
                 + toString() : String
         }
@@ -63,98 +52,95 @@ package DED{
     package Entite {
             interface Entitee
             {
-
+                + m_coordonées : Couple
+                + attaquer(Entite entite)
+                + defense(Integer attaque)
+                + getCoordonées() : Couple
+                + setCoordonées(Couple coordonées)
             }
 
             class Personnages implements Entitee
             {
                 +<<create>> Personnage(nom : String)
-                +<<create>> Caracteristiques(carac: dictionary)
+                +attaquer(Monstres monstre)
+                +defense(Integer pointsAttaque) : Boolean
             }
 
-            abstract class Race
+            class Race
             {
-                +<<create>> Race (race:String)
+                + <<create>> Race (race:String)
+                + m_vie  : Integer
+                + m_force : Integer
+                + m_dexterite: Integer
+                + m_vitesse : Integer
+                + m_initiative : Integer
+                + getStats() : Integer[]
 
             }
 
             class Humain extends Race
             {
                 +<<create>> Humain(monstres : String)
-                +m_vie  : Integer
-                +m_dexterite: Integer
-                +m_force : Integer
-                +m_vitesse : Integer
-                +m_initiative : Integer
+
             }
 
             class Halfelins extends Race
             {
                 +<<create>> Halfelins(race : String)
-                +m_vie  : Integer
-                +m_dexterite: Integer
-                +m_force : Integer
-                +m_vitesse : Integer
-                +m_initiative : Integer
+
             }
 
             class Elfes extends Race
             {
                 +<<create>> Elfes(monstres : String)
-                +m_vie  : Integer
-                +m_dexterite: Integer
-                +m_force : Integer
-                +m_vitesse : Integer
-                +m_initiative : Integer
+
             }
 
             class Nains extends Race
             {
                 +<<create>> Nains (monstres : String)
-                +m_vie  : Integer
-                +m_dexterite: Integer
-                +m_force : Integer
-                +m_vitesse : Integer
-                +m_initiative : Integer
+
             }
 
             class Classe
             {
                 +<<create>> Classe(classe: String)
+                +m_vie : Integer
             }
 
             class Clercs extends Classe
             {
                 +<<create>> Clercs(classe : String)
-                +m_vie : Integer
+
 
             }
 
             class Guerriers extends Classe
             {
                 +<<create>> Guerriers(classe : String)
-                +m_vie : Integer
+
             }
 
             class Magiciens extends Classe
             {
                 +<<create>> Magiciens(classe : String)
-                +m_vie : Integer
             }
 
             class Roublards extends Classe
             {
                 +<<create>> Roublards(classe : String)
-                +m_vie : Integer
             }
 
             class Monstres implements Entitee
             {
                 +<<create>> Monstre(nom : String)
+                +attaquer(Personnages)
+                +defense(Integer pointsAttaque) : Boolean
             }
 
             class Espece
             {
+                +m_nom : String
                 +m_vie  : Integer
                 +m_dexterite: Integer
                 +m_force : Integer
@@ -163,16 +149,21 @@ package DED{
             }
 
     }
+
+
     class Donjon
     {
+
         + m_tabObjet : Array
         + m_tabEntitee : Array
+        + genererObjetDonjon(Objet[]) :
+        + genererPersonnageDonjon(Entitee[]) : String
     }
 
 }
 
 
-Donjon o--> Objet : > coordonées
+Donjon o--> Equipement : > coordonées
 Donjon o--> Entitee: > coordonées
 Personnages *--> Race
 Personnages *--> Classe
