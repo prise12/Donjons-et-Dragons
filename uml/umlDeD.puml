@@ -52,6 +52,7 @@ package DED{
     package Entite {
             interface Entitee
             {
+                + m_nom : String
                 + m_coordonées : Couple
                 + attaquer(Entite entite)
                 + defense(Integer attaque)
@@ -133,6 +134,7 @@ package DED{
 
             class Monstres implements Entitee
             {
+
                 +<<create>> Monstre(nom : String)
                 +attaquer(Personnages)
                 +defense(Integer pointsAttaque) : Boolean
@@ -154,10 +156,10 @@ package DED{
     class Donjon
     {
 
-        + m_tabObjet : Array
-        + m_tabEntitee : Array
-        + genererObjetDonjon(Objet[]) :
-        + genererPersonnageDonjon(Entitee[]) : String
+        + m_tabObjet : (Objet[])
+        + m_tabEntitee : (Entitee[])
+        + afficherDonjon(Interger nMap) :
+        + genererDonjon(Entitee[], Objet[]) : String
     }
 
 }
