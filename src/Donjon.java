@@ -1,3 +1,5 @@
+import DED.Creatures.Entite;
+import DED.Creatures.Personnage;
 import DED.Entite.Personnage;
 
 import java.io;
@@ -7,7 +9,7 @@ import java.util.Map;
 
 public class Donjon {
 
-    LinkedHashMap<Creature, int[] > m_dictEntitee;
+    LinkedHashMap<Creature, int[] > m_dictCreature;
     LinkedHashMap<Objet, int[] > m_dictObjet;
     int[][] m_tabObstacles;
 
@@ -62,6 +64,21 @@ public class Donjon {
         writer.close();
 
     }
+
+    public void addCreature(Creature creature, int[] coordonées) {
+
+        m_dictCreature.Add(creature, coordonées);
+
+    }
+
+    public void addEquipement(Equipement , int[] coordonées) {
+
+        m_dictCreature.Add(creature, coordonées);
+
+    }
+
+
+
 
 
 
