@@ -1,4 +1,4 @@
-package DED.Creatures;
+package DED.creature;
 
 public class Magicien extends Classe{
     public Magicien(String nom)

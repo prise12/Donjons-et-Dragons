@@ -1,4 +1,4 @@
-package DED.Creatures;
+package DED.creature;
 
 public abstract class Race extends Personnage{
     protected String m_race;

@@ -1,4 +1,4 @@
-package DED.Creatures;
+package DED.creature;
 
 public class Clerc extends Classe{
     public Clerc(String nom){

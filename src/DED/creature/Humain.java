@@ -1,4 +1,4 @@
-package DED.Creatures;
+package DED.creature;
 import DED.Des;
 
 

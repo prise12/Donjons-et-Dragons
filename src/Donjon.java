@@ -1,11 +1,8 @@
-import DED.Creatures.Entite;
-import DED.Creatures.Personnage;
+import DED.creature.Entite;
 import DED.Entite.Personnage;
 
 import java.io;
 import java.io.Console;
-import java.io.PrintStream;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
