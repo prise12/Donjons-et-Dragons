@@ -1,3 +1,5 @@
+package ded;
+
 import ded.entite.Entite;
 import ded.Entite.Personnage;
 
