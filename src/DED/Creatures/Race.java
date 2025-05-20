@@ -1,6 +1,6 @@
 package DED.Creatures;
 
-public class Race extends Personnage{
+public abstract class Race extends Personnage{
     protected String m_race;
     protected Integer m_vie;
     protected Integer m_force;
