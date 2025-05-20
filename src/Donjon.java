@@ -74,7 +74,7 @@ public class Donjon {
     public void addEntitee(Entite entite, int[] coordonées) {
         if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
 
-            this.m_dictEntite.Add(entite, coordonées);
+            this.m_dictEntite.put(entite, coordonées);
         }
         else {
             throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
