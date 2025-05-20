@@ -3,23 +3,36 @@ import DED.Creatures.Personnage;
 import DED.Entite.Personnage;
 
 import java.io;
+import java.io.Console;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Donjon {
 
-    LinkedHashMap<Creature, int[] > m_dictCreature;
-    LinkedHashMap<Objet, int[] > m_dictObjet;
-    int[][] m_tabObstacles;
+    private LinkedHashMap<Entitee, int[] > m_dictEntitee;
+    private LinkedHashMap<Equipement, int[] > m_dictEquipement;
+    private int[][] m_tabObstacles;
+    private String[][] m_donjon;
+    private int m_largeurMap;
+    
+    public Donjon(LinkedHashMap<Entitee, int[] > dictEntitee, LinkedHashMap<Equipement, int[] > dictEquipement, int[][] tabObstacles, int largeurMap) {
+        
+        this.m_dictEntitee = dictEntitee;
+        this.m_dictEquipement = dictEquipement;
+        this.m_tabObstacles = tabObstacles;
+        this.m_tabObstacles = tabObstacles;
+        this.m_largeurMap = largeurMap;
+        
 
-    string[][] m_donjon;
-    int m_largeurMap;
+    }
 
 
     public void afficherDonjon(int nMap){
-        writer.println(" A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W\n");
-        writer.println("*-----------------------------------------------------------------------*\n");
+
+        Console.println(" A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W\n");
+        Console.("*-----------------------------------------------------------------------*\n");
         for(int i = 0; i<  m_largeurMap; i++ ){
 
             Console.print(i+" ");
@@ -31,29 +44,25 @@ public class Donjon {
         }
     }
 
-    }
-
     public void genererDonjon(){
 
         for(int i = 0; i< m_largeurMap; i++ ){
             for(int j = 0; j <  m_largeurMap; j++ ){;
-                m_donjon[i][j] = ".";
+                this.m_donjon[i][j] = ".";
             }
         }
 
         //On genere les creatures, objets, obstacles dans la map
-        for(Map.Entry<Creature, Integer[]> entry : m_dictEntitee.entrySet()) {
-            m_donjon[entry.getvalue()[0]][entry.getvalue()[1]] = entry.getValue().getNom().substring(0,2);
+        for(Map.Entry<Entitee, Integer[]> entry : m_dictEntitee.entrySet()) {
+            this.m_donjon[entry.getvalue()[0]][entry.getvalue()[1]] = entry.getValue().getNom().substring(0,2);
         }
-        for(Map.Entry<Creature, Integer[]> entry : m_dictObjet.entrySet()) {
-            m_donjon[entry.getvalue()[0]][entry.getvalue()[1]] = entry.getValue().getNom().substring(0,2);
+        for(Map.Entry<Entitee, Integer[]> entry : m_dictObjet.entrySet()) {
+            this.m_donjon[entry.getvalue()[0]][entry.getvalue()[1]] = entry.getValue().getNom().substring(0,2);
         }
         for(int[] coo : m_tabObstacles) {
-            m_donjon[coo[0]][coo[1]] = "[]";
+            this.m_donjon[coo[0]][coo[1]] = "[]";
         }
-
-
-
+        
         for(int i = 0; i< m_largeurMap; i++ ){
             writer.print(i+" ");
             for(int j = 0; j<  m_largeurMap; j++ ){;
@@ -65,16 +74,33 @@ public class Donjon {
 
     }
 
-    public void addCreature(Creature creature, int[] coordonées) {
+    public void addEntitee(Entitee creature, int[] coordonées) {
+        if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
 
-        m_dictCreature.Add(creature, coordonées);
+            this.m_dictEntitee.Add(creature, coordonées)
+        }
+        else {
+            throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
+        }
 
     }
 
-    public void addEquipement(Equipement , int[] coordonées) {
+    public void addEquipement(Equipement equipement, int[] coordonées) {
+        if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
+            this.m_dictEquipement.Add(equipement, coordonées);
+        }
+        else {
+            throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
+        }
+    }
 
-        m_dictCreature.Add(creature, coordonées);
-
+    public void addObstacles(int[] coordonées) {
+        if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
+            this.m_donjon[coordonées[0]][coordonées[1]] = "[]";
+        }
+        else {
+            throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
+        }
     }
 
 
