@@ -2,6 +2,7 @@
 skinparam style strictuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
+skinparam linetype ortho
 hide empty members
 
 package ded {
@@ -82,6 +83,7 @@ package ded {
 
         abstract class Race <<abstract>> {
             + <<create>> Race(race : String)
+            + m_vie : Integer
             + m_force : Integer
             + m_dexterite : Integer
             + m_vitesse : Integer
@@ -106,32 +108,24 @@ package ded {
         }
 
         abstract class Classe <<abstract>> {
+            + <<create>> Classe(classe : String)
             + m_vie : Integer
         }
 
         class Clerc extends Classe {
-            + m_vie : Integer
             + <<create>> Clerc(classe : String)
-            + getVie() : Integer
-
         }
 
         class Guerrier extends Classe {
-            + m_vie : Integer
             + <<create>> Guerrier(classe : String)
-            + getVie() : Integer
         }
 
         class Magicien extends Classe {
-            + m_vie : Integer
             + <<create>> Magicien(classe : String)
-            + getVie() : Integer
         }
 
         class Roublard extends Classe {
-            + m_vie : Integer
             + <<create>> Roublard(classe : String)
-            + getVie() : Integer
         }
 
         class Monstre implements Entite {
