@@ -1,6 +1,6 @@
-package DED.creature;
+package ded.entite;
 
-import DED.Des;
+import ded.Des;
 
 public class Halfelin extends Race{
     public Halfelin(String nom){

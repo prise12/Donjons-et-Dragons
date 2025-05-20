@@ -1,5 +1,5 @@
-package DED.creature;
-import DED.Des;
+package ded.entite;
+import ded.Des;
 
 
 public class Humain extends Race{

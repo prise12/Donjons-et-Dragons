@@ -43,10 +43,10 @@ Chaque joueur à l'exception du Maître du Jeu incarne un personnage.
 Chaque personnage est défini par:
 - un nom
 - une race parmi:
-  - DED.creature.Humain
-  - DED.creature.Nain
-  - DED.DED.creature.Entite.Elfe
-  - DED.creature.Halfelin
+  - ded.entite.Humain
+  - ded.entite.Nain
+  - ded.ded.entite.Entite.Elfe
+  - ded.entite.Halfelin
 - une classe parmi:
   - Guerrier
   - Clerc
@@ -207,16 +207,16 @@ En cas de victoire, les personnages regagnent l'intégralité de leur vie et pas
 ```console
 ********************************************************************************
 Donjon 2:
-                                    Caelynn (DED.DED.creature.Entite.Elfe magicienne)              
+                                    Caelynn (ded.ded.entite.Entite.Elfe magicienne)              
 
 ********************************************************************************
 Tour 3:
    And   Andry (Naine Clerc, 15/16)
    X(    Demogorgon (25/45)
-   Dar   Darvin (DED.creature.Humain Guerrier, 13/20)
--> Cae   Caelynn (DED.DED.creature.Entite.Elfe Magicienne, 10/12)
+   Dar   Darvin (ded.entite.Humain Guerrier, 13/20)
+-> Cae   Caelynn (ded.ded.entite.Entite.Elfe Magicienne, 10/12)
    X^    Dragon bleu (35/50)
-   Alt   Alton (DED.creature.Halfelin Roublard, 14/16)
+   Alt   Alton (ded.entite.Halfelin Roublard, 14/16)
 
       A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W
    *-----------------------------------------------------------------------*

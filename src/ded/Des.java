@@ -1,4 +1,4 @@
-package DED;
+package ded;
 
 import java.util.Random;
 

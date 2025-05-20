@@ -1,4 +1,4 @@
-package DED.creature;
+package ded.entite;
 
 public class Roublard extends Classe{
     public Roublard(String nom){

@@ -1,4 +1,4 @@
-package DED.objet;
+package ded.objet;
 
 public class Arme {
 }

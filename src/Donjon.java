@@ -1,5 +1,5 @@
-import DED.creature.Entite;
-import DED.Entite.Personnage;
+import ded.entite.Entite;
+import ded.Entite.Personnage;
 
 import java.io;
 import java.io.Console;
