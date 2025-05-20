@@ -1,4 +1,4 @@
-﻿/home/giorgipanazzolo/p21exo/td1@startuml
+﻿@startuml
 skinparam style strictuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
@@ -14,20 +14,20 @@ package ded {
         + genererDonjon(tabEntitee : Entite[*], tabObjet : Equipement[*]) : String
     }
 
+    class Main {
+        + {static} main(args : String[*])
+    }
+
     class Des {
         + {static} lancer(faces : Integer)
         + {static} lancerMultiple(nbDes : Integer, faces : Integer)
         + {static} lancerAvecBonus(nbDes : Integer, faces : Integer, bonus : Integer)
     }
 
-    class Main {
-        + {static} main(args : String[*])
-    }
-
-
     package objets {
 
         abstract class Equipement <<abstract>> {
+            + <<create>> Equipement()
             + m_coordonnees : Integer[*]
             + m_nom : String
             + m_personnage : Personnage
@@ -81,7 +81,7 @@ package ded {
         }
 
         abstract class Race <<abstract>> {
-
+            + <<create>> Race(race : String)
             + m_vie : Integer
             + m_force : Integer
             + m_dexterite : Integer
