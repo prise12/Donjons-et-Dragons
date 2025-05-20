@@ -6,6 +6,18 @@ hide empty members
 
 package ded {
 
+    class Donjon {
+        + <<create>> Donjon(nom : String)
+        + m_tabObjet : Equipement[*]
+        + m_tabEntitee : Entite[*]
+        + afficherDonjon(nMap : Integer)
+        + genererDonjon(tabEntitee : Entite[*], tabObjet : Equipement[*]) : String
+    }
+
+    class Main {
+        + {static} main(args : String[*])
+    }
+
     class Des {
         + {static} lancer(faces : Integer)
         + {static} lancerMultiple(nbDes : Integer, faces : Integer)
@@ -48,9 +60,6 @@ package ded {
             LOURDE
             LEGERE
         }
-
-        TypeArme .> Arme : <<use>>
-        TypeArmure .> Armure : <<use>>
     }
 
     package creatures {
@@ -133,32 +142,24 @@ package ded {
             + m_vitesse : Integer
             + m_initiative : Integer
         }
-
-        Personnage *--> Race
-        Personnage *--> Classe
-        Monstre *--> Espece
     }
 
-    class Donjon {
-        + <<create>> Donjon(nom : String)
-        + m_tabObjet : Equipement[*]
-        + m_tabEntitee : Entite[*]
-        + afficherDonjon(nMap : Integer)
-        + genererDonjon(tabEntitee : Entite[*], tabObjet : Equipement[*]) : String
-    }
 
-    class Main {
-        + {static} main(args : String[*])
-    }
+    Personnage *--> Race
+    Personnage *--> Classe
+    Monstre *-> Espece
 
-    Personnage "1" o--> "0..*" Equipement : possède >
+    Personnage "1" o-> "0..*" Equipement : possède >
 
-    Donjon "1" o--> "0..*" Equipement : contient >
-    Donjon "1" o--> "0..*" Entite : contient >
+    Donjon "1" o-> "0..*" Equipement : contient >
+    Donjon "1" o-> "0..*" Entite : contient >
 
-    Des .> Personnage : <<use>>
-    Des .> Race : <<use>>
-    Des .> Monstre : <<use>>
+    Des .-> Personnage : <<use>>
+    Des .-> Race : <<use>>
+    Des .-> Monstre : <<use>>
+    TypeArme .> Arme : <<use>>
+    TypeArmure .> Armure : <<use>>
+
 }
 
 @enduml
