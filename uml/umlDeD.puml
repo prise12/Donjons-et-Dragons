@@ -2,6 +2,7 @@
 skinparam style strictuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
+skinparam linetype ortho
 hide empty members
 
 package ded {
