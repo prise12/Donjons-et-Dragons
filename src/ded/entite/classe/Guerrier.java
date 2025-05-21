@@ -1,4 +1,4 @@
-package ded.entite;
+package ded.entite.classe;
 
 public class Guerrier extends Classe {
     public Guerrier(String nom) {

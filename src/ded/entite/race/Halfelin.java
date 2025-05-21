@@ -1,8 +1,8 @@
-package ded.entite;
+package ded.entite.race;
 
 import ded.Des;
 
-public class Halfelin extends Race{
+public class Halfelin extends Race {
     public Halfelin(String nom){
         super(
                 nom,

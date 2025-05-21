@@ -1,16 +1,16 @@
-package ded.entite;
+package ded.entite.race;
 
 import ded.Des;
 
-public class Elfe extends Race{
+public class Nain extends Race {
 
-    public Elfe(String nom){
+    public Nain(String nom){
         super(
                 nom,
-                "Elfe",
+                "Nain",
                 12,
-                Des.lancerBonus(4, 4, 3),
                 Des.lancerBonus(4, 4, 9),
+                Des.lancerBonus(4, 4, 3),
                 Des.lancerBonus(4, 4, 3),
                 Des.lancerBonus(4, 4, 3)
         );

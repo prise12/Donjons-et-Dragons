@@ -1,6 +1,8 @@
-package ded.entite;
+package ded.entite.race;
 
-public abstract class Race extends Personnage{
+import ded.entite.Personnage;
+
+public abstract class Race extends Personnage {
     protected String m_race;
     protected Integer m_vie;
     protected Integer m_force;

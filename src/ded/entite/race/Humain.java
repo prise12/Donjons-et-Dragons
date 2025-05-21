@@ -1,8 +1,8 @@
-package ded.entite;
+package ded.entite.race;
 import ded.Des;
 
 
-public class Humain extends Race{
+public class Humain extends Race {
 
     public Humain(String nom) {
 
