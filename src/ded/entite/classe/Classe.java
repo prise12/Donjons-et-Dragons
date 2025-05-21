@@ -1,4 +1,8 @@
-package ded.entite;
+<<<<<<< HEAD:src/DED/creature/Classe.java
+package DED.creature;
+=======
+package DED.Creatures.classe;
+>>>>>>> origin/master:src/DED/creature/classe/Classe.java
 
 public abstract class Classe extends Personnage{
 
