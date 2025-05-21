@@ -1,11 +1,10 @@
 package ded.entite;
 
-public class Personnage {
+public class Personnage extends Entite{
 
-    protected String m_nom;
 
     public Personnage(String nom){
-        this.m_nom = nom;
+        super(nom);
     }
 
 }

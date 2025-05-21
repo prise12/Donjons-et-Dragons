@@ -1,9 +1,8 @@
 package ded;
 
-import ded.entite.Entite;
-import ded.Entite.Personnage;
+import ded.entite.Entite;;
+import ded.objet.Equipement;
 
-import java.io;
 import java.io.Console;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,20 +20,44 @@ public class Donjon {
         this.m_dictEntite = dictEntite;
         this.m_dictEquipement = dictEquipement;
         this.m_tabObstacles = tabObstacles;
-        this.m_tabObstacles = tabObstacles;
         this.m_largeurMap = largeurMap;
-        
+        this.m_donjon = new String[m_largeurMap][m_largeurMap];
 
     }
 
 
-    public void afficherDonjon(int nMap){
+    public void afficherDonjon(){
+        System.out.print("     ");
+        for(int i = 0; i<  m_largeurMap; i++ ){
+            if(i<25){
 
-        System.out.println(" A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W");
-        System.out.println("*-----------------------------------------------------------------------*");
+            }
+            char c = (char) (65 + i%26);
+            System.out.print( c );
+            if(i>25){
+                char c1 = (char) (65 + i/26);
+                System.out.print( c );
+                System.out.print( " " );
+            }
+            else {
+
+                System.out.print( "  " );
+            }
+
+
+
+        }
+        System.out.print("\n");
+
+
         for(int i = 0; i<  m_largeurMap; i++ ){
 
             System.out.print(i+" ");
+            int nbChiffres = String.valueOf(Math.abs(i)).length();
+            for(int j =0; j < 3 - nbChiffres; j++){
+                System.out.print(" ");
+            }
+
             for(int j = 0; j<  m_largeurMap; j++ ) {
                 System.out.print(m_donjon[i][j]);
 
@@ -45,31 +68,24 @@ public class Donjon {
 
     public void genererDonjon(){
 
-        for(int i = 0; i< m_largeurMap; i++ ){
-            for(int j = 0; j <  m_largeurMap; j++ ){;
-                this.m_donjon[i][j] = ".";
+        for(int i = 0; i<this.m_largeurMap; i++){
+            for(int j = 0; j<this.m_largeurMap; j++){
+
+                this.m_donjon[i][j] = " . ";
             }
         }
-
         //On genere les creatures, objets, obstacles dans la map
         for(Map.Entry<Entite, int[]> entry : m_dictEntite.entrySet()) {
-            this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = entry.getValue().getNom().substring(0,2);
+            this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = entry.getKey().getNom().substring(0,3);
         }
-        for(Map.Entry<Equipement, Integer[]> entry : m_dictEquipement.entrySet()) {
-            this.m_donjon[entry.getvalue()[0]][entry.getvalue()[1]] = entry.getValue().getNom().substring(0,2);
+        for(Map.Entry<Equipement, int[]> entry : m_dictEquipement.entrySet()) {
+            this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = entry.getKey().getNom().substring(0,3);
         }
         for(int[] coo : m_tabObstacles) {
             this.m_donjon[coo[0]][coo[1]] = "[]";
         }
         
-        for(int i = 0; i< m_largeurMap; i++ ){
-            System.out.print(i+" ");
-            for(int j = 0; j<  m_largeurMap; j++ ){;
-                System.out.print(m_donjon[i][j]);
-            }
-        }
 
-        Console.close();
 
     }
 

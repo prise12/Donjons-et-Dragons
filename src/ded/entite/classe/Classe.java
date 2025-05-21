@@ -1,10 +1,11 @@
-<<<<<<< HEAD:src/DED/creature/Classe.java
-package DED.creature;
-=======
-package DED.Creatures.classe;
->>>>>>> origin/master:src/DED/creature/classe/Classe.java
 
-public abstract class Classe extends Personnage{
+package ded.entite.classe;
+
+import ded.entite.Personnage;
+
+
+
+public abstract class Classe extends Personnage {
 
     protected Integer m_vie;
 
