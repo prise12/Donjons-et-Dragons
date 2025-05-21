@@ -12,11 +12,11 @@ public class Des {
 
     // Lance plusieurs dés et additionne le résultat
     public static int lancerMulti(int nbDes, int faces) {
-        int total = 0;
+        int jet = 0;
         for (int i = 0; i < nbDes; i++) {
-            total += lancer(faces);
+            jet += lancer(faces);
+            return jet;
         }
-        return total;
     }
 
 

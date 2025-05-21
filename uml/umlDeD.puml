@@ -75,6 +75,12 @@ package ded {
             + {abstract} //getNom() : String//
         }
 
+        class MaitreDeJeu {
+        + deplacerPerso(coordonnees : Integer) : String
+        + ajouterObstacles(coordonnees : Integer)
+
+        }
+
         class Personnage implements Entite {
             + <<create>> Personnage(nom : String)
             + attaquer(monstre : Monstre)
@@ -110,6 +116,7 @@ package ded {
         abstract class Classe <<abstract>> {
             + <<create>> Classe(classe : String)
             + m_vie : Integer
+            + LancerSort(personnage : Integer)
         }
 
         class Clerc extends Classe {
