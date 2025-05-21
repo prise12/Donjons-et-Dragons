@@ -75,7 +75,7 @@ package ded {
             + {abstract} //getNom() : String//
         }
 
-        class MaitreDeJeu {
+        class MaitreDeJeu implements Entite{
         + deplacerPerso(coordonnees : Integer) : String
         + ajouterObstacles(coordonnees : Integer)
 
@@ -163,6 +163,7 @@ package ded {
     Donjon "1" o-> "0..*" Entite : contient >
 
     Des .-> Personnage : <<use>>
+    Des .-> MaitreDeJeu : <<use>>
     Des .-> Race : <<use>>
     Des .-> Monstre : <<use>>
     TypeArme .> Arme : <<use>>
