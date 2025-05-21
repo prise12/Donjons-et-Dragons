@@ -65,7 +65,7 @@ package ded {
 
     package creatures {
 
-        interface Entite <<interface>> {
+        abstract class Entite <<abstract>> {
             + m_nom : String
             + m_coordonnees : Integer[*]
             + {abstract} //attaquer(entite : Entite)//

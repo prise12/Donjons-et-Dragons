@@ -2,9 +2,6 @@ package ded.entite.classe;
 import ded.entite.Personnage;
 
 
-
-
-
 public abstract class Classe extends Personnage {
 
     protected Integer m_vie;
