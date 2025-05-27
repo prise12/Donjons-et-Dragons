@@ -4,26 +4,29 @@ public class Arme extends Equipement{
 
     private int m_degat;
     private int m_portee;
+    private int m_force = 0;
 
-    private int m_force;
-    private int m_ralentissement;
-
+    private Type m_type;
     public enum Type {
-        COURANTECAC,
-        GUERRECAC,
+        COURANTE,
+        GUERRE,
         DISTANCE;
 
 
         }
 
-    public Arme(Type type, int degat, int portee){
+    public Arme(Type type, int degat, int portee, String nom){
+        super(nom);
         switch(type) {
-            case COURANTECAC:
-            case GUERRECAC:
+            case COURANTE:
+                this.m_type = Type.COURANTE;
+            case GUERRE:
                 this.m_force = 4;
+                this.m_type = Type.GUERRE;
                 this.m_ralentissement = 2;
             case DISTANCE:
                 this.m_ralentissement = 4;
+                this.m_type = Type.DISTANCE;
         }
 
         this.m_degat = degat;
@@ -31,8 +34,7 @@ public class Arme extends Equipement{
 
     }
 
-
-
-
-
+    public int get_degat(){ return this.m_degat ;}
+    public int get_portee(){ return this.m_portee ;}
+    public Armure.Type get_type(){ return this.m_type ;}
 }

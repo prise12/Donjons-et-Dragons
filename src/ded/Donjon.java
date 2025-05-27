@@ -4,6 +4,7 @@ import ded.entite.Entite;;
 import ded.objet.Equipement;
 
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,15 +12,15 @@ public class Donjon {
 
     private LinkedHashMap<Entite, int[] > m_dictEntite;
     private LinkedHashMap<Equipement, int[] > m_dictEquipement;
-    private int[][] m_tabObstacles;
+    private ArrayList<int[]> m_lstObstacles;
     private String[][] m_donjon;
     private int m_largeurMap;
     
-    public Donjon(LinkedHashMap<Entite, int[] > dictEntite, LinkedHashMap<Equipement, int[] > dictEquipement, int[][] tabObstacles, int largeurMap) {
+    public Donjon(LinkedHashMap<Entite, int[] > dictEntite, LinkedHashMap<Equipement, int[] > dictEquipement, ArrayList<int[]> lstObstacles, int largeurMap) {
         
         this.m_dictEntite = dictEntite;
         this.m_dictEquipement = dictEquipement;
-        this.m_tabObstacles = tabObstacles;
+        this.m_lstObstacles = lstObstacles;
         this.m_largeurMap = largeurMap;
         this.m_donjon = new String[m_largeurMap][m_largeurMap];
 
@@ -41,7 +42,7 @@ public class Donjon {
             }
             else {
 
-                System.out.print( "  " );
+                System.out.print("  ");
             }
 
 
@@ -79,10 +80,10 @@ public class Donjon {
             this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = entry.getKey().getNom().substring(0,3);
         }
         for(Map.Entry<Equipement, int[]> entry : m_dictEquipement.entrySet()) {
-            this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = entry.getKey().getNom().substring(0,3);
+            this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = " * ";
         }
-        for(int[] coo : m_tabObstacles) {
-            this.m_donjon[coo[0]][coo[1]] = "[]";
+        for(int[] coo : m_lstObstacles) {
+            this.m_donjon[coo[0]][coo[1]] = " []";
         }
         
 
@@ -117,11 +118,4 @@ public class Donjon {
             throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
         }
     }
-
-
-
-
-
-
-
 }

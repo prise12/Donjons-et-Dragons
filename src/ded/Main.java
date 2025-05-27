@@ -5,27 +5,28 @@ import ded.entite.Personnage;
 import ded.objet.Arme;
 import ded.objet.Equipement;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class Main {
     public static void main(String[] args) {
         LinkedHashMap<Entite, int[]> dictEntite = new LinkedHashMap<>();
         LinkedHashMap<Equipement, int[]> dictEquipement = new LinkedHashMap<>();
-        int[][] tabObstacles = new int[0][0];
+        ArrayList<int[]> lstObstacles = new ArrayList<int[]>();
         int largeurMap = 30;
 
         Entite bryan = new Personnage("Bryan");
         Entite fab = new Personnage("Fab");
-        Equipement sabre = new Arme();
+        Equipement sabre = new Arme(Arme.Type.COURANTE,8,8, "sabre");
 
         dictEntite.put(bryan,new int[]{5,5});
         dictEntite.put(fab,new int[]{10,12});
 
-        dictEquipement.put(sabre, )
+        dictEquipement.put(sabre, new int[]{10,4});
 
+        lstObstacles.add(new int[]{2,3});
 
-
-        Donjon donjon1 = new Donjon(dictEntite,dictEquipement,tabObstacles, largeurMap );
+        Donjon donjon1 = new Donjon(dictEntite,dictEquipement,lstObstacles, largeurMap );
 
         donjon1.genererDonjon();
         donjon1.afficherDonjon();
