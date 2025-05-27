@@ -1,15 +1,13 @@
-<<<<<<< HEAD:src/DED/creature/Classe.java
-package DED.creature;
-=======
-package DED.Creatures.classe;
->>>>>>> origin/master:src/DED/creature/classe/Classe.java
+package ded.entite.classe;
 
-public abstract class Classe extends Personnage{
+public abstract class Classe {
 
-    protected Integer m_vie;
+    private Integer m_vie;
+    private String m_nom;
 
     public Classe(String nom, Integer vie){
-        super(nom);
+
+        this.m_nom = nom;
         this.m_vie = vie;
     }
 

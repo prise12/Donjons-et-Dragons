@@ -2,6 +2,7 @@ package ded;
 
 import ded.entite.Entite;
 import ded.entite.Personnage;
+import ded.objet.Arme;
 import ded.objet.Equipement;
 
 import java.util.LinkedHashMap;
@@ -15,9 +16,12 @@ public class Main {
 
         Entite bryan = new Personnage("Bryan");
         Entite fab = new Personnage("Fab");
+        Equipement sabre = new Arme();
 
         dictEntite.put(bryan,new int[]{5,5});
         dictEntite.put(fab,new int[]{10,12});
+
+        dictEquipement.put(sabre, )
 
 
 

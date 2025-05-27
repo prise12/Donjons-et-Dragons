@@ -1,15 +1,14 @@
 package ded.entite;
 
-public class Personnage {
+public class Personnage extends Entite{
 
-    protected String m_nom;
-    protected int[] m_coordonnes;
+    private String m_nom;
 
     public Personnage(String nom){
-        this.m_nom = nom;
+        super(nom);
     }
 
-    @Override
+    /*@Override
     public void attaquer (Entite entite)
     {
 
@@ -39,5 +38,7 @@ public class Personnage {
     {abstract} //getCoordonnees() : Integer[*]//
             + {abstract} //setCoordonnees(coordonnees : Integer[*])//
             + {abstract} //getNom() : String//
+
+     */
 
 }
