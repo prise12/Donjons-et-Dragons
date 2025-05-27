@@ -4,13 +4,13 @@ import ded.entite.Personnage;
 
 public abstract class Race extends Personnage {
     protected String m_race;
-    protected Integer m_vie;
-    protected Integer m_force;
-    protected Integer m_dexterite;
-    protected Integer m_vitesse;
-    protected Integer m_initiative;
+    protected int m_vie;
+    protected int m_force;
+    protected int m_dexterite;
+    protected int m_vitesse;
+    protected int m_initiative;
 
-    public Race(String nom, String race, Integer vie, Integer force, Integer dexterite, Integer vitesse, Integer initiative)
+    public Race(String nom, String race, int vie, int force, int dexterite, int vitesse, int initiative)
     {
         super(nom);
         this.m_race = race;
@@ -20,6 +20,8 @@ public abstract class Race extends Personnage {
         this.m_vitesse = vitesse;
         this.m_initiative = initiative;
     }
+
+
 
 
 
