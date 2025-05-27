@@ -4,6 +4,8 @@ public class Armure extends Equipement{
 
     private int m_classe;
     private Type m_type;
+
+
     public enum Type {
         LEGERE,
         LOURDE,

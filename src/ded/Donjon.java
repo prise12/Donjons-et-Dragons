@@ -31,7 +31,6 @@ public class Donjon {
         System.out.print("     ");
         for(int i = 0; i<  m_largeurMap; i++ ){
             if(i<25){
-
             }
             char c = (char) (65 + i%26);
             System.out.print( c );
@@ -41,7 +40,6 @@ public class Donjon {
                 System.out.print( " " );
             }
             else {
-
                 System.out.print("  ");
             }
 
@@ -61,7 +59,6 @@ public class Donjon {
 
             for(int j = 0; j<  m_largeurMap; j++ ) {
                 System.out.print(m_donjon[i][j]);
-
             }
             System.out.print("\n");
         }
@@ -71,7 +68,6 @@ public class Donjon {
 
         for(int i = 0; i<this.m_largeurMap; i++){
             for(int j = 0; j<this.m_largeurMap; j++){
-
                 this.m_donjon[i][j] = " . ";
             }
         }
@@ -101,6 +97,14 @@ public class Donjon {
 
     }
 
+    public LinkedHashMap<Entite, int[]> getEntitee(){
+        return m_dictEntite;
+    }
+
+    public void setEntiee(LinkedHashMap<Entite, int[] > dictEntitee){
+        m_dictEntite = dictEntitee;
+    }
+
     public void addEquipement(Equipement equipement, int[] coordonées) {
         if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
             this.m_dictEquipement.put(equipement, coordonées);
@@ -117,5 +121,24 @@ public class Donjon {
         else {
             throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
         }
+    }
+
+    public boolean verfifierDeplacement(int[] coo){
+        for(Map.Entry<Entite, int[]> entry : m_dictEntite.entrySet()) {
+            if(entry.getValue() == coo){
+                return false;
+            }
+        }
+        for(Map.Entry<Equipement, int[]> entry : m_dictEquipement.entrySet()) {
+            if(entry.getValue() == coo){
+                return false;
+            }
+        }
+        for(int[] coo2 : m_lstObstacles) {
+            if(coo2 == coo){
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -11,8 +11,6 @@ public class Arme extends Equipement{
         COURANTE,
         GUERRE,
         DISTANCE;
-
-
         }
 
     public Arme(Type type, int degat, int portee, String nom){
@@ -36,5 +34,5 @@ public class Arme extends Equipement{
 
     public int get_degat(){ return this.m_degat ;}
     public int get_portee(){ return this.m_portee ;}
-    public Armure.Type get_type(){ return this.m_type ;}
+    public Type get_type(){ return this.m_type ;}
 }
