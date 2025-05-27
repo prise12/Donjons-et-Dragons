@@ -11,17 +11,18 @@ public class Armure extends Equipement{
         LOURDE,
     }
 
-    public Armure(Type type, int degat, int portee, String nom){
+    public Armure(Type type, int classe, String nom){
         super(nom);
 
         switch(type) {
             case LEGERE:
                 this.m_type = Type.LEGERE;
+                this.m_classe = 9;
             case LOURDE:
                 this.m_ralentissement = 4;
                 this.m_type = Type.LOURDE;
         }
     }
-    public int get_classe(){ return this.m_ralentissement;}
+    public int get_classe(){ return this.m_classe;}
     public Type get_type(){ return this.m_type ;}
 }
