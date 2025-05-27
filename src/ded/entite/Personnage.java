@@ -1,5 +1,7 @@
 package ded.entite;
 
+import ded.entite.classe.Classe;
+import ded.entite.race.Race;
 import ded.objet.Arme;
 import ded.objet.Armure;
 
@@ -7,44 +9,25 @@ public class Personnage extends Entite{
 
     private String m_nom;
     private Arme arme;
-    private Armure armure;
+    private Classe m_classe;
+    private Race m_race;
 
 
-    public Personnage(String nom){
+    public Personnage(String nom,Classe classe, Race race){
         super(nom);
+        this.m_classe = classe;
+        this.m_race = race;
     }
 
-    /*@Override
     public void attaquer (Entite entite)
     {
-
+        //Attaque
+        if()
     }
 
-    @Override
     public void defense (){
 
     }
 
-    @Override
-    public void getCoordonnes(){
-        return this.m_coordonnes[0];
-    }
-
-    @Override
-    public void setCoordonnes(int[] coordonnes){
-        this.m_coordonnes[0] = coordonnes[0];
-        this.m_coordonnes[1] = coordonnes[1];
-    }
-
-    @Override
-    public void getNom(){
-
-    }
-
-    {abstract} //getCoordonnees() : Integer[*]//
-            + {abstract} //setCoordonnees(coordonnees : Integer[*])//
-            + {abstract} //getNom() : String//
-
-     */
 
 }

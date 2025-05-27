@@ -2,7 +2,7 @@ package ded.objet;
 
 public class Arme extends Equipement{
 
-    private int m_degat;
+    private int[] m_degat;
     private int m_portee;
     private int m_force = 0;
 
@@ -13,7 +13,7 @@ public class Arme extends Equipement{
         DISTANCE;
         }
 
-    public Arme(Type type, int degat, int portee, String nom){
+    public Arme(Type type, int[] degat, int portee, String nom){
         super(nom);
         switch(type) {
             case COURANTE:
@@ -32,7 +32,7 @@ public class Arme extends Equipement{
 
     }
 
-    public int get_degat(){ return this.m_degat ;}
+    public int[] get_degat(){ return this.m_degat ;}
     public int get_portee(){ return this.m_portee ;}
     public Type get_type(){ return this.m_type ;}
 }

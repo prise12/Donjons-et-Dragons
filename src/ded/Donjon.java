@@ -27,41 +27,36 @@ public class Donjon {
     }
 
 
-    public void afficherDonjon(){
-        System.out.print("     ");
+    public String getDonjon(){
+
+        String map = "";
+        map += "     ";
         for(int i = 0; i<  m_largeurMap; i++ ){
-            if(i<25){
-            }
+
             char c = (char) (65 + i%26);
-            System.out.print( c );
-            if(i>25){
-                char c1 = (char) (65 + i/26);
-                System.out.print( c );
-                System.out.print( " " );
-            }
-            else {
-                System.out.print("  ");
-            }
 
-
+            map += c ;
+            map += "  ";
 
         }
-        System.out.print("\n");
+        map += "\n";
 
 
         for(int i = 0; i<  m_largeurMap; i++ ){
 
-            System.out.print(i+" ");
+            map += i+" ";
             int nbChiffres = String.valueOf(Math.abs(i)).length();
             for(int j =0; j < 3 - nbChiffres; j++){
-                System.out.print(" ");
+                map += " ";
             }
 
             for(int j = 0; j<  m_largeurMap; j++ ) {
-                System.out.print(m_donjon[i][j]);
+                map += m_donjon[i][j];
             }
-            System.out.print("\n");
+            map += "\n";
         }
+
+        return map;
     }
 
     public void genererDonjon(){
