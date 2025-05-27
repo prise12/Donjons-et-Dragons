@@ -4,9 +4,11 @@ import ded.Donjon;
 
 import java.util.Map;
 
-public class MJ extends Entite{
+public class MJ {
 
-    public MJ(String nom){super(nom);}
+    private String m_nom;
+
+    public MJ(String nom){}
 
     public void ajouterObtacles(Donjon donjon, int[] coo){
         donjon.addObstacles(new int[]{coo[0],coo[1]});

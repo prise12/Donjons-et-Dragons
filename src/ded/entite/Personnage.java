@@ -1,8 +1,14 @@
 package ded.entite;
 
+import ded.objet.Arme;
+import ded.objet.Armure;
+
 public class Personnage extends Entite{
 
     private String m_nom;
+    private Arme arme;
+    private Armure armure;
+
 
     public Personnage(String nom){
         super(nom);
