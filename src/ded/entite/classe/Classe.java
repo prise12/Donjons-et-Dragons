@@ -1,18 +1,13 @@
 package ded.entite.classe;
 
-public abstract class Classe {
+import ded.entite.Personnage;
 
-
-    private Integer m_vie;
-    private String m_classe;
-
-    public Classe(String nom, Integer vie){
-
-        this.m_nom = nom;
 public abstract class Classe {
 
     protected int m_vie;
 
+    public Classe(String nom, int vie){
+        this.m_vie = vie;
     }
 
 
