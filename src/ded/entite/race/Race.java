@@ -1,5 +1,6 @@
 package ded.entite.race;
 
+import ded.entite.Entite;
 import ded.entite.Personnage;
 
 public abstract class Race extends Personnage {
@@ -20,6 +21,7 @@ public abstract class Race extends Personnage {
         this.m_vitesse = vitesse;
         this.m_initiative = initiative;
     }
+
 
 
 

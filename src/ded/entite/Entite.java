@@ -17,6 +17,12 @@ public abstract class Entite {
     private int m_initiative;
 =======
     protected String m_nom;
+    protected int m_vie;
+    protected int m_force;
+    protected int m_dexterite;
+    protected int m_vitesse;
+    protected int m_initiative;
+
 
     public class (String nom) {
         this.m_nom = nom;
