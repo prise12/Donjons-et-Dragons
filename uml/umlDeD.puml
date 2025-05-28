@@ -2,174 +2,223 @@
 skinparam style strictuml
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
-skinparam linetype ortho
 hide empty members
 
 package ded {
 
     class Donjon {
-        + <<create>> Donjon(nom : String)
-        + m_tabObjet : Equipement[*]
-        + m_tabEntitee : Entite[*]
-        + afficherDonjon(nMap : Integer)
-        + genererDonjon(tabEntitee : Entite[*], tabObjet : Equipement[*]) : String
+        - m_lstEntite : Entite[*]
+        - m_lstEquipement : Equipement[*]
+        - m_lstObstacles : Integer[*][2]
+        - m_donjon : String[*][*]
+        - m_dimensionMap : Integer[2]
+
+        + <<create>> Donjon(entites : Entite[*], equipements : Equipement[*], obstacles : Integer[*][2], dimensions : Integer[2])
+        + getDonjon() : String
+        + genererDonjon()
+        + addEntitee(entite : Entite)
+        + addEquipement(equipement : Equipement)
+        + addObstacles(obstacle : Integer[2])
+        + verfifierDeplacement(pos : Integer[2], dx : Integer, dy : Integer) : Boolean
     }
 
     class Main {
         + {static} main(args : String[*])
     }
 
-    class Des {
-        + {static} lancer(faces : Integer)
-        + {static} lancerMultiple(nbDes : Integer, faces : Integer)
-        + {static} lancerAvecBonus(nbDes : Integer, faces : Integer, bonus : Integer)
+    class Des <<static>> {
+        - {static} jetD : Random
+        + {static} lancer(faces : Integer) : Integer
+        + {static} lancerMulti(nbDes : Integer, faces : Integer) : Integer
+        + {static} lancerBonus(nbDes : Integer, faces : Integer, bonus : Integer) : Integer
+    }
+}
+
+package objets {
+
+    abstract class Equipement <<abstract>> {
+        - m_nom : String
+        - m_ralentissement : Integer
+        - m_coo : Integer[2]
+
+        + <<create>> Equipement(nom : String, coo : Integer[2])
+        + getNom() : String
+        + get_ralentissement() : Integer
+        + setCoo(coo : Integer[2])
+        + getCoo() : Integer[2]
     }
 
-    package objets {
+    class Arme {
+        - m_degat : Integer[*]
+        - m_portee : Integer
+        - m_force : Integer
+        - m_type : Type
 
-        abstract class Equipement <<abstract>> {
-            + <<create>> Equipement()
-            + m_coordonnees : Integer[*]
-            + m_nom : String
-            + m_personnage : Personnage
-            + recupererObjet(personnage : Personnage)
-            + desequiperObjet()
-            + getCoordonnees() : Integer[*]
-            + toString() : String
-        }
-
-        class Arme extends Equipement {
-            + <<create>> Arme()
-            + m_degat : Integer
-            + m_portee : Integer
-            + toString() : String
-        }
-
-        enum TypeArme <<enumerate>> {
-            CAC
-            GUERRECAC
+        + <<create>> Arme(type : Type, degat : Integer[*], portee : Integer, nom : String, coo : Integer[2])
+        + get_degat() : Integer[*]
+        + get_portee() : Integer
+        + get_type() : Type
+    }
+    enum TypeArme <<enumerate>> {
+            COURANTE
+            GUERRE
             DISTANCE
-        }
+    }
 
-        class Armure extends Equipement {
-            + <<create>> Armure()
-            + m_classe : Integer
-            + toString() : String
-        }
-
-        enum TypeArmure <<enumerate>> {
+    enum typeArmure <<enumerate>>{
             LOURDE
             LEGERE
-        }
     }
 
-    package creatures {
+    class Armure {
+        - m_classe : Integer
+        - m_type : Type
 
-        abstract class Entite <<abstract>> {
-            + m_nom : String
-            + m_coordonnees : Integer[*]
-            + {abstract} //attaquer(entite : Entite)//
-            + {abstract} //defense(attaque : Integer)//
-            + {abstract} //getCoordonnees() : Integer[*]//
-            + {abstract} //setCoordonnees(coordonnees : Integer[*])//
-            + {abstract} //getNom() : String//
-        }
-
-        class MaitreDeJeu implements Entite{
-        + deplacerPerso(coordonnees : Integer) : String
-        + ajouterObstacles(coordonnees : Integer)
-
-        }
-
-        class Personnage implements Entite {
-            + <<create>> Personnage(nom : String)
-            + attaquer(monstre : Monstre)
-            + defense(pointsAttaque : Integer) : Boolean
-        }
-
-        abstract class Race <<abstract>> {
-            + <<create>> Race(race : String)
-            + m_vie : Integer
-            + m_force : Integer
-            + m_dexterite : Integer
-            + m_vitesse : Integer
-            + m_initiative : Integer
-            + getStats() : Integer[*]
-        }
-
-        class Humain extends Race {
-            + <<create>> Humain(race : String)
-        }
-
-        class Halfelin extends Race {
-            + <<create>> Halfelin(race : String)
-        }
-
-        class Elfe extends Race {
-            + <<create>> Elfe(race : String)
-        }
-
-        class Nain extends Race {
-            + <<create>> Nain(race : String)
-        }
-
-        abstract class Classe <<abstract>> {
-            + <<create>> Classe(classe : String)
-            + m_vie : Integer
-            + LancerSort(personnage : Integer)
-        }
-
-        class Clerc extends Classe {
-            + <<create>> Clerc(classe : String)
-        }
-
-        class Guerrier extends Classe {
-            + <<create>> Guerrier(classe : String)
-        }
-
-        class Magicien extends Classe {
-            + <<create>> Magicien(classe : String)
-        }
-
-        class Roublard extends Classe {
-            + <<create>> Roublard(classe : String)
-        }
-
-        class Monstre implements Entite {
-            + <<create>> Monstre(nom : String)
-            + attaquer(personnage : Personnage)
-            + defense(pointsAttaque : Integer) : Boolean
-        }
-
-        class Espece {
-            + <<create>> Espece(nom : String)
-            + m_nom : String
-            + m_vie : Integer
-            + m_dexterite : Integer
-            + m_force : Integer
-            + m_vitesse : Integer
-            + m_initiative : Integer
-        }
+        + <<create>> Armure(type : Type, classe : Integer, nom : String, coo : Integer[2])
+        + get_classe() : Integer
+        + get_type() : Type
     }
 
-
-    Personnage *--> Race
-    Personnage *--> Classe
-    Monstre *-> Espece
-
-    Personnage "1" o-> "0..*" Equipement : possède >
-
-    Donjon "1" o-> "0..*" Equipement : contient >
-    Donjon "1" o-> "0..*" Entite : contient >
-
-    Des .-> Personnage : <<use>>
-    Des .-> MaitreDeJeu : <<use>>
-    Des .-> Race : <<use>>
-    Des .-> Monstre : <<use>>
-    TypeArme .> Arme : <<use>>
-    TypeArmure .> Armure : <<use>>
 
 }
 
-@enduml
+package creatures {
 
+    abstract class Entite <<abstract>> {
+        - m_nom : String
+        - m_coo : Integer[2]
+        - m_vie : Integer
+        - m_vitesse : Integer
+        - m_force : Integer
+        - m_dexterite : Integer
+        - m_initiative : Integer
+
+        + <<create>> Entite(nom : String, vie : Integer, coo : Integer[2])
+        + defenseDegat(degat : Integer) : Integer
+        + {abstract} getClasseArmure() : Integer
+        + {abstract} degat(attaque : Integer)
+        + {abstract} attaque(attaque : Integer)
+        + {abstract} defense(attaque : Integer)
+        + getNom() : String
+        + setCoo(coo : Integer[2])
+        + getCoo() : Integer[2]
+    }
+
+    class MJ {
+        - m_nom : String
+
+        + <<create>> MJ(nom : String)
+        + ajouterObstacles(donjon : Donjon, coo : Integer[2])
+        + deplacerEntite(donjon : Donjon, entite : Entite, coo : Integer[2])
+        + attaquer(entite : Entite, attaque : Integer)
+        + getNom() : String
+    }
+
+    class Personnage {
+        - m_armeEquipe : Arme
+        - m_armureEquipe : Armure
+        - m_lstInventaire : Equipement[*]
+        - m_classe : Classe
+        - m_race : Race
+
+        + <<create>> Personnage(nom : String, classe : Classe, race : Race)
+        + attaque(entite : Entite, des : Des)
+        + degat() : Integer
+        + defenseAttaque()
+        + recuperer(equipement : Equipement)
+        + equiper(equipement : Equipement)
+        + getClasseArmure() : Integer
+    }
+
+    class Monstre {
+        - m_race : Race
+        - m_classeArmure : Integer
+
+        + <<create>> Monstre(nom : String, race : Race)
+        + getclasseArmure() : Integer
+    }
+
+    abstract class Race <<abstract>> {
+        - m_vie : Integer
+        - m_force : Integer
+        - m_dexterite : Integer
+        - m_vitesse : Integer
+        - m_initiative : Integer
+
+        + <<create>> Race(race : String)
+        + getStats() : Integer[*]
+    }
+
+    class Humain extends Race {
+        + <<create>> Humain(race : String)
+    }
+
+    class Elfe extends Race {
+        + <<create>> Elfe(race : String)
+    }
+
+    class Halfelin extends Race {
+        + <<create>> Halfelin(race : String)
+    }
+
+    class Nain extends Race {
+        + <<create>> Nain(race : String)
+    }
+
+    abstract class Classe <<abstract>> {
+        - m_vie : Integer
+
+        + <<create>> Classe(classe : String)
+        + LancerSort(personnage : Integer)
+    }
+
+    class Clerc extends Classe {
+        + <<create>> Clerc(classe : String)
+    }
+
+    class Guerrier extends Classe {
+        + <<create>> Guerrier(classe : String)
+    }
+
+    class Magicien extends Classe {
+        + <<create>> Magicien(classe : String)
+    }
+
+    class Roublard extends Classe {
+        + <<create>> Roublard(classe : String)
+    }
+
+    class Espece {
+        - m_nom : String
+        - m_vie : Integer
+        - m_dexterite : Integer
+        - m_force : Integer
+        - m_vitesse : Integer
+        - m_initiative : Integer
+
+        + <<create>> Espece(nom : String)
+    }
+
+    Entite <|-- Personnage
+    Entite <|-- Monstre
+    Monstre --> Race
+    Monstre --> Espece
+    Personnage --> Classe
+    Personnage --> Race
+    Personnage --> Arme
+    Personnage --> Armure
+    Personnage --> Equipement
+    Personnage --> Des
+    MJ --> Donjon
+    MJ --> Entite
+}
+
+Donjon "1" *--> "1..*\n- m_lstEntite" Entite : contains >
+Donjon "1" *--> "1..*\n- m_lstEquipement" Equipement : contains >
+Equipement <|-- Arme
+Equipement <|-- Armure
+Arme --> TypeArme
+Armure --> Type
+Monstre o-->1\n- Espece
+
+@enduml

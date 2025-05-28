@@ -18,8 +18,8 @@ public class Personnage extends Entite{
     private Race m_race;
 
 
-    public Personnage(String nom,Classe classe, Race race){
-        this.m_nom = nom;
+    public Personnage(String nom, int vie, int[] coo,Classe classe, Race race){
+        super(nom, vie,coo);
         this.m_classe = classe;
         this.m_race = race;
     }

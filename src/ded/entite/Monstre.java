@@ -4,11 +4,13 @@ import ded.entite.race.Race;
 
 public class Monstre extends Entite{
 
-    private Race m_race;
+    private Espece m_espece;
     private int m_classeArmure;
-    public Monstre(String nom, Race race){
-        this.m_nom = nom;
-        this.m_race = race;
+    private int degat;
+    public Monstre(String nom,int vie, int[] coo, Espece espece, int classeA){
+        super(nom, vie,coo);
+        this.m_espece = espece;
+        this.m_classeArmure = classeA;
     }
 
     public int getclasseArmure(){

@@ -14,15 +14,15 @@ public class Donjon {
     private ArrayList<Equipement> m_lstEquipement;
     private ArrayList<int[]> m_lstObstacles;
     private String[][] m_donjon;
-    private int m_largeurMap;
+    private int[] m_dimensionMap;
     
-    public Donjon(ArrayList<Entite> lstEntite, ArrayList<Equipement> lstEquipement, ArrayList<int[]> lstObstacles, int largeurMap) {
+    public Donjon(ArrayList<Entite> lstEntite, ArrayList<Equipement> lstEquipement, ArrayList<int[]> lstObstacles, int[] dimensionMap) {
         
         this.m_lstEntite= lstEntite;
         this.m_lstEquipement = lstEquipement;
         this.m_lstObstacles = lstObstacles;
-        this.m_largeurMap = largeurMap;
-        this.m_donjon = new String[m_largeurMap][m_largeurMap];
+        this.m_dimensionMap = dimensionMap;
+        this.m_donjon = new String[m_dimensionMap[0]][m_dimensionMap[1]];
 
     }
 
@@ -31,7 +31,7 @@ public class Donjon {
 
         String map = "";
         map += "     ";
-        for(int i = 0; i<  m_largeurMap; i++ ){
+        for(int i = 0; i<  m_dimensionMap[1]; i++ ){
 
             char c = (char) (65 + i%26);
 
@@ -42,7 +42,7 @@ public class Donjon {
         map += "\n";
 
 
-        for(int i = 0; i<  m_largeurMap; i++ ){
+        for(int i = 0; i<  m_dimensionMap[0]; i++ ){
 
             map += i+" ";
             int nbChiffres = String.valueOf(Math.abs(i)).length();
@@ -50,7 +50,7 @@ public class Donjon {
                 map += " ";
             }
 
-            for(int j = 0; j<  m_largeurMap; j++ ) {
+            for(int j = 0; j<  m_dimensionMap[1]; j++ ) {
                 map += m_donjon[i][j];
             }
             map += "\n";
@@ -61,17 +61,17 @@ public class Donjon {
 
     public void genererDonjon(){
 
-        for(int i = 0; i<this.m_largeurMap; i++){
-            for(int j = 0; j<this.m_largeurMap; j++){
+        for(int i = 0; i<this.m_dimensionMap[0]; i++){
+            for(int j = 0; j<this.m_dimensionMap[1]; j++){
                 this.m_donjon[i][j] = " . ";
             }
         }
         //On genere les creatures, objets, obstacles dans la map
-        for(Map.Entry<Entite, int[]> entry : m_dictEntite.entrySet()) {
-            this.m_donjon[(Entite) entry.getValue()][entry.getValue()[1]] = entry.getKey().getNom().substring(0,3);
+        for(Entite entite : m_lstEntite) {
+            this.m_donjon[entite.getCoo()[0]][entite.getCoo()[1]] = entite.getNom().substring(0,3);
         }
-        for(Map.Entry<Equipement, int[]> entry : m_dictEquipement.entrySet()) {
-            this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = " * ";
+        for(Equipement equipement : m_lstEquipement) {
+            this.m_donjon[equipement.getCoo()[0]][equipement.getCoo()[1]] = " * ";
         }
         for(int[] coo : m_lstObstacles) {
             this.m_donjon[coo[0]][coo[1]] = " []";
@@ -79,10 +79,11 @@ public class Donjon {
 
     }
 
-    public void addEntitee(Entite entite, int[] coordonées) {
-        if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
+    public void addEntitee(Entite entite) {
+       int[] coo = entite.getCoo();
+        if(coo[0] < this.m_dimensionMap[0] && coo[1] < this.m_dimensionMap[1] ) {
 
-            this.m_dictEntite.put(entite, coordonées);
+            this.m_lstEntite.add(entite);
         }
         else {
             throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
@@ -90,14 +91,13 @@ public class Donjon {
 
     }
 
-    public LinkedHashMap<Entite, int[]> getEntitee(){
-        return m_dictEntite;
-    }
 
 
-    public void addEquipement(Equipement equipement, int[] coordonées) {
-        if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
-            this.m_dictEquipement.put(equipement, coordonées);
+    public void addEquipement(Equipement equipement) {
+
+        int[] coo = equipement.getCoo();
+        if(coo[0] < this.m_dimensionMap[0] && coo[1] < this.m_dimensionMap[1] ) {
+            this.m_lstEquipement.add(equipement);
         }
         else {
             throw new IllegalArgumentException("Les coordonées doivent êtres contenue dans la map.");
@@ -105,7 +105,7 @@ public class Donjon {
     }
 
     public void addObstacles(int[] coordonées) {
-        if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
+        if(coordonées[0] < this.m_dimensionMap[0] && coordonées[1] < this.m_dimensionMap[1] ) {
             this.m_donjon[coordonées[0]][coordonées[1]] = "[]";
         }
         else {
@@ -114,18 +114,18 @@ public class Donjon {
     }
 
     public boolean verfifierDeplacement(int[] coo, int vitesse, int distance){
-        for(Map.Entry<Entite, int[]> entry : m_dictEntite.entrySet()) {
-            if(entry.getValue() == coo){
-                return false;
-            }
-        }
-        for(Map.Entry<Equipement, int[]> entry : m_dictEquipement.entrySet()) {
-            if(entry.getValue() == coo){
-                return false;
-            }
-        }
         for(int[] coo2 : m_lstObstacles) {
             if(coo2 == coo){
+                return false;
+            }
+        }
+        for(Entite entite: m_lstEntite) {
+            if(entite.getCoo() == coo){
+                return false;
+            }
+        }
+        for(Equipement equipement : m_lstEquipement) {
+            if(equipement.getCoo() == coo){
                 return false;
             }
         }
