@@ -5,51 +5,42 @@ import ded.entite.race.Race;
 import ded.objet.Armure;
 
 public abstract class Entite {
-<<<<<<< HEAD
     private String m_nom;
+    private int[] m_coo;
     private int m_vie;
-
     private int m_vitesse;
-    Armure m_armureEquipe;
-    private Race m_race;
+    private int m_force;
     private int m_dexterite ;
-    private int m_vitesse;
     private int m_initiative;
-=======
-    protected String m_nom;
-    protected int m_vie;
-    protected int m_force;
-    protected int m_dexterite;
-    protected int m_vitesse;
-    protected int m_initiative;
 
-    public class Entite (String nom) {
+    public Entite(String nom,int vie, int[] coo){
         this.m_nom = nom;
-    }
->>>>>>> 0478158 (modif personnage et int)
-
-
-<<<<<<< HEAD
-    public Entite(String nom){
-        this.m_nom = nom;
+        this.m_vie = vie;
+        this.m_coo = coo;
     }
 
-
-    //public abstract void attaquer(Entite entite);
-=======
-    public abstract void defense(int attaque);
->>>>>>> 0478158 (modif personnage et int)
-
-<<<<<<< HEAD
-    public void defense(Integer attaque){
-        this.m_vie -= attaque;
+    public int defenseDegat(int degat){
+        this.m_vie -= degat;
+        return m_vie;
     }
-=======
+    public abstract int getClasseArmure();
+    public abstract void degat(int attaque);
+    public abstract void attaque(int attaque);
 
->>>>>>> 65f6756 (modif personnage)
+
+    //l'adversaire attaque et
+    public abstract void defense(Integer attaque);
 
     public String getNom(){
         return this.m_nom;
+    }
+
+    public void setCoo(int[] coo){
+        this.m_coo = coo;
+    }
+
+    public int[] getCoo(){
+        return this.m_coo;
     }
 
 

@@ -10,16 +10,16 @@ import java.util.Map;
 
 public class Donjon {
 
-    private LinkedHashMap<Entite, int[] > m_dictEntite;
-    private LinkedHashMap<Equipement, int[] > m_dictEquipement;
+    private ArrayList<Entite> m_lstEntite;
+    private ArrayList<Equipement> m_lstEquipement;
     private ArrayList<int[]> m_lstObstacles;
     private String[][] m_donjon;
     private int m_largeurMap;
     
-    public Donjon(LinkedHashMap<Entite, int[] > dictEntite, LinkedHashMap<Equipement, int[] > dictEquipement, ArrayList<int[]> lstObstacles, int largeurMap) {
+    public Donjon(ArrayList<Entite> lstEntite, ArrayList<Equipement> lstEquipement, ArrayList<int[]> lstObstacles, int largeurMap) {
         
-        this.m_dictEntite = dictEntite;
-        this.m_dictEquipement = dictEquipement;
+        this.m_lstEntite= lstEntite;
+        this.m_lstEquipement = lstEquipement;
         this.m_lstObstacles = lstObstacles;
         this.m_largeurMap = largeurMap;
         this.m_donjon = new String[m_largeurMap][m_largeurMap];
@@ -68,7 +68,7 @@ public class Donjon {
         }
         //On genere les creatures, objets, obstacles dans la map
         for(Map.Entry<Entite, int[]> entry : m_dictEntite.entrySet()) {
-            this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = entry.getKey().getNom().substring(0,3);
+            this.m_donjon[(Entite) entry.getValue()][entry.getValue()[1]] = entry.getKey().getNom().substring(0,3);
         }
         for(Map.Entry<Equipement, int[]> entry : m_dictEquipement.entrySet()) {
             this.m_donjon[entry.getValue()[0]][entry.getValue()[1]] = " * ";
@@ -76,8 +76,6 @@ public class Donjon {
         for(int[] coo : m_lstObstacles) {
             this.m_donjon[coo[0]][coo[1]] = " []";
         }
-        
-
 
     }
 
@@ -96,9 +94,6 @@ public class Donjon {
         return m_dictEntite;
     }
 
-    public void setEntiee(LinkedHashMap<Entite, int[] > dictEntitee){
-        m_dictEntite = dictEntitee;
-    }
 
     public void addEquipement(Equipement equipement, int[] coordonées) {
         if(coordonées[0] < this.m_largeurMap && coordonées[1] < this.m_largeurMap ) {
@@ -118,7 +113,7 @@ public class Donjon {
         }
     }
 
-    public boolean verfifierDeplacement(int[] coo){
+    public boolean verfifierDeplacement(int[] coo, int vitesse, int distance){
         for(Map.Entry<Entite, int[]> entry : m_dictEntite.entrySet()) {
             if(entry.getValue() == coo){
                 return false;
@@ -134,6 +129,10 @@ public class Donjon {
                 return false;
             }
         }
+        if(vitesse<distance){
+            return false;
+        }
+
         return true;
     }
 }
