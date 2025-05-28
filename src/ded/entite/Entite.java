@@ -23,8 +23,7 @@ public abstract class Entite {
     protected int m_vitesse;
     protected int m_initiative;
 
-
-    public class (String nom) {
+    public class Entite (String nom) {
         this.m_nom = nom;
     }
 >>>>>>> 0478158 (modif personnage et int)
@@ -41,9 +40,13 @@ public abstract class Entite {
     public abstract void defense(int attaque);
 >>>>>>> 0478158 (modif personnage et int)
 
+<<<<<<< HEAD
     public void defense(Integer attaque){
         this.m_vie -= attaque;
     }
+=======
+
+>>>>>>> 65f6756 (modif personnage)
 
     public String getNom(){
         return this.m_nom;

@@ -10,7 +10,6 @@ public class Armure extends Equipement{
         LEGERE,
         LOURDE,
     }
-
     public Armure(Type type, int classe, String nom){
         super(nom);
 
