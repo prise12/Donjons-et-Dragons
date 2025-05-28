@@ -10,7 +10,7 @@ public abstract class Entite {
     private int m_vie;
 
     private int m_vitesse;
-    private Armure armure;
+    Armure m_armureEquipe;
     private Race m_race;
     private int m_dexterite ;
     private int m_vitesse;
