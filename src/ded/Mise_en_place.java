@@ -56,5 +56,5 @@ public class Mise_en_place {
     }
 
     // Pas oublier de fermer : scanner.close()
-    scanner.close();
+    //scanner.close();
 }
