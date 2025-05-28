@@ -10,8 +10,8 @@ public class Armure extends Equipement{
         LEGERE,
         LOURDE,
     }
-    public Armure(Type type, int classe, String nom){
-        super(nom);
+    public Armure(String nom, int[] coo, Type type, int classe ){
+        super(nom,coo);
 
         switch(type) {
             case LEGERE:

@@ -21,6 +21,13 @@ public abstract class Race {
         this.m_initiative = initiative;
     }
 
+    public String getRace(){return this.m_race ;}
+    public int getVie(){return this.m_vie ;}
+    public int getForce(){return this.m_force ;}
+    public int getDexterite(){return this.m_force ;}
+    public int getVitesse(){return this.m_force ;}
+    public int getInitiative(){return this.m_force ;}
+
 
 
 

@@ -219,6 +219,6 @@ Equipement <|-- Arme
 Equipement <|-- Armure
 Arme --> TypeArme
 Armure --> Type
-Monstre o-->1\n- Espece
+
 
 @enduml

@@ -10,5 +10,9 @@ public abstract class Classe {
         this.m_vie = vie;
     }
 
+    public int getVie(){
+        return this.m_vie;
+    }
+
 
 }

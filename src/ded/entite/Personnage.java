@@ -18,16 +18,14 @@ public class Personnage extends Entite{
     private Race m_race;
 
 
-    public Personnage(String nom, int vie, int[] coo,Classe classe, Race race){
-        super(nom, vie,coo);
+    public Personnage(String nom, int[] coo,Classe classe, Race race){
+        super(nom, coo, );
         this.m_classe = classe;
         this.m_race = race;
     }
 
-    public void attaque(Entite entite , Des des){
+    public bool attaque(Entite entite, Des des){
 
-
-        if()
         des.lancer()
         entite.getClasseArmure();
     }
@@ -54,8 +52,11 @@ public class Personnage extends Entite{
     }
 
     public int getClasseArmure(){
-
         return this.m_armureEquipe.get_classe();
+    }
+
+    public int getVitesse(){
+        return this.m_vitesse + this.m_armureEquipe.get_ralentissement() + this.m_armeEquipe.get_ralentissement() + this.m_race.getVitesse();
     }
 
 

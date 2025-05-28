@@ -8,15 +8,18 @@ public abstract class Entite {
     private String m_nom;
     private int[] m_coo;
     private int m_vie;
-    private int m_vitesse;
+    int m_vitesse;
     private int m_force;
     private int m_dexterite ;
     private int m_initiative;
 
-    public Entite(String nom,int vie, int[] coo){
+    public Entite(String nom, int[] coo, int[] stats){
         this.m_nom = nom;
-        this.m_vie = vie;
         this.m_coo = coo;
+        this.m_vitesse = stats[1];
+        this.m_force = stats[2];
+        this.m_dexterite = stats[3];
+        this.m_initiative = stats[4];
     }
 
     public int defenseDegat(int degat){
@@ -42,6 +45,7 @@ public abstract class Entite {
     public int[] getCoo(){
         return this.m_coo;
     }
+    public int getInitiative(){return this.m_initiative;}
 
 
 }

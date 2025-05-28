@@ -13,8 +13,8 @@ public class Arme extends Equipement{
         DISTANCE;
         }
 
-    public Arme(Type type, int[] degat, int portee, String nom){
-        super(nom);
+    public Arme(String nom,int[] coo, Type type, int[] degat, int portee){
+        super(nom,coo);
         switch(type) {
             case COURANTE:
                 this.m_type = Type.COURANTE;
@@ -33,9 +33,6 @@ public class Arme extends Equipement{
 
     public int[] get_degat(){ return this.m_degat ;}
     public int get_portee(){ return this.m_portee ;}
-<<<<<<< HEAD
     public Type get_type(){ return this.m_type ;}
-=======
-    public get_type(){ return this.m_type ;}
->>>>>>> 2300749 (modif personnage)
+
 }
