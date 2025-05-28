@@ -19,6 +19,12 @@ public class Personnage extends Entite{
         this.m_race = race;
     }
 
+    public bool degat(Entite entite)
+    {
+        defense()
+
+    }
+
     public void attaquer (Entite entite)
     {
         //Attaque
