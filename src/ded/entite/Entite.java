@@ -16,6 +16,7 @@ public abstract class Entite {
     public Entite(String nom, int[] coo, int[] stats){
         this.m_nom = nom;
         this.m_coo = coo;
+        this.m_vie = stats[0];
         this.m_vitesse = stats[1];
         this.m_force = stats[2];
         this.m_dexterite = stats[3];

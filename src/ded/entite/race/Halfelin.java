@@ -4,14 +4,7 @@ import ded.Des;
 
 public class Halfelin extends Race {
     public Halfelin(String nom){
-        super(
-                nom,
-                "Halfelin",
-                12,
-                Des.lancerBonus(4, 4, 3),
-                Des.lancerBonus(4, 4, 7),
-                Des.lancerBonus(4, 4, 5),
-                Des.lancerBonus(4, 4, 3)
-        );
+        super(0,0,4,2,0);
+        this.m_nom = "Halfelin";
     }
 }

@@ -19,15 +19,15 @@ public class Personnage extends Entite{
 
 
     public Personnage(String nom, int[] coo,Classe classe, Race race){
-        super(nom, coo, );
+        super(nom, coo, new int[]{race.getVie() + classe.getVie(), race.getVitesse(), race.getForce(), race.getDexterite(), race.getInitiative() });
         this.m_classe = classe;
         this.m_race = race;
+
+
     }
 
     public bool attaque(Entite entite, Des des){
-
-        des.lancer()
-        entite.getClasseArmure();
+        return true;
     }
 
     public int degat(){

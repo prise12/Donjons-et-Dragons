@@ -4,24 +4,24 @@ import ded.entite.Entite;
 import ded.entite.Personnage;
 
 public abstract class Race {
-    protected String m_race;
+    String m_nom;
     protected int m_vie;
     protected int m_force;
     protected int m_dexterite;
     protected int m_vitesse;
     protected int m_initiative;
 
-    public Race( String race, int vie, int force, int dexterite, int vitesse, int initiative)
+    public Race(int vie,int force,int dexterite,int vitesse,int intitative)
     {
-        this.m_race = race;
         this.m_vie = vie;
-        this.m_force = force;
-        this.m_dexterite = dexterite;
-        this.m_vitesse = vitesse;
-        this.m_initiative = initiative;
+        this.m_force =  force;
+        this.m_dexterite =  dexterite;
+        this.m_vitesse =  vitesse;
+        this.m_initiative = intitative;
     }
 
-    public String getRace(){return this.m_race ;}
+
+    public String getNom(){return this.m_nom ;}
     public int getVie(){return this.m_vie ;}
     public int getForce(){return this.m_force ;}
     public int getDexterite(){return this.m_force ;}
