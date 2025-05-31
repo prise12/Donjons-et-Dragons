@@ -15,27 +15,19 @@ public class Monstre extends Entite{
     }
 
     public int getClasseArmure(){return this.m_classeArmure;}
-    public int getVie(){return this.m_vie;}
     public Espece getEspece(){return this.m_espece;}
-    public int getDexterite(){return this.m_dexterite;}
-    public int getForce(){return this.m_force;}
-    public int getVitesse(){return this.m_vitesse;}
-
-
-
-
 
     //retourne un int correspondant au point d'attaque le mj peut choisir en paramètre les différentes caratèritique de l'attaque,
-    // la portee ,les degat et si l'attaque est a distance ou pas
-    public int getAttaque(int portee, int[] degat, boolean coc){
-        if (coc){
+    // la portee, les degat et si l'attaque est a distance ou pas
+    public int getAttaque(int portee, int[] degat, boolean estCac){
+        if (estCac){
             return Des.lancer(20) + this.m_force;
         }
         return Des.lancer(20) + this.m_dexterite;
     }
 
     //retourne un int correspondant au point de degat
-    public int getDegat( int portee, int[] degat, boolean){
+    public int getDegat(int[] degat){
         return Des.lancerMulti(degat[0], degat[1]);
     }
 
