@@ -1,22 +1,45 @@
 package ded.entite;
 
+import ded.Des;
 import ded.entite.race.Race;
+import ded.objet.Arme;
 
 public class Monstre extends Entite{
 
     private Espece m_espece;
-    private int m_vie;
     private int m_classeArmure;
-    private int degat;
-    public Monstre(String nom,int vie, int[] coo, Espece espece, int classeA){
-        super(nom,coo,);
-        this.m_vie = vie;
+    public Monstre(String nom, int[] coo, Espece espece, int classeA, int[] stats){
+        super(nom,coo,stats);
         this.m_espece = espece;
         this.m_classeArmure = classeA;
     }
 
-    public int getclasseArmure(){
-        return this.m_classeArmure;
+    public int getClasseArmure(){return this.m_classeArmure;}
+    public int getVie(){return this.m_vie;}
+    public Espece getEspece(){return this.m_espece;}
+    public int getDexterite(){return this.m_dexterite;}
+    public int getForce(){return this.m_force;}
+    public int getVitesse(){return this.m_vitesse;}
+
+
+
+
+
+    //retourne un int correspondant au point d'attaque le mj peut choisir en paramètre les différentes caratèritique de l'attaque,
+    // la portee ,les degat et si l'attaque est a distance ou pas
+    public int getAttaque(int portee, int[] degat, boolean coc){
+        if (coc){
+            return Des.lancer(20) + this.m_force;
+        }
+        return Des.lancer(20) + this.m_dexterite;
     }
+
+    //retourne un int correspondant au point de degat
+    public int getDegat( int portee, int[] degat, boolean){
+        return Des.lancerMulti(degat[0], degat[1]);
+    }
+
+
+
 
 }

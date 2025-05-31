@@ -7,10 +7,10 @@ import ded.objet.Armure;
 public abstract class Entite {
     private String m_nom;
     private int[] m_coo;
-    private int m_vie;
+    int m_vie;
     int m_vitesse;
-    private int m_force;
-    private int m_dexterite ;
+    int m_force;
+    int m_dexterite ;
     private int m_initiative;
 
     public Entite(String nom, int[] coo, int[] stats){
@@ -23,17 +23,20 @@ public abstract class Entite {
         this.m_initiative = stats[4];
     }
 
-    public int defenseDegat(int degat){
-        this.m_vie -= degat;
-        return m_vie;
-    }
+
     public abstract int getClasseArmure();
-    public abstract void degat(int attaque);
-    public abstract void attaque(int attaque);
+    public abstract int getAttaque();
+    public abstract int getDegat();
+
+    //Infliges les degat au personnge et renvoie un booleen indiquant si le personnage et à 0 pv ou moins
+    public boolean setDegat(int degat){
+        if(this.m_vie - degat <= 0){
+            return false;
+        }
+        return true;
+    }
 
 
-    //l'adversaire attaque et
-    public abstract void defense(Integer attaque);
 
     public String getNom(){
         return this.m_nom;

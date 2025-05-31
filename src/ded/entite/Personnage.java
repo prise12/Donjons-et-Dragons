@@ -19,30 +19,32 @@ public class Personnage extends Entite{
 
 
     public Personnage(String nom, int[] coo,Classe classe, Race race){
+        // on initalise les caractéristiques avec les bonus des classes et des races
         super(nom, coo, new int[]{race.getVie() + classe.getVie(), race.getVitesse(), race.getForce(), race.getDexterite(), race.getInitiative() });
         this.m_classe = classe;
         this.m_race = race;
-
-
     }
 
-    public bool attaque(Entite entite, Des des){
-        return true;
+    //retourne un int correspondant au point d'attaque total en comptant tous les bonus
+    public int getAttaque(Entite entite){
+        if (m_armeEquipe.get_type() == Arme.Type.COURANTE || m_armeEquipe.get_type() == Arme.Type.GUERRE ){
+            return Des.lancerBonus(0,20, this.m_force);
+        } else if (m_armeEquipe.get_type() == Arme.Type.COURANTE) {
+            return Des.lancerBonus(0,20, this.m_dexterite);
+        }
+        return 0;
     }
 
-    public int degat(){
-
+    //retourne un int correspondant au point de degat
+    public int getDegat(){
+        return Des.lancerMulti(m_armeEquipe.get_degat()[0], m_armeEquipe.get_degat()[1]);
     }
 
-    public void defenseAttaque(){
-
-    }
-
-    public void recuperer(Equipement equipement){
+    public void recupererEquipement(Equipement equipement){
         m_lstInventaire.add(equipement);
     }
 
-    public void equiper(Equipement equipement){
+    public void equiperEquipement(Equipement equipement){
         if(equipement.getClass() == Arme.class){
             this.m_armeEquipe = (Arme) equipement;
         }
@@ -51,16 +53,13 @@ public class Personnage extends Entite{
         }
     }
 
-    public int getClasseArmure(){
+    public int getClasseArmureEquipe(){
         return this.m_armureEquipe.get_classe();
     }
+    public int getPorteeArmeEquipe(){return this.m_armeEquipe.get_portee();}
 
     public int getVitesse(){
-        return this.m_vitesse + this.m_armureEquipe.get_ralentissement() + this.m_armeEquipe.get_ralentissement() + this.m_race.getVitesse();
+        return this.m_vitesse + this.m_armureEquipe.get_ralentissement() + this.m_armeEquipe.get_ralentissement();
     }
-
-
-
-
 
 }
