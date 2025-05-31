@@ -5,6 +5,7 @@ public class Arme extends Equipement{
     private int[] m_degat;
     private int m_portee;
     private int m_force = 0;
+    private int m_bonusMagique;
 
     private Type m_type;
     public enum Type {
@@ -31,8 +32,10 @@ public class Arme extends Equipement{
 
     }
 
-    public int[] get_degat(){ return this.m_degat ;}
-    public int get_portee(){ return this.m_portee ;}
-    public Type get_type(){ return this.m_type ;}
+    public int[] getDegat(){ return this.m_degat ;}
+    public int getPortee(){ return this.m_portee ;}
+    public Type getType(){ return this.m_type ;}
+    public int getBonusMagique(){return this.m_bonusMagique ;}
+    public void addBonusMagique(){this.m_bonusMagique++}
 
 }

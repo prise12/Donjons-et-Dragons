@@ -22,6 +22,6 @@ public class Armure extends Equipement{
                 this.m_type = Type.LOURDE;
         }
     }
-    public int get_classe(){ return this.m_classe;}
-    public Type get_type(){ return this.m_type ;}
+    public int getClasse(){ return this.m_classe;}
+    public Type getType(){ return this.m_type ;}
 }

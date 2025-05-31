@@ -27,7 +27,7 @@ public class Donjon {
     }
 
 
-    public String getDonjon(){
+    public String getDonjon(int tour){
 
         String map = "";
         map += "     ";

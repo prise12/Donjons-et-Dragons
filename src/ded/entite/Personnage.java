@@ -23,13 +23,20 @@ public class Personnage extends Entite{
         super(nom, coo, new int[]{race.getVie() + classe.getVie(), race.getVitesse(), race.getForce(), race.getDexterite(), race.getInitiative() });
         this.m_classe = classe;
         this.m_race = race;
+
+        //on ajoute le 4d4 et les 3 points par default
+        int desCara = Des.lancerMulti(4,4);
+        this.m_vitesse += desCara + 3;
+        this.m_force += desCara + 3;
+        this.m_dexterite += desCara + 3;
+        this.m_initiative += desCara + 3;
     }
 
     //retourne un int correspondant au point d'attaque total en comptant tous les bonus
     public int getAttaque(Entite entite){
-        if (m_armeEquipe.get_type() == Arme.Type.COURANTE || m_armeEquipe.get_type() == Arme.Type.GUERRE ){
-            return Des.lancerBonus(0,20, this.m_force);
-        } else if (m_armeEquipe.get_type() == Arme.Type.COURANTE) {
+        if (m_armeEquipe.getType() == Arme.Type.COURANTE || m_armeEquipe.getType() == Arme.Type.GUERRE ){
+            return Des.lancerBonus(0,20, this.m_force + this.m_armeEquipe.getBonusMagique());
+        } else if (m_armeEquipe.getType() == Arme.Type.COURANTE) {
             return Des.lancerBonus(0,20, this.m_dexterite);
         }
         return 0;
@@ -37,7 +44,7 @@ public class Personnage extends Entite{
 
     //retourne un int correspondant au point de degat
     public int getDegat(){
-        return Des.lancerMulti(m_armeEquipe.get_degat()[0], m_armeEquipe.get_degat()[1]);
+        return Des.lancerBonus(m_armeEquipe.getDegat()[0], m_armeEquipe.getDegat()[1], this.m_armeEquipe.getBonusMagique());
     }
 
     public void recupererEquipement(Equipement equipement){
@@ -53,13 +60,25 @@ public class Personnage extends Entite{
         }
     }
 
-    public int getClasseArmureEquipe(){
-        return this.m_armureEquipe.get_classe();
-    }
-    public int getPorteeArmeEquipe(){return this.m_armeEquipe.get_portee();}
+    public Classe getClasse(){return this.m_classe;}
 
-    public int getVitesse(){
-        return this.m_vitesse + this.m_armureEquipe.get_ralentissement() + this.m_armeEquipe.get_ralentissement();
+    public int getClasseArmureEquipe(){
+        return this.m_armureEquipe.getClasse();
     }
+    public int getPorteeArmeEquipe(){return this.m_armeEquipe.getPortee();}
+
+    public Arme getArmeEquipe(){return this.m_armeEquipe;}
+    public Armure getArmureEquipe(){return this.m_armureEquipe;}
+    public ArrayList<Equipement> getInventaire(){return this.m_lstInventaire;}
+
+    @Override
+    public int getVitesse(){
+        return this.m_vitesse - this.m_armureEquipe.getRalentissement() - this.m_armeEquipe.getRalentissement();
+    }
+
+    public void guerison(int pv){
+        this.m_vie += pv;
+    }
+
 
 }

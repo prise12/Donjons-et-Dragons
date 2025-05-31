@@ -11,7 +11,7 @@ public abstract class Entite {
     int m_vitesse;
     int m_force;
     int m_dexterite ;
-    private int m_initiative;
+    int m_initiative;
 
     public Entite(String nom, int[] coo, int[] stats){
         this.m_nom = nom;
@@ -36,6 +36,7 @@ public abstract class Entite {
     public int getForce(){return this.m_force;}
     public int getVitesse(){return this.m_vitesse;}
     public int getVie(){return this.m_vie;}
+
     public String getNom(){
         return this.m_nom;
     }

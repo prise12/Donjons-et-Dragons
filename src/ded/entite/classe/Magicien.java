@@ -1,5 +1,8 @@
 package ded.entite.classe;
 
+import ded.Des;
+import ded.entite.Entite;
+import ded.entite.Personnage;
 import ded.objet.Arme;
 import ded.objet.Equipement;
 
@@ -12,5 +15,20 @@ public class Magicien extends Classe {
                 new Arme("Baton",null, Arme.Type.COURANTE, new int[]{1,6},1 ),
                 new Arme("Fronde",null, Arme.Type.DISTANCE, new int[]{1,4},6 )
         };
+    }
+
+    public void guerison(Personnage personnage){
+
+        personnage.guerison(Des.lancer(10));
+    }
+
+    public void boogieWoogie(Entite entite1, Entite entite2){
+        int[] coo1 = entite1.getCoo();
+        entite1.setCoo(entite2.getCoo());
+        entite2.setCoo(coo1);
+    }
+
+    public void armeMagique(Arme arme){
+        arme.addBonusMagique();
     }
 }

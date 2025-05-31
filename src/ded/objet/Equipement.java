@@ -13,7 +13,7 @@ public abstract class Equipement {
         return this.m_nom;
     }
 
-    public int get_ralentissement(){ return this.m_ralentissement;}
+    public int getRalentissement(){ return this.m_ralentissement;}
 
     public void setCoo(int[] coo){
         this.m_coo = coo;
