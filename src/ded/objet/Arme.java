@@ -36,6 +36,6 @@ public class Arme extends Equipement{
     public int getPortee(){ return this.m_portee ;}
     public Type getType(){ return this.m_type ;}
     public int getBonusMagique(){return this.m_bonusMagique ;}
-    public void addBonusMagique(){this.m_bonusMagique++}
+    public void addBonusMagique(){this.m_bonusMagique++;}
 
 }

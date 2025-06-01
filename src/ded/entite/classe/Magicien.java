@@ -7,7 +7,7 @@ import ded.objet.Arme;
 import ded.objet.Equipement;
 
 public class Magicien extends Classe {
-    public Magicien(String nom)
+    public Magicien()
     {
         super(12);
         this.m_nom  ="Magicien";

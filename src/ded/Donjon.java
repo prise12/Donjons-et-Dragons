@@ -1,6 +1,6 @@
 package ded;
 
-import ded.entite.Entite;;
+import ded.entite.Entite;
 import ded.objet.Equipement;
 
 import java.io.Console;

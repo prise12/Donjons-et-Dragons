@@ -4,9 +4,11 @@ import ded.entite.classe.Classe;
 import ded.entite.race.Race;
 import ded.objet.Armure;
 
+import java.util.Optional;
+
 public abstract class Entite {
     private String m_nom;
-    private int[] m_coo;
+    private Optional<int[]>m_coo;
     int m_vie;
     int m_vitesse;
     int m_force;
@@ -15,7 +17,7 @@ public abstract class Entite {
 
     public Entite(String nom, int[] coo, int[] stats){
         this.m_nom = nom;
-        this.m_coo = coo;
+        this.m_coo = Optional.ofNullable(coo);
         this.m_vie = stats[0];
         this.m_vitesse = stats[1];
         this.m_force = stats[2];
@@ -43,11 +45,11 @@ public abstract class Entite {
 
 
     public void setCoo(int[] coo){
-        this.m_coo = coo;
+        this.m_coo = Optional.of(coo);
     }
 
     public int[] getCoo(){
-        return this.m_coo;
+        return this.m_coo.get();
     }
     public int getInitiative(){return this.m_initiative;}
 

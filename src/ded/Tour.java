@@ -1,17 +1,9 @@
 package ded;
-import ded.entite.*;
-import ded.entite.race.*;
-import ded.entite.classe.*;
-import ded.objet.*;
-import ded.*;
-import ded.Mise_en_place;
-import jdk.internal.jrtfs.JrtFileAttributeView;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Tour {
-    Scanner scanner = new Scanner(System.in);
+    /*Scanner scanner = new Scanner(System.in);
     System.out.println("");
 
     for(int i = 0; i < 3; i++)
@@ -30,7 +22,7 @@ public class Tour {
         Chaque joueur et chaque monstre lance 1d20 et ajoute leur caractéristique d'initiative. Ils joueront par ordre décroissant du résultat d'initiative.
         Avant de débuter le donjon, chaque joueur peut équiper l'armure et l'arme de son choix.
                 */
-        int init = 0;
+        /*int init = 0;
         for(int j = 0; j < personnages.size; j++){
             init = personnages.get(j).getinitiative;
             init += Des.lancer(20);
@@ -41,7 +33,7 @@ public class Tour {
 
 
 
-    }
+    }*/
 
 
 

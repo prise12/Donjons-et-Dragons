@@ -6,7 +6,7 @@ import ded.objet.Armure;
 import ded.objet.Equipement;
 
 public class Clerc extends Classe {
-    public Clerc(String nom){
+    public Clerc(){
         super(16);
         this.m_nom = "Clerc";
         this.m_tabEquipement = new Equipement[]{

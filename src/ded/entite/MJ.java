@@ -19,6 +19,6 @@ public class MJ {
     }
 
     public void attaquer(Entite entite, int attaque){
-        entite.defense(attaque);
+        entite.setDegat(attaque);
     }
 }
