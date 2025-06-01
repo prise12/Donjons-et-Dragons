@@ -1,8 +1,6 @@
 package ded.entite;
 
-import ded.Donjon;
-
-import java.util.Map;
+import ded.donjon.Donjon;
 
 public class MJ {
 

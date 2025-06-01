@@ -1,5 +1,6 @@
 package ded;
 
+import ded.donjon.Donjon;
 import ded.entite.*;
 import ded.entite.race.*;
 import ded.entite.classe.*;
@@ -53,6 +54,17 @@ public class Affichage{
 
         }
         return m_lstPersonnage;
+    }
+
+
+
+
+
+    public static Donjon MetreEnPlaceDonjon() {
+
+        return null;
+
+
     }
 
 

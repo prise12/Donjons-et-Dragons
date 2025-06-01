@@ -1,12 +1,11 @@
-package ded;
+package ded.donjon;
 
 import ded.entite.Entite;
 import ded.objet.Equipement;
 
-import java.io.Console;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
 
 public class Donjon {
 
@@ -134,5 +133,12 @@ public class Donjon {
         }
 
         return true;
+    }
+
+    public void arrangerObstacles(int nbEquipement, int nbObstacles) {
+
+        for(int i = 0; i<nbEquipement; i++){
+            if(! this.m_lstEquipement.contains()){}
+        }
     }
 }

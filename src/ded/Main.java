@@ -18,8 +18,10 @@ import org.jline.terminal.TerminalBuilder;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        //Affichage.MetreEnPlacePeronnage();
-        Terminal terminal = TerminalBuilder.builder().system(true).build();
+        Affichage.MetreEnPlacePeronnage();
+
+        
+        /*Terminal terminal = TerminalBuilder.builder().system(true).build();
         BindingReader reader = new BindingReader(terminal.reader());
         KeyMap<String> keyMap = new KeyMap<>();
 
@@ -57,5 +59,7 @@ public class Main {
                 break;
             }
         }
+
+         */
     }
 }
