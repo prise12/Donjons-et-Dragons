@@ -138,7 +138,7 @@ public class Donjon {
     public void arrangerObstacles(int nbEquipement, int nbObstacles) {
 
         for(int i = 0; i<nbEquipement; i++){
-            if(! this.m_lstEquipement.contains()){}
+            if(! this.m_lstEquipement.contains(i)){}
         }
     }
 }
