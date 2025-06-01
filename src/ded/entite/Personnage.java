@@ -8,11 +8,12 @@ import ded.objet.Armure;
 import ded.objet.Equipement;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Personnage extends Entite{
 
-    private Arme m_armeEquipe;
-    private Armure m_armureEquipe;
+    private Optional<Arme> m_armeEquipe;
+    private Optional<Armure> m_armureEquipe;
     private ArrayList<Equipement>  m_lstInventaire;
     private Classe m_classe;
     private Race m_race;
@@ -34,9 +35,9 @@ public class Personnage extends Entite{
 
     //retourne un int correspondant au point d'attaque total en comptant tous les bonus
     public int getAttaque(Entite entite){
-        if (m_armeEquipe.getType() == Arme.Type.COURANTE || m_armeEquipe.getType() == Arme.Type.GUERRE ){
-            return Des.lancerBonus(0,20, this.m_force + this.m_armeEquipe.getBonusMagique());
-        } else if (m_armeEquipe.getType() == Arme.Type.COURANTE) {
+        if (m_armeEquipe.get().getType() == Arme.Type.COURANTE || m_armeEquipe.get().getType() == Arme.Type.GUERRE ){
+            return Des.lancerBonus(0,20, this.m_force + this.m_armeEquipe.get().getBonusMagique());
+        } else if (m_armeEquipe.get().getType() == Arme.Type.COURANTE) {
             return Des.lancerBonus(0,20, this.m_dexterite);
         }
         return 0;
@@ -44,36 +45,34 @@ public class Personnage extends Entite{
 
     //retourne un int correspondant au point de degat
     public int getDegat(){
-        return Des.lancerBonus(m_armeEquipe.getDegat()[0], m_armeEquipe.getDegat()[1], this.m_armeEquipe.getBonusMagique());
+        return Des.lancerBonus(m_armeEquipe.get().getDegat()[0], m_armeEquipe.get().getDegat()[1], this.m_armeEquipe.get().getBonusMagique());
     }
 
     public void recupererEquipement(Equipement equipement){
         m_lstInventaire.add(equipement);
     }
 
-    public void equiperEquipement(Equipement equipement){
-        if(equipement.getClass() == Arme.class){
-            this.m_armeEquipe = (Arme) equipement;
-        }
-        else if(equipement.getClass() == Armure.class){
-            this.m_armureEquipe = (Armure) equipement;
-        }
+    public void equiperEquipement(Arme arme) {
+        this.m_armeEquipe = Optional.of((arme));
+    }
+    public void equiperEquipement(Armure armure) {
+        this.m_armureEquipe = Optional.of(armure);
     }
 
     public Classe getClasse(){return this.m_classe;}
 
     public int getClasseArmureEquipe(){
-        return this.m_armureEquipe.getClasse();
+        return this.m_armureEquipe.get().getClasse();
     }
-    public int getPorteeArmeEquipe(){return this.m_armeEquipe.getPortee();}
+    public int getPorteeArmeEquipe(){return this.m_armeEquipe.get().getPortee();}
 
-    public Arme getArmeEquipe(){return this.m_armeEquipe;}
-    public Armure getArmureEquipe(){return this.m_armureEquipe;}
+    public Arme getArmeEquipe(){return this.m_armeEquipe.get();}
+    public Armure getArmureEquipe(){return this.m_armureEquipe.get();}
     public ArrayList<Equipement> getInventaire(){return this.m_lstInventaire;}
 
     @Override
     public int getVitesse(){
-        return this.m_vitesse - this.m_armureEquipe.getRalentissement() - this.m_armeEquipe.getRalentissement();
+        return this.m_vitesse - this.m_armureEquipe.get().getRalentissement() - this.m_armeEquipe.get().getRalentissement();
     }
 
     public void guerison(int pv){

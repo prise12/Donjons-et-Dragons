@@ -4,6 +4,8 @@ import ded.Des;
 import ded.entite.race.Race;
 import ded.objet.Arme;
 
+import java.util.Optional;
+
 public class Monstre extends Entite{
 
     private Espece m_espece;
