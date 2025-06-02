@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public abstract class Entite {
     private String m_nom;
-    private Optional<int[]>m_coo;
+    private Optional<int[]> m_coo;
     int m_vie;
-    int m_vitesse;
+    int  m_vitesse;
     int m_force;
     int m_dexterite ;
     int m_initiative;
