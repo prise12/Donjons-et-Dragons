@@ -21,7 +21,7 @@ public class Main {
         Affichage.MetreEnPlacePeronnage();
 
         
-        /*Terminal terminal = TerminalBuilder.builder().system(true).build();
+        Terminal terminal = TerminalBuilder.builder().system(true).build();
         BindingReader reader = new BindingReader(terminal.reader());
         KeyMap<String> keyMap = new KeyMap<>();
 
@@ -60,6 +60,6 @@ public class Main {
             }
         }
 
-         */
+
     }
 }
