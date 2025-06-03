@@ -20,9 +20,8 @@ import org.jline.terminal.TerminalBuilder;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Donjon d1 = DonjonParDefault.getDonjonParDefault1();
-        d1.genererDonjon();
-        System.out.println( d1.getDonjon());
+
+
 
     }
 }

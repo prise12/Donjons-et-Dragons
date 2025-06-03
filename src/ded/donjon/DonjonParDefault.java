@@ -27,8 +27,8 @@ public class DonjonParDefault {
         Entite gobelin1 = new Monstre("gobelin1",new int[]{10,12}, gobelin, 7, new int[]{10, 6, 6, 3, 4});
         Entite gobelin2 = new Monstre("gobelin2",new int[]{11,12}, gobelin, 7, new int[]{9, 4, 5, 2, 5});
 
-        Entite orc1 = new Monstre("orc1",new int[]{15,18}, gobelin, 9, new int[]{12, 12, 4, 6, 6});
-        Entite orc2 = new Monstre("orc2",new int[]{15,17}, gobelin, 9, new int[]{11, 11, 5, 7, 5});
+        Entite orc1 = new Monstre("orc1",new int[]{15,18}, orc, 9, new int[]{12, 12, 4, 6, 6});
+        Entite orc2 = new Monstre("orc2",new int[]{15,17}, orc, 9, new int[]{11, 11, 5, 7, 5});
 
         // on ajoute a la liste des entite monstre
         ArrayList<Entite> lstMonstre = new ArrayList<>(Arrays.asList(gobelin1, gobelin2, orc1, orc2));
@@ -51,5 +51,85 @@ public class DonjonParDefault {
         Donjon donjon = new Donjon(lstMonstre,lstEquipement,lstObstacle,dimension );
         return donjon;
     }
+    public static Donjon getDonjonParDefault2(){
+
+        //dimension de la map
+        int[] dimension = new int[]{25,25};
+
+        //On crée deux espèce de monstre
+        Espece orc = new Espece("orc");
+        Espece gobelin = new Espece("gobelin");
+        Espece troll = new Espece("troll");
+
+        //on crée les monstre present dans la map
+        Entite gobelin1 = new Monstre("gobelin1",new int[]{10,12}, gobelin, 7, new int[]{10, 6, 6, 3, 4});
+
+        Entite orc1 = new Monstre("orc1",new int[]{15,18}, orc, 9, new int[]{12, 12, 4, 6, 6});
+        Entite orc2 = new Monstre("orc2",new int[]{15,17}, orc, 9, new int[]{11, 11, 5, 7, 5});
+
+        Entite troll1 = new Monstre("troll1",new int[]{24,24}, troll, 9, new int[]{15, 15, 8, 10, 2});
+
+        // on ajoute a la liste des entite monstre
+        ArrayList<Entite> lstMonstre = new ArrayList<>(Arrays.asList(gobelin1, orc1, orc2, troll1));
+        //on cree la disposition des obstacles
+        ArrayList<int[]> lstObstacle = new ArrayList<>();
+        for(int i = 0; i<4; i++){
+            lstObstacle.add(new int[]{4,i});
+        }
+
+        //on ajoute les equipement
+
+        Armure armure1 = new Armure("Armure d'ecaille",new int[]{14,14}, Armure.Type.LEGERE,9);
+        Armure armure2 = new Armure("Cotte de mailles",new int[]{10,10}, Armure.Type.LOURDE,11);
+        Arme arme1 = new Arme("Baton",new int[]{12,6}, Arme.Type.COURANTE, new int[]{1,6},1 );
+        Arme arme2 = new Arme("Fronde",new int[]{10,6}, Arme.Type.DISTANCE, new int[]{1,4},6 );
+        Arme arme3 = new Arme("Rapière",new int[]{7,6}, Arme.Type.GUERRE, new int[]{1,8},1);
+        Arme arme4 = new Arme("Arc court",new int[]{7,7}, Arme.Type.DISTANCE, new int[]{1,6},16);
+        ArrayList<Equipement> lstEquipement = new ArrayList<>(Arrays.asList(arme1,arme2,arme3,arme4,armure1,armure2));
+
+        Donjon donjon = new Donjon(lstMonstre,lstEquipement,lstObstacle,dimension );
+        return donjon;
+    }
+
+    public static Donjon getDonjonParDefault3(){
+
+        //dimension de la map
+        int[] dimension = new int[]{25,25};
+
+        //On crée deux espèce de monstre
+        Espece orc = new Espece("orc");
+        Espece gobelin = new Espece("gobelin");
+        Espece troll = new Espece("troll");
+
+        //on crée les monstre present dans la map
+
+        Entite orc1 = new Monstre("orc1",new int[]{15,18}, orc, 9, new int[]{12, 12, 4, 6, 6});
+        Entite orc2 = new Monstre("orc2",new int[]{15,17}, orc, 9, new int[]{11, 11, 5, 7, 5});
+
+        Entite troll1 = new Monstre("troll1",new int[]{20,20}, troll, 9, new int[]{15, 15, 8, 10, 2});
+        Entite troll2 = new Monstre("troll2",new int[]{22,22}, troll, 9, new int[]{16, 14, 7, 9, 3});
+
+        // on ajoute a la liste des entite monstre
+        ArrayList<Entite> lstMonstre = new ArrayList<>(Arrays.asList( orc1, orc2, troll1, troll2));
+        //on cree la disposition des obstacles
+        ArrayList<int[]> lstObstacle = new ArrayList<>();
+        for(int i = 0; i<4; i++){
+            lstObstacle.add(new int[]{4,i});
+        }
+
+        //on ajoute les equipement
+
+
+        Arme arme1 = new Arme("Baton",new int[]{12,8}, Arme.Type.COURANTE, new int[]{1,6},1 );
+        Arme arme2 = new Arme("Fronde",new int[]{12,6}, Arme.Type.DISTANCE, new int[]{1,4},6 );
+        Arme arme3 = new Arme("Rapière",new int[]{9,14}, Arme.Type.GUERRE, new int[]{1,8},1);
+        Arme arme4 = new Arme("Arc court",new int[]{7,7}, Arme.Type.DISTANCE, new int[]{1,6},16);
+        Arme arme5 = new Arme("Arbalete legere", new int[]{7,8}, Arme.Type.DISTANCE, new int[]{1,8},16);
+        ArrayList<Equipement> lstEquipement = new ArrayList<>(Arrays.asList(arme1,arme2,arme3,arme4,arme5));
+
+        Donjon donjon = new Donjon(lstMonstre,lstEquipement,lstObstacle,dimension );
+        return donjon;
+    }
+
 
 }
