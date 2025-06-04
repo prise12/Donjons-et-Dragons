@@ -9,7 +9,7 @@ public class Guerrier extends Classe {
         super(20);
         this.m_nom  ="Guerrier";
         this.m_tabEquipement = new Equipement[]{
-                new Armure("Cotte de mailles",null, Armure.Type.LOURDE,11),
+                new Armure("Cotte de mailles",null, Armure.Type.LEGERE,11),
                 new Arme("Epee longue",null, Arme.Type.GUERRE, new int[]{1,8},1 ),
                 new Arme("Arbalete legere",null, Arme.Type.DISTANCE, new int[]{1,8},16 )
         };

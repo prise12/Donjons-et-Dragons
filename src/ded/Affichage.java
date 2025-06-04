@@ -5,6 +5,8 @@ import ded.donjon.DonjonParDefault;
 import ded.entite.*;
 import ded.entite.race.*;
 import ded.entite.classe.*;
+import ded.objet.Arme;
+import ded.objet.Armure;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,7 +17,7 @@ public class Affichage{
     private static Scanner m_scanner = new Scanner(System.in);
     private static ArrayList<Personnage> m_lstPersonnage = new ArrayList<>();
 
-    public static ArrayList<Personnage> MetreEnPlacePeronnage() {
+    public ArrayList<Personnage> MetreEnPlacePeronnage() {
         for(int i = 0; i < 4; i++)
         {
             Race race = null;
@@ -57,10 +59,6 @@ public class Affichage{
         return m_lstPersonnage;
     }
 
-
-
-
-
     public Donjon MetreEnPlaceDonjon(int nDonjon) {
         Race race = null;
         Classe classe = null;
@@ -85,7 +83,7 @@ public class Affichage{
             }
         }
 
-        //metre en place mosntre
+        /*//metre en place mosntre
         if(flag){
             this.clearTerminal(donjon);
             System.out.println("Ajouter monstre:");
@@ -100,7 +98,7 @@ public class Affichage{
                     case "2" : flag2 = false;
                 }
             }
-        }
+        }*/
 
         //equipements
         if(flag){
@@ -113,16 +111,17 @@ public class Affichage{
                 System.out.println("");
                 String  choix = (String) m_scanner.nextLine();
                 switch (choix) {
-                    case "1" : this.metreEnPlaceEquipement(donjon);
-                    case "2" : flag3 = false;
+                    case "1" : this.metreEnPlaceArme(donjon);
+                    case "2" : this.metreEnPlaceArmure(donjon);
+                    case "3" : flag3 = false;
                 }
             }
         }
 
-        //onbstacles
+        //obstacles
         if(flag){
             this.clearTerminal(donjon);
-            System.out.println("Ajouter equipement:");
+            System.out.println("Ajouter obstacles:");
             System.out.println("1. Obstacles\n2. continuer mise en place donjon");
             boolean flag4 = true;
             while (flag4){
@@ -135,10 +134,7 @@ public class Affichage{
                 }
             }
         }
-
         return donjon;
-
-
     }
 
     public void clearTerminal(Donjon donjon){
@@ -157,13 +153,67 @@ public class Affichage{
     }
 
     public void metreEnPlaceArme(Donjon donjon){
+
         this.clearTerminal(donjon);
-        System.out.println("Choisir la coordonée x de obstacle.");
+        System.out.println("Choisir une arme parmis celle-ci:\n"+
+                "1.bâton, dégât: 1d6, portée: 1 case\n" +
+                "2.masse d'armes, dégât: 1d6, portée: 1 case\n" +
+                "3.épée longue, dégât: 1d8, portée: 1 case\n" +
+                "4.rapière, dégât: 1d8, portée: 1 case\n" +
+                "5.arbalète légère, dégât: 1d8, portée 16 cases\n" +
+                "6.fronde, dégât 1d4, portée 6 cases\n" +
+                "7.arc court, dégât 1d6, portée 16 cases");
+        String  choix = (String) m_scanner.nextLine();
+        Arme arme;
+        switch (choix) {
+            case "1" : arme = new Arme("Baton",null, Arme.Type.COURANTE, new int[]{1,6},1 );
+            case "2" : arme = new Arme("Masse d'armes",null, Arme.Type.COURANTE, new int[]{1,6},1 );
+            case "3" : arme = new Arme("Epee longue",null, Arme.Type.GUERRE, new int[]{1,8},1 );
+            case "4" : arme = new Arme("Rapière",null, Arme.Type.GUERRE, new int[]{1,8},1 );
+            case "5" : arme = new Arme("Arbalete legere",null, Arme.Type.DISTANCE, new int[]{1,8},16 );
+            case "6" : arme = new Arme("Fronde",null, Arme.Type.DISTANCE, new int[]{1,4},6 );
+            case "7" : arme = new Arme("Arc court",null, Arme.Type.DISTANCE, new int[]{1,6},16 );
+            default : {
+                System.out.println("Aucune option choisis, Baton choisis.");
+                arme = new Arme("Baton",null, Arme.Type.COURANTE, new int[]{1,6},1 );
+            }
+        }
+        System.out.println("Choisir la coordonée x de l'arme.");
         int  choix1 = m_scanner.nextInt();
-        System.out.println("Choisir la coordonée y de obstacle.");
+        System.out.println("Choisir la coordonée y de l'arme.");
         int  choix2 = m_scanner.nextInt();
-        donjon.addObstacles(new int[]{choix1, choix2});
+        arme.setCoo(new int[]{choix1,choix2} );
+        donjon.addEquipement(arme);
     }
+    public void metreEnPlaceArmure(Donjon donjon){
+
+        this.clearTerminal(donjon);
+        System.out.println("Choisir une armure parmis celle-ci:\n"+
+                "1.armure d'écailles, classe d'armure: 9\n" +
+                "2.demi-plate,        classe d'armure: 10\n" +
+                "3.cotte de mailles,  classe d'armure: 11\n" +
+                "4.harnois: classe d'armure: 12\n" );
+        String choix = (String) m_scanner.nextLine();
+        Armure armure;
+        switch (choix) {
+            case "1" : armure = new Armure("Cotte de mailles",null, Armure.Type.LOURDE,11);
+            case "2" : armure = new Armure("Demi-plate",null, Armure.Type.LEGERE,9);
+            case "4" : armure = new Armure("Harnois",null, Armure.Type.LOURDE,12);
+            case "3" : armure = new Armure("Cotte de mailles",null, Armure.Type.LOURDE,11);
+            default : {
+                System.out.println("Aucune option choisis, Cotte de mailles choisis.");
+                armure = new Armure("Cotte de mailles",null, Armure.Type.LOURDE,11);
+            }
+        }
+        System.out.println("Choisir la coordonée x de l'armure.");
+        int  choix1 = m_scanner.nextInt();
+        System.out.println("Choisir la coordonée y de l'armure.");
+        int  choix2 = m_scanner.nextInt();
+        armure.setCoo(new int[]{choix1,choix2} );
+        donjon.addEquipement(armure);
+    }
+
+
 
 
 

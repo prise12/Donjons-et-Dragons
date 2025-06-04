@@ -20,7 +20,9 @@ import org.jline.terminal.TerminalBuilder;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
+        Affichage a = new Affichage();
+        a.MetreEnPlaceDonjon(1);
+        a.MetreEnPlacePeronnage();
 
 
     }
