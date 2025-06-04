@@ -20,10 +20,10 @@ import org.jline.terminal.TerminalBuilder;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Affichage a = new Affichage();
-        a.MetreEnPlaceDonjon(1);
-        a.MetreEnPlacePeronnage();
-
+        Donjon d1 = new Donjon();
+        ArrayList<Personnage> lstPersonnage = new ArrayList<>();
+        //Affichage.MetreEnPlacePersonnage(lstPersonnage);
+        Affichage.MetreEnPlaceDonjon(d1);
 
     }
 }
