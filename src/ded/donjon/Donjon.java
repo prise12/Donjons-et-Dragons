@@ -95,6 +95,7 @@ public class Donjon {
     public boolean addEntitee(Entite entite) {
         //on verfifie que les coordonée peuvent etre contenue dans la map et qu'il n'y ai pas autre chose à cette endrois
         if(this.verfifierCoo(entite.getCoo())) {
+            this.m_lstEntite.add(entite);
             return true;
         }
         return false;
@@ -104,6 +105,7 @@ public class Donjon {
 
     public boolean addEquipement(Equipement equipement) {
             if (this.verfifierCoo(equipement.getCoo())) {
+                this.m_lstEquipement.add(equipement);
                 return true;
             }
             return false;
@@ -112,6 +114,7 @@ public class Donjon {
 
     public boolean addObstacles(int[] coo) {
             if(this.verfifierCoo(coo)){
+                this.m_lstObstacle.add(coo);
                 return true;
             }
 

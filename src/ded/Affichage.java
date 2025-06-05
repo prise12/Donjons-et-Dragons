@@ -86,6 +86,20 @@ public class Affichage{
             donjon.setDiemensionMap(new int[]{choix,choix2});
 
             Affichage.clearTerminalDonjon(donjon);
+            //ajout des monstres
+            ArrayList<Espece> lstEspece = new ArrayList<Espece>();
+            lstEspece.add(new Espece("Gobelin"));
+            System.out.println("Ajouter equipement:");
+            boolean flag2 = true;
+            while (flag2){
+                System.out.println("1. Ajouter Monstre\n2. Continuer la mise en place du donjon");
+                choix = m_scanner.nextInt();
+                switch (choix) {
+                    case 1 : Affichage.mettreEnPlaceMonstre(donjon, lstEspece);break;
+                    case 3 : flag2 = false;
+                }
+            }
+
             //ajout des equipements
             System.out.println("Ajouter equipement:");
             boolean flag3 = true;
@@ -98,15 +112,14 @@ public class Affichage{
                     case 3 : flag3 = false;
                 }
             }
-
             System.out.println("Ajouter obstacles:");
-            System.out.println("1. Obstacles\n2. continuer mise en place donjon");
             boolean flag4 = true;
             while (flag4){
+                System.out.println("1. Ajouter Obstacle\n2. Continuer mise en place donjon");
                 System.out.println("");
                 choix = m_scanner.nextInt();
                 switch (choix) {
-                    case 1 : Affichage.mettreEnPlaceObstacle(donjon);
+                    case 1 : Affichage.mettreEnPlaceObstacle(donjon);break;
                     case 2 : flag4 = false;
                 }
             }
@@ -129,7 +142,7 @@ public class Affichage{
         donjon.addObstacles(new int[]{choix1, choix2});
         if(! donjon.addObstacles(new int[]{choix1, choix2})){
             System.out.println("Les coordonées appartienent deja à quelque chose sur la map ou sont hors des dimensions.");
-            mettreEnPlaceArmure(donjon);
+            mettreEnPlaceObstacle(donjon);
         }
     }
 
@@ -192,7 +205,7 @@ public class Affichage{
         int  choix1 = m_scanner.nextInt();
         System.out.println("Y :");
         int  choix2 = m_scanner.nextInt();
-        armure.setCoo(new int[]{choix1,choix2} );
+        armure.setCoo(new int[]{choix1,choix2});
 
         if(! donjon.addEquipement(armure)){
             System.out.println("Les coordonées appartienent deja à quelque chose sur la map ou sont hors des dimensions.");
@@ -200,10 +213,75 @@ public class Affichage{
         }
     }
 
+    public static void mettreEnPlaceMonstre(Donjon donjon, ArrayList<Espece> lstEspece){
+        Entite monstre;
+        Espece espece;
+        int[] stats = new int[5];
 
+        //nom du monstre
+        System.out.println("Choisir le nom du personnage n :");
+        String nom = m_scanner.nextLine();
 
+        //espece du monstre
+        System.out.println("Choisir une espece :\n1. Choisir d'une espece existante :\n2. Créer une nouvelle espece :");
+        int choix = m_scanner.nextInt();
 
+        switch (choix) {
+            case 1 : espece = Affichage.mettreEnPlaceEspece(lstEspece);
+            case 2 : espece = Affichage.choisirParmisEspece(lstEspece);
+            default : {
+                System.out.println("Aucune option choisis,"+ lstEspece.get(0).getNom() +"choisis.");
+                espece = lstEspece.get(0);
+            }
+        }
 
+        //Les caracteristique du monstre
+        System.out.println("Classe d'armure :");
+        int classeArmure = m_scanner.nextInt();
+        System.out.println("Vie :");
+        stats[0] = m_scanner.nextInt();
+        System.out.println("Vitesse :");
+        stats[1] = m_scanner.nextInt();
+        System.out.println("Force :");
+        stats[2] = m_scanner.nextInt();
+        System.out.println("Dexterité :");
+        stats[3] = m_scanner.nextInt();
+        System.out.println("Initiative :");
+        stats[4] = m_scanner.nextInt();
+
+        //Coordonées du monstre
+        System.out.println("Choisir les coordonées du Monstre:");
+        System.out.println("X :");
+        int  choix1 = m_scanner.nextInt();
+        System.out.println("Y :");
+        int  choix2 = m_scanner.nextInt();
+        int[] coo = new int[]{choix1,choix2};
+
+        monstre = new Monstre("oui", coo, espece, classeArmure, stats);
+        donjon.addEntitee(monstre);
+    }
+    public static Espece mettreEnPlaceEspece(ArrayList<Espece> lstEspece){
+        System.out.println("Choisir nom Espece:");
+        String choix = m_scanner.nextLine();
+        Espece e = new Espece(choix);
+        lstEspece.add(e);
+        return e;
+    }
+    public static Espece choisirParmisEspece(ArrayList<Espece> lstEspece){
+        System.out.println("Choisir Parmis les especes:");
+        int i = 0;
+        for(Espece e : lstEspece){
+            System.out.println(i + ". " + e.getNom());
+        }
+        int choix = m_scanner.nextInt();
+        if(0 < choix  && choix< lstEspece.size()){
+            return lstEspece.get(choix);
+        }
+        else{
+            System.out.println("Aucune option choisis,"+ lstEspece.get(0).getNom() +"choisis.");
+            return lstEspece.get(0);
+        }
+    }
 
     // Pas oublier de fermer : scanner.close()
     //scanner.close();
