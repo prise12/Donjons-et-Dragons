@@ -21,12 +21,9 @@ public class Monstre extends Entite{
 
     //retourne un int correspondant au point d'attaque le mj peut choisir en paramètre les différentes caratèritique de l'attaque,
     // la portee, les degat et si l'attaque est a distance ou pas
-    public int getAttaque( int portee, int[] degat, boolean estCac){
+    public int getAttaque( int portee, int[] degat){
         this.m_portee = portee;
-        if (estCac){
-            return Des.lancer(20) + this.m_force;
-        }
-        return Des.lancer(20) + this.m_dexterite;
+        return Des.lancer(20) + this.m_force;
     }
 
     //retourne un int correspondant au point de degat

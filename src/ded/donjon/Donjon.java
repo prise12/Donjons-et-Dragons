@@ -1,6 +1,7 @@
 package ded.donjon;
 
 import ded.entite.Entite;
+import ded.entite.Monstre;
 import ded.entite.Personnage;
 import ded.objet.Equipement;
 
@@ -21,6 +22,7 @@ public class Donjon {
     public Donjon(int[] dimensionMap) {
         this.m_dimensionMap = dimensionMap;
     }
+    public boolean m_finDonjon = false;
     
     public Donjon(ArrayList<Entite> lstEntite, ArrayList<Equipement> lstEquipement, ArrayList<int[]> lstObstacles, int[] dimensionMap) {
         
@@ -144,12 +146,6 @@ public class Donjon {
         return true;
     }
 
-    public void arrangerObstacles(int nbEquipement, int nbObstacles) {
-
-        for(int i = 0; i<nbEquipement; i++){
-            if(! this.m_lstEquipement.contains(i)){}
-        }
-    }
 
     public int[] getDimensionMap() {
         return this.m_dimensionMap;
@@ -202,5 +198,21 @@ public class Donjon {
         return false;
     }
 
+    public boolean isFinDonjon(){
+        boolean aMonstre = false;
+        for (Entite entite : this.m_lstEntite) {
+            if(entite instanceof Monstre monstre){
+                aMonstre = true;
+            } else if (entite instanceof Personnage personnage) {
+                if(personnage.getVie() <= 0) {
+                    return true;
+                }
+            }
+        }
+        if(aMonstre){
+            return true;
+        }
+        return false;
+    }
 
 }

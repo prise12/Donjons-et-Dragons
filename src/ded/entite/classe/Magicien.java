@@ -15,10 +15,7 @@ public class Magicien extends Classe {
         this.m_lstEquipement.add(new Arme("Fronde", null, Arme.Type.DISTANCE, new int[]{1, 4}, 6));
     }
 
-    public void guerison(Personnage personnage){
 
-        personnage.guerison(Des.lancer(10));
-    }
 
     public void boogieWoogie(Entite entite1, Entite entite2){
         int[] coo1 = entite1.getCoo();

@@ -28,12 +28,8 @@ public abstract class Entite {
     }
 
     //Infliges les degat au personnge et renvoie un booleen indiquant si le personnage et à 0 pv ou moins
-    public boolean setDegat(int degat){
+    public void setDegat(int degat){
         this.m_vie -= degat;
-        if(this.m_vie <= 0){
-            return false;
-        }
-        return true;
     }
 
     public boolean setAttaque(int degat){
@@ -69,8 +65,8 @@ public abstract class Entite {
         if( 0 > distance || distance > this.m_vitesse){
             return false;
         }
-        this.m_coo[0] = this.m_coo[0] * (direction[0] * distance);
-        this.m_coo[1] = this.m_coo[1] * (direction[1] * distance);
+        this.m_coo[0] = this.m_coo[0] + (direction[0] * distance);
+        this.m_coo[1] = this.m_coo[1] + (direction[1] * distance);
         return true;
     }
 

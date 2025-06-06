@@ -10,6 +10,7 @@ import ded.objet.Arme;
 import ded.objet.Armure;
 import ded.objet.Equipement;
 
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -19,9 +20,8 @@ public class Tour {
 
     public static void jeuDonjon(Donjon donjon) {
         System.out.println("Le jeu peut commencer !");
-        boolean finDonjon = true;
-        while (finDonjon) {
-
+        boolean finDonjon = false;
+        while (!finDonjon) {
             System.out.println("Bienvenue dans le Donjon");
             for (Entite entite : donjon.getOrdreEntite()) {
                 Affichage.clearTerminalDonjon(donjon);
@@ -66,24 +66,24 @@ public class Tour {
                             Tour.attaquer(donjon, entite);
                             break;
                         case 1:
-                            Tour.deplacer(entite);
+                            Tour.deplacer(donjon, entite);
                             break;
                         case 3:
                             if (estClerc) {
-                                Tour.guerison(entite);
+                                Tour.guerison(donjon, entite);
                             } else if (estMagicien) {
-                                Tour.guerison(entite);
+                                Tour.guerison(donjon, entite);
                             }
                         case 4:
                             if (estMagicien) {
-                                Tour.boogieWoogie(entite);
+                                Tour.boogieWoogie(donjon);
                                 break;
                             } else {
                                 System.out.println("Aucune attaque selectioner, action sauter.");
                             }
                         case 5:
                             if (estMagicien) {
-                                Tour.armeMagique(entite);
+                                Tour.armeMagique(donjon, entite);
                                 break;
                             } else {
                                 System.out.println("Aucune attaque selectioner, action sauter.");
@@ -91,6 +91,7 @@ public class Tour {
                         default:
                             System.out.println("Aucune attaque selectioner, action sauter.");
                     }
+                    finDonjon = donjon.isFinDonjon();
                 }
             }
         }
@@ -102,45 +103,193 @@ public class Tour {
         int coo1 = Tour.m_scanner.nextInt();
         System.out.println("Y :");
         int coo2 = Tour.m_scanner.nextInt();
+        Tour.m_scanner.nextLine();
         int attaque = 0;
+        int degat = 0;
         Entite entite2 = donjon.getCase(new int[]{coo1,coo2});
 
         if(entite2 == null) {
-            System.out.println("Les coordonées n'appartienent à aucune entité, action sauter");
+            System.out.println("Les coordonées n'appartienent à aucune entité.");
+            attaquer(donjon, entite);
         } else if (donjon.touche(entite, entite2, entite.getPortee())) {
             if (entite instanceof Personnage personnage) {
                 attaque = personnage.getAttaque();
+                degat = personnage.getDegat();
+
             } else if (entite instanceof Monstre monstre) {
-                System.out.println("Choisir portee.");
-                int portee = Tour.m_scanner.nextInt();
+                boolean flag = true;
+                int portee = 0;
+                while (flag){
+                    System.out.println("Attaque au coprs à corps ? (o/n)");
+                    String cac = Tour.m_scanner.nextLine();
+                    if(Objects.equals(cac, "o")){
+                        flag = false;
+                        System.out.println("Choisir portee.");
+                        portee = Tour.m_scanner.nextInt();
+                    } else if (Objects.equals(cac, "n")) {
+                        flag = false;
+                        portee = 1;
+                    }
+                }
+
                 System.out.println("Choisir degat.");
                 System.out.println("Nombre de des");
                 int des = Tour.m_scanner.nextInt();
-                System.out.println("Des ?");
-
-                attaque = monstre.getAttaque();
+                System.out.println("Nombre de faces:");
+                int faces = Tour.m_scanner.nextInt();
+                attaque = monstre.getAttaque(portee,new int[]{des,faces});
+                degat = monstre.getDegat(new int[]{des,faces});
             }
+            System.out.println(entite.getNom() + " inflige " + attaque + " de points d'attaque à " + entite2.getNom());
+            if(entite2.setAttaque(attaque)) {
+                System.out.println(entite.getNom() + " pourfend l'armure (" + entite2.getClasseArmure() + ") de" + entite2.getNom() +" !");
+
+                entite2.setDegat(degat) ;
+                System.out.println(entite.getNom() + " inflige " + degat + " de points de degats à " + entite2.getNom());
+            }
+            else {
+                System.out.println(entite.getNom() + " n'atteint pas" + entite2.getNom() +" !");
+            }
+
         } else{
-            System.out.println(entite.getNom() + " n'as pas assez portee pour son attque ou attaque un de ses alie.");
+            System.out.println(entite.getNom() + " n'as soit pas assez de portee pour son attaque ou soit une attaque visant un de ses alie.");
+            attaquer(donjon, entite);
+        }
+    }
+
+    public static void armeMagique(Donjon donjon,Entite entite) {
+        System.out.println("Choisissez la case du Personnage possedant l'arme que vous voulez rendre magique.");
+        System.out.println("X :");
+        int coo1 = Tour.m_scanner.nextInt();
+        System.out.println("Y :");
+        int coo2 = Tour.m_scanner.nextInt();
+        Tour.m_scanner.nextLine();
+        Entite entite2 = donjon.getCase(new int[]{coo1,coo2});
+        if(entite2 != null && entite2 instanceof Personnage personnage) {
+            System.out.println("Choisissez parmis ses armes.");
+            int i = 0;
+            boolean equipeArme = false;
+            if(personnage.getArmeEquipe() != null){
+                i = 1;
+                System.out.println("0: " + personnage.getArmeEquipe().getNom());
+                equipeArme = true;
+            }
+            for(Equipement equipement : personnage.getInventaire()){
+                if(equipement instanceof Arme arme) {
+                    System.out.println(i + ": " + personnage.getArmeEquipe().getNom());
+                    i++;
+                }
+            }
+            int index = Tour.m_scanner.nextInt();
+            if(equipeArme){
+                if(index == 0){
+                    personnage.getArmeEquipe().addBonusMagique();
+                }
+                else{
+                    int j = 0;
+                    for(Equipement equipement : personnage.getInventaire() ){
+                        if(equipement instanceof Arme arme) {
+                            if(j == index -1){
+                                personnage.getArmeEquipe().addBonusMagique();
+                            }
+                            j++;
+                        }
+                    }
+                }
+            }
+            else{
+                int j = 0;
+                for(Equipement equipement : personnage.getInventaire() ){
+                    if(equipement instanceof Arme arme) {
+                        if(j == index ){
+                            personnage.getArmeEquipe().addBonusMagique();
+                        }
+                        j++;
+                    }
+                }
+            }
+        }
+        else {
+            System.out.println("Aucun personnage sur cette case.");
         }
 
+    }
+
+    public static void boogieWoogie(Donjon donjon) {
+        System.out.println("Choisissez la case de la première entite que vous voulez echangez.");
+        System.out.println("X :");
+        int coo11 = Tour.m_scanner.nextInt();
+        System.out.println("Y :");
+        int coo12 = Tour.m_scanner.nextInt();
+        Tour.m_scanner.nextLine();
+        Entite entite1 = donjon.getCase(new int[]{coo11,coo12});
+        if(entite1 == null) {
+            System.out.println("La case ne contient pas d'entite");
+            boogieWoogie(donjon);
+        }
+        System.out.println("Choisissez la case de la deuxième entite que vous voulez echangez.");
+        System.out.println("X :");
+        int coo21 = Tour.m_scanner.nextInt();
+        System.out.println("Y :");
+        int coo22 = Tour.m_scanner.nextInt();
+        Tour.m_scanner.nextLine();
+        Entite entite2 = donjon.getCase(new int[]{coo11,coo12});
+        if(entite2 == null) {
+            System.out.println("La case ne contient pas d'entite");
+            boogieWoogie(donjon);
+        }
+        System.out.println(entite1.getNom() + " et " + entite2.getNom() + " on echangez de place!");
+        entite1.setCoo(new int[]{coo21,coo22});
+        entite2.setCoo(new int[]{coo11,coo12});
 
     }
 
-    public static void armeMagique(Entite entite) {
-        System.out.println("Choisir une case à attaquer.");
+    public static void guerison(Donjon donjon, Entite entite) {
+        System.out.println("Choisissez la case du personnage que vous voulez guerir.");
+        System.out.println("X :");
+        int coo11 = Tour.m_scanner.nextInt();
+        System.out.println("Y :");
+        int coo12 = Tour.m_scanner.nextInt();
+        Tour.m_scanner.nextLine();
+        Entite entite1 = donjon.getCase(new int[]{coo11,coo12});
+        if(entite1 != null && entite1 instanceof Personnage personnage) {
+            int pv = Des.lancer(10);
+            personnage.guerison(pv);
+            System.out.println("Vous guerisez " + personnage.getNom() + "de " + pv +" points de vie." );
+        }
+        else{
+            System.out.println("La case ne contient pas de personnage.");
+            guerison(donjon, entite);
+        }
     }
 
-    public static void boogieWoogie(Entite entite) {
+    public static void deplacer(Donjon donjon, Entite entite) {
+        System.out.println("Choisiser la distance de deplacement: ");
+        int distance = Tour.m_scanner.nextInt();
+        if(distance < 0){
+            System.out.println("Distance positive !");
+            deplacer(donjon, entite);
+        }
 
-    }
-
-    public static void guerison(Entite entite) {
-
-    }
-
-    public static void deplacer(Entite entite) {
-
+        System.out.println("Choisiser la direction de deplacement: ");
+        System.out.println("1. haut :");
+        System.out.println("2. bas :");
+        System.out.println("3. gauche :");
+        System.out.println("4. droite :");
+        int[] direction = null;
+        switch (Tour.m_scanner.nextInt()) {
+            case 1: direction = new int[]{0,1}; break;
+            case 2: direction = new int[]{1,0}; break;
+            case 3: direction = new int[]{0,-1}; break;
+            case 4: direction = new int[]{-1,0}; break;
+        }
+        if(entite.deplacerDirection(direction, distance)){
+            System.out.println(entite.getNom() +  " c'est deplacer à [" + entite.getCoo()[0] + "," +entite.getCoo()[1] + "]");
+        }
+        else{
+            System.out.println(entite.getNom() + " n'as pas assez de vitesse !");
+            deplacer(donjon, entite);
+        }
     }
 
 }
