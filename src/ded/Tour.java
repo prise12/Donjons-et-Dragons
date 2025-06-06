@@ -95,7 +95,6 @@ public class Tour {
                 }
             }
         }
-
     }
     public static void attaquer(Donjon donjon, Entite entite) {
         System.out.println("Choisir une case à attaquer.");

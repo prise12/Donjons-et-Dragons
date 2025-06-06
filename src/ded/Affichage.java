@@ -16,7 +16,7 @@ public class Affichage{
 
     private static final Scanner m_scanner = new Scanner(System.in);
 
-    public static void MetreEnPlacePersonnage(ArrayList<Personnage> lstPersonnage) {
+    public static void MetreEnPlacePersonnage(ArrayList<Entite> lstPersonnage) {
         for(int i = 0; i < 4; i++)
         {
             Race race = null;
