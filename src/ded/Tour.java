@@ -2,7 +2,9 @@ package ded;
 
 import ded.donjon.Donjon;
 import ded.entite.Entite;
+import ded.entite.Monstre;
 import ded.entite.Personnage;
+import ded.entite.classe.Clerc;
 import ded.entite.classe.Magicien;
 import ded.objet.Arme;
 import ded.objet.Armure;
@@ -12,43 +14,135 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Tour {
-    Scanner scanner = new Scanner(System.in);
+    private static final Scanner m_scanner = new Scanner(System.in);
 
 
-    public static void jeuDonjon(Donjon donjon){
+    public static void jeuDonjon(Donjon donjon) {
         System.out.println("Le jeu peut commencer !");
-            flag finDonjon = true;
-            while(finDonjon){
+        boolean finDonjon = true;
+        while (finDonjon) {
 
-                System.out.println("Bienvenue dans le Donjon");
-                for(Entite entite : donjon.getOrdreEntite()) {
-                    Affichage.clearTerminalDonjon(donjon);
-                    System.out.println("C'est au tour de " + entite.getNom() );
-                    System.out.println("Initative : " + entite.getInitiative() );
-                    System.out.println("Vie : " + entite.getVie() );
-                    System.out.println("Force : " + entite.getForce() );
-                    System.out.println("Dexterite : " + entite.getDexterite() );
-                    System.out.println("Vitesse : " + entite.getVitesse() );
+            System.out.println("Bienvenue dans le Donjon");
+            for (Entite entite : donjon.getOrdreEntite()) {
+                Affichage.clearTerminalDonjon(donjon);
+                System.out.println("C'est au tour de " + entite.getNom());
+                System.out.println("Initative : " + entite.getInitiative());
+                System.out.println("Vie : " + entite.getVie());
+                System.out.println("Force : " + entite.getForce());
+                System.out.println("Dexterite : " + entite.getDexterite());
+                System.out.println("Vitesse : " + entite.getVitesse());
 
-                    String actions = "Choisisez Parmis ces actions\n1. se deplacer\n2. attaquer";
+                String actions = "Choisisez Parmis ces actions\n1. se deplacer\n2. attaquer";
+                boolean estMagicien = false;
+                boolean estClerc = false;
 
-                    if (entite instanceof Personnage personnage) {
-                        Armure armure = personnage.getArmureEquipe();
-                        Arme arme = personnage.getArmeEquipe();
-                        System.out.println("Armure : " + armure.getNom() + "(classe d'armure: " + armure.getClasse() + ")" );
-                        System.out.println("Arme : " + arme.getNom() + "(degat: " + arme.getDegat()[0]+"d"+arme.getDegat()[1] +", portee: "+ arme.getPortee()+ ")" );
-                        int i = 0;
-                        for(Equipement equipement : personnage.getInventaire()) {
-                            System.out.print(" [" + i + "] " + equipement.getNom() );
-                        }
-
-
+                if (entite instanceof Personnage personnage) {
+                    Armure armure = personnage.getArmureEquipe();
+                    Arme arme = personnage.getArmeEquipe();
+                    System.out.println("Armure : " + armure.getNom() + "(Classe d'armure: " + armure.getClasse() + ")");
+                    System.out.println("Arme : " + arme.getNom() + "(Degat: " + arme.getDegat()[0] + "d" + arme.getDegat()[1] + ", Portee: " + arme.getPortee() + ")");
+                    System.out.print("Inventaire : ");
+                    int i = 0;
+                    for (Equipement equipement : personnage.getInventaire()) {
+                        System.out.print(" [" + i + "] " + equipement.getNom());
                     }
+                    System.out.println();
 
+                    if (personnage.getClasse() instanceof Magicien magicien) {
+                        estMagicien = true;
+                        actions += "\n3. Guerison\n4. Boogie Woogie\n5. Arme Magique";
+                    } else if (personnage.getClasse() instanceof Clerc clerc) {
+                        estClerc = true;
+                        actions += "\n3. Guerison";
+                    }
+                }
+                for (int i = 1; i <= 3; i++) {
+                    System.out.println("Il vous reste"  + (3 - (i-1)) +" action." );
+
+                    System.out.println(actions);
+                    int choix = Tour.m_scanner.nextInt();
+                    switch (choix) {
+                        case 2:
+                            Tour.attaquer(donjon, entite);
+                            break;
+                        case 1:
+                            Tour.deplacer(entite);
+                            break;
+                        case 3:
+                            if (estClerc) {
+                                Tour.guerison(entite);
+                            } else if (estMagicien) {
+                                Tour.guerison(entite);
+                            }
+                        case 4:
+                            if (estMagicien) {
+                                Tour.boogieWoogie(entite);
+                                break;
+                            } else {
+                                System.out.println("Aucune attaque selectioner, action sauter.");
+                            }
+                        case 5:
+                            if (estMagicien) {
+                                Tour.armeMagique(entite);
+                                break;
+                            } else {
+                                System.out.println("Aucune attaque selectioner, action sauter.");
+                            }
+                        default:
+                            System.out.println("Aucune attaque selectioner, action sauter.");
+                    }
                 }
             }
         }
+
     }
+    public static void attaquer(Donjon donjon, Entite entite) {
+        System.out.println("Choisir une case à attaquer.");
+        System.out.println("X :");
+        int coo1 = Tour.m_scanner.nextInt();
+        System.out.println("Y :");
+        int coo2 = Tour.m_scanner.nextInt();
+        int attaque = 0;
+        Entite entite2 = donjon.getCase(new int[]{coo1,coo2});
+
+        if(entite2 == null) {
+            System.out.println("Les coordonées n'appartienent à aucune entité, action sauter");
+        } else if (donjon.touche(entite, entite2, entite.getPortee())) {
+            if (entite instanceof Personnage personnage) {
+                attaque = personnage.getAttaque();
+            } else if (entite instanceof Monstre monstre) {
+                System.out.println("Choisir portee.");
+                int portee = Tour.m_scanner.nextInt();
+                System.out.println("Choisir degat.");
+                System.out.println("Nombre de des");
+                int des = Tour.m_scanner.nextInt();
+                System.out.println("Des ?");
+
+                attaque = monstre.getAttaque();
+            }
+        } else{
+            System.out.println(entite.getNom() + " n'as pas assez portee pour son attque ou attaque un de ses alie.");
+        }
+
+
+    }
+
+    public static void armeMagique(Entite entite) {
+        System.out.println("Choisir une case à attaquer.");
+    }
+
+    public static void boogieWoogie(Entite entite) {
+
+    }
+
+    public static void guerison(Entite entite) {
+
+    }
+
+    public static void deplacer(Entite entite) {
+
+    }
+
 }
 
         /*
@@ -65,9 +159,5 @@ public class Tour {
         Chaque joueur et chaque monstre lance 1d20 et ajoute leur caractéristique d'initiative. Ils joueront par ordre décroissant du résultat d'initiative.
         Avant de débuter le donjon, chaque joueur peut équiper l'armure et l'arme de son choix.
                 */
-        /*int init = 0;
-        for(int j = 0; j < personnages.size; j++){
-            init = personnages.get(j).getinitiative;
-            init += Des.lancer(20);
 
 

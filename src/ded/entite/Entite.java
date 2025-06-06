@@ -14,6 +14,8 @@ public abstract class Entite {
     int m_force;
     int m_dexterite ;
     int m_initiative;
+    int m_classeArmure;
+    int m_portee;
 
     public Entite(String nom, int[] coo, int[] stats){
         this.m_nom = nom;
@@ -27,16 +29,27 @@ public abstract class Entite {
 
     //Infliges les degat au personnge et renvoie un booleen indiquant si le personnage et à 0 pv ou moins
     public boolean setDegat(int degat){
-        if(this.m_vie - degat <= 0){
+        this.m_vie -= degat;
+        if(this.m_vie <= 0){
             return false;
         }
         return true;
     }
 
+    public boolean setAttaque(int degat){
+        if(this.m_classeArmure < degat){
+            return true;
+        }
+        return false;
+    }
+
+
     public int getDexterite(){return this.m_dexterite;}
     public int getForce(){return this.m_force;}
     public int getVitesse(){return this.m_vitesse;}
     public int getVie(){return this.m_vie;}
+    public int getClasseArmure(){return this.m_classeArmure;}
+    public int getPortee(){return this.m_portee;}
 
     public String getNom(){
         return this.m_nom;

@@ -32,10 +32,12 @@ public class Personnage extends Entite{
         this.m_dexterite += desCara + 3;
         this.m_initiative += desCara + 3;
         this.m_inventaire = m_classe.getEquipement();
+        this.m_classeArmure = 0;
+        this.m_portee = this.m_armeEquipe.get().getPortee();
     }
 
     //retourne un int correspondant au point d'attaque total en comptant tous les bonus
-    public int getAttaque(Entite entite){
+    public int getAttaque(){
         if (m_armeEquipe.get().getType() == Arme.Type.COURANTE || m_armeEquipe.get().getType() == Arme.Type.GUERRE ){
             return Des.lancerBonus(0,20, this.m_force + this.m_armeEquipe.get().getBonusMagique());
         } else if (m_armeEquipe.get().getType() == Arme.Type.COURANTE) {
@@ -43,6 +45,8 @@ public class Personnage extends Entite{
         }
         return 0;
     }
+
+
 
     //retourne un int correspondant au point de degat
     public int getDegat(){
@@ -60,6 +64,7 @@ public class Personnage extends Entite{
         } else if (this.m_inventaire.get(index) instanceof Armure armure) {
             this.m_inventaire.add( this.m_armureEquipe.get() );
             this.m_armureEquipe = Optional.of( armure);
+            this.m_classeArmure=  armure.getClasse();
         }
     }
 

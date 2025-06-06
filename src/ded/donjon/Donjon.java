@@ -184,5 +184,23 @@ public class Donjon {
         return lstOrdreEntite;
     }
 
+    public Entite getCase(int[] coo){
+        if(! m_lstEntite.isEmpty()) {
+            for (Entite entite : m_lstEntite) {
+                if(entite.getCoo() == coo){
+                    return entite;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean touche(Entite entite1, Entite entite2, int portee){
+        if(Math.abs(entite1.getCoo()[0]-entite2.getCoo()[0]) <= portee && Math.abs(entite1.getCoo()[1]-entite2.getCoo()[1]) <= portee ){
+            return true;
+        }
+        return false;
+    }
+
 
 }
