@@ -21,8 +21,8 @@ import org.jline.terminal.TerminalBuilder;
 public class Main {
     public static void main(String[] args) throws IOException {
         Donjon d1 = new Donjon();
-        ArrayList<Personnage> lstPersonnage = new ArrayList<>();
         //Affichage.MetreEnPlacePersonnage(lstPersonnage);
+        ArrayList<Personnage> lstPersonnage = new ArrayList<>();
         Affichage.MetreEnPlaceDonjon(d1);
 
     }

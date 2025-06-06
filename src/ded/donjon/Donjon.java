@@ -134,7 +134,7 @@ public class Donjon {
             if(entite.getCoo() == coo){
                 return false;
             }
-        }
+        }  
         for(Equipement equipement : this.m_lstEquipement) {
             if(equipement.getCoo() == coo){
                 return false;
@@ -155,5 +155,34 @@ public class Donjon {
         return this.m_dimensionMap;
     }
 
-    public void setDiemensionMap(int[] dimensionMap) {this.m_dimensionMap = dimensionMap; }
+    public void setDiemensionMap(int[] dimensionMap) {
+        this.m_dimensionMap = dimensionMap;
+        if(this.m_dimensionMap[0] > 25){
+            this.m_dimensionMap[0] = 25;
+        }
+        if(this.m_dimensionMap[1] > 25){
+            this.m_dimensionMap[1] = 25;
+        }
+    }
+    public ArrayList<Entite> getLstEntite() {return this.m_lstEntite;}
+    public void setLstEntite(ArrayList<Entite> lstEntite) {this.m_lstEntite = lstEntite;}
+
+    public ArrayList<Entite> getOrdreEntite(){
+        //trie des entite en fonction de leurs initative
+        ArrayList<Entite> lstEntiteCopy = this.getLstEntite();
+        ArrayList<Entite> lstOrdreEntite = new ArrayList();
+        Entite minInitiative = lstEntiteCopy.get(0);
+        while(! lstEntiteCopy.isEmpty()){
+            for(Entite entite : lstEntiteCopy){
+                if(minInitiative.getInitiative() < minInitiative.getInitiative()){
+                    minInitiative = entite;
+                }
+            }
+            lstOrdreEntite.add(minInitiative);
+            lstEntiteCopy.remove(minInitiative);
+        }
+        return lstOrdreEntite;
+    }
+
+
 }

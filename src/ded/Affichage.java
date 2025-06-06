@@ -84,8 +84,8 @@ public class Affichage{
             System.out.println("Y :");
             int choix2 = m_scanner.nextInt();
             donjon.setDiemensionMap(new int[]{choix,choix2});
-
             Affichage.clearTerminalDonjon(donjon);
+
             //ajout des monstres
             ArrayList<Espece> lstEspece = new ArrayList<Espece>();
             lstEspece.add(new Espece("Gobelin"));
@@ -96,7 +96,7 @@ public class Affichage{
                 choix = m_scanner.nextInt();
                 switch (choix) {
                     case 1 : Affichage.mettreEnPlaceMonstre(donjon, lstEspece);break;
-                    case 3 : flag2 = false;
+                    case 2 : flag2 = false;
                 }
             }
 
@@ -219,18 +219,20 @@ public class Affichage{
         int[] stats = new int[5];
 
         //nom du monstre
-        System.out.println("Choisir le nom du personnage n :");
+        System.out.println("Choisir le nom du Monstre :");
         String nom = m_scanner.nextLine();
+        m_scanner.nextLine();
 
         //espece du monstre
         System.out.println("Choisir une espece :\n1. Choisir d'une espece existante :\n2. Créer une nouvelle espece :");
         int choix = m_scanner.nextInt();
+        m_scanner.nextLine();
 
         switch (choix) {
-            case 1 : espece = Affichage.mettreEnPlaceEspece(lstEspece);
-            case 2 : espece = Affichage.choisirParmisEspece(lstEspece);
+            case 1 : espece = Affichage.choisirParmisEspece(lstEspece);break;
+            case 2 : espece = Affichage.mettreEnPlaceEspece(lstEspece);break;
             default : {
-                System.out.println("Aucune option choisis,"+ lstEspece.get(0).getNom() +"choisis.");
+                System.out.println("Aucune option choisis, "+ lstEspece.get(0).getNom() +" choisis.");
                 espece = lstEspece.get(0);
             }
         }
@@ -265,24 +267,27 @@ public class Affichage{
         String choix = m_scanner.nextLine();
         Espece e = new Espece(choix);
         lstEspece.add(e);
+        System.out.println("Espece créée: " + e.getNom());
+        System.out.println("Nombre total d'especes: " + lstEspece.size());
         return e;
     }
-    public static Espece choisirParmisEspece(ArrayList<Espece> lstEspece){
+    public static Espece choisirParmisEspece(ArrayList<Espece> lstEspece) {
         System.out.println("Choisir Parmis les especes:");
         int i = 0;
-        for(Espece e : lstEspece){
+        for (Espece e : lstEspece) {
             System.out.println(i + ". " + e.getNom());
+            i++;
         }
         int choix = m_scanner.nextInt();
-        if(0 < choix  && choix< lstEspece.size()){
+        if (0 <= choix && choix < lstEspece.size()) {
             return lstEspece.get(choix);
-        }
-        else{
-            System.out.println("Aucune option choisis,"+ lstEspece.get(0).getNom() +"choisis.");
+        } else {
+            System.out.println("Aucune option choisis," + lstEspece.get(0).getNom() + "choisis.");
             return lstEspece.get(0);
         }
     }
 
-    // Pas oublier de fermer : scanner.close()
-    //scanner.close();
+    public static void affichageTour(){
+
+    }
 }

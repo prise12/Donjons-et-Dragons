@@ -1,13 +1,40 @@
 package ded;
 
+import ded.donjon.Donjon;
+import ded.entite.Entite;
+import ded.entite.Personnage;
+
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Tour {
-    /*Scanner scanner = new Scanner(System.in);
-    System.out.println("");
+    Scanner scanner = new Scanner(System.in);
 
-    for(int i = 0; i < 3; i++)
-    {
+
+    public static void jeu(Donjon donjon){
+        System.out.println("Le jeu peut commencer !");
+        for(int i = 1; i <=3 ; i++){
+            System.out.println("Bienvenue dans le Donjon");
+            for(Entite entite : donjon.ordreLstEntite()){
+                Affichage.clearTerminalDonjon(donjon);
+                System.out.println("C'est au tour de " + entite.getNom() + " !");
+                if(entite.equals(Personnage.class)){
+
+
+
+
+                }
+                else{
+
+
+
+                }
+            }
+        }
+
+    }
+}
+
         /*
         Au début de chaque donjon, le maître du jeu
 
@@ -28,16 +55,3 @@ public class Tour {
             init += Des.lancer(20);
 
 
-        }
-
-
-
-
-    }*/
-
-
-
-
-
-
-}

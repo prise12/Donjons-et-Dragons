@@ -4,5 +4,5 @@ public class Espece {
 
     private String m_nom;
     public Espece(String nom) {this.m_nom = nom;}
-    public String getNom(){return m_nom;}
+    public String getNom(){return this.m_nom;}
 }
