@@ -14,7 +14,7 @@ public class Personnage extends Entite{
 
     private Optional<Arme> m_armeEquipe;
     private Optional<Armure> m_armureEquipe;
-    private ArrayList<Equipement>  m_lstInventaire;
+    private ArrayList<Equipement>  m_inventaire;
     private Classe m_classe;
     private Race m_race;
 
@@ -31,6 +31,7 @@ public class Personnage extends Entite{
         this.m_force += desCara + 3;
         this.m_dexterite += desCara + 3;
         this.m_initiative += desCara + 3;
+        this.m_inventaire = m_classe.getEquipement();
     }
 
     //retourne un int correspondant au point d'attaque total en comptant tous les bonus
@@ -49,14 +50,17 @@ public class Personnage extends Entite{
     }
 
     public void recupererEquipement(Equipement equipement){
-        m_lstInventaire.add(equipement);
+        m_inventaire.add(equipement);
     }
 
-    public void equiperEquipement(Arme arme) {
-        this.m_armeEquipe = Optional.of((arme));
-    }
-    public void equiperEquipement(Armure armure) {
-        this.m_armureEquipe = Optional.of(armure);
+    public void equiperEquipement(int index) {
+        if(this.m_inventaire.get(index) instanceof Arme arme){
+            this.m_inventaire.add( this.m_armeEquipe.get() );
+            this.m_armeEquipe = Optional.of( arme);
+        } else if (this.m_inventaire.get(index) instanceof Armure armure) {
+            this.m_inventaire.add( this.m_armureEquipe.get() );
+            this.m_armureEquipe = Optional.of( armure);
+        }
     }
 
     public Classe getClasse(){return this.m_classe;}
@@ -68,7 +72,7 @@ public class Personnage extends Entite{
 
     public Arme getArmeEquipe(){return this.m_armeEquipe.get();}
     public Armure getArmureEquipe(){return this.m_armureEquipe.get();}
-    public ArrayList<Equipement> getInventaire(){return this.m_lstInventaire;}
+    public ArrayList<Equipement> getInventaire(){return this.m_inventaire;}
 
     @Override
     public int getVitesse(){

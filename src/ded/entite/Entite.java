@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public abstract class Entite {
     private String m_nom;
-    private Optional<int[]> m_coo;
+    private int[] m_coo = null;
     int m_vie;
     int  m_vitesse;
     int m_force;
@@ -17,14 +17,13 @@ public abstract class Entite {
 
     public Entite(String nom, int[] coo, int[] stats){
         this.m_nom = nom;
-        this.m_coo = Optional.ofNullable(coo);
+        this.m_coo = coo;
         this.m_vie = stats[0];
         this.m_vitesse = stats[1];
         this.m_force = stats[2];
         this.m_dexterite = stats[3];
         this.m_initiative = stats[4];
     }
-
 
     //Infliges les degat au personnge et renvoie un booleen indiquant si le personnage et à 0 pv ou moins
     public boolean setDegat(int degat){
@@ -45,13 +44,22 @@ public abstract class Entite {
 
 
     public void setCoo(int[] coo){
-        this.m_coo = Optional.of(coo);
+        this.m_coo = coo;
     }
 
     public int[] getCoo(){
-        return this.m_coo.get();
+        return this.m_coo;
     }
     public int getInitiative(){return this.m_initiative;}
+
+    public boolean deplacerDirection(int[] direction, int distance){
+        if( 0 > distance || distance > this.m_vitesse){
+            return false;
+        }
+        this.m_coo[0] = this.m_coo[0] * (direction[0] * distance);
+        this.m_coo[1] = this.m_coo[1] * (direction[1] * distance);
+        return true;
+    }
 
 
 }

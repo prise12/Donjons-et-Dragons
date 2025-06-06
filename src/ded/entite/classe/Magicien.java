@@ -11,10 +11,8 @@ public class Magicien extends Classe {
     {
         super(12);
         this.m_nom  ="Magicien";
-        this.m_tabEquipement = new Equipement[]{
-                new Arme("Baton",null, Arme.Type.COURANTE, new int[]{1,6},1 ),
-                new Arme("Fronde",null, Arme.Type.DISTANCE, new int[]{1,4},6 )
-        };
+        this.m_lstEquipement.add(new Arme("Bâton", null, Arme.Type.COURANTE, new int[]{1, 6}, 1));
+        this.m_lstEquipement.add(new Arme("Fronde", null, Arme.Type.DISTANCE, new int[]{1, 4}, 6));
     }
 
     public void guerison(Personnage personnage){

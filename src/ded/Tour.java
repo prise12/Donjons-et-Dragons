@@ -3,6 +3,10 @@ package ded;
 import ded.donjon.Donjon;
 import ded.entite.Entite;
 import ded.entite.Personnage;
+import ded.entite.classe.Magicien;
+import ded.objet.Arme;
+import ded.objet.Armure;
+import ded.objet.Equipement;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -11,27 +15,39 @@ public class Tour {
     Scanner scanner = new Scanner(System.in);
 
 
-    public static void jeu(Donjon donjon){
+    public static void jeuDonjon(Donjon donjon){
         System.out.println("Le jeu peut commencer !");
-        for(int i = 1; i <=3 ; i++){
-            System.out.println("Bienvenue dans le Donjon");
-            for(Entite entite : donjon.ordreLstEntite()){
-                Affichage.clearTerminalDonjon(donjon);
-                System.out.println("C'est au tour de " + entite.getNom() + " !");
-                if(entite.equals(Personnage.class)){
+            flag finDonjon = true;
+            while(finDonjon){
+
+                System.out.println("Bienvenue dans le Donjon");
+                for(Entite entite : donjon.getOrdreEntite()) {
+                    Affichage.clearTerminalDonjon(donjon);
+                    System.out.println("C'est au tour de " + entite.getNom() );
+                    System.out.println("Initative : " + entite.getInitiative() );
+                    System.out.println("Vie : " + entite.getVie() );
+                    System.out.println("Force : " + entite.getForce() );
+                    System.out.println("Dexterite : " + entite.getDexterite() );
+                    System.out.println("Vitesse : " + entite.getVitesse() );
+
+                    String actions = "Choisisez Parmis ces actions\n1. se deplacer\n2. attaquer";
+
+                    if (entite instanceof Personnage personnage) {
+                        Armure armure = personnage.getArmureEquipe();
+                        Arme arme = personnage.getArmeEquipe();
+                        System.out.println("Armure : " + armure.getNom() + "(classe d'armure: " + armure.getClasse() + ")" );
+                        System.out.println("Arme : " + arme.getNom() + "(degat: " + arme.getDegat()[0]+"d"+arme.getDegat()[1] +", portee: "+ arme.getPortee()+ ")" );
+                        int i = 0;
+                        for(Equipement equipement : personnage.getInventaire()) {
+                            System.out.print(" [" + i + "] " + equipement.getNom() );
+                        }
 
 
-
-
-                }
-                else{
-
-
+                    }
 
                 }
             }
         }
-
     }
 }
 
