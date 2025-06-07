@@ -33,7 +33,6 @@ public class Personnage extends Entite{
         this.m_initiative += desCara + 3;
         this.m_inventaire = m_classe.getEquipement();
         this.m_classeArmure = 0;
-        this.m_portee = this.m_armeEquipe.get().getPortee();
     }
 
     //retourne un int correspondant au point d'attaque total en comptant tous les bonus

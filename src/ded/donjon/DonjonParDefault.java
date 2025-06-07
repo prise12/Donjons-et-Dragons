@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class DonjonParDefault {
 
-    //on créer les 3 donjon par default que le mj pourra choisir au debut d'un tour
+    //on créer les 3 donjon par default que le mj pourra choisir au debut d'un donjon
     public static Donjon getDonjonParDefault1(){
 
         //dimension de la map
@@ -48,7 +48,7 @@ public class DonjonParDefault {
         Arme arme4 = new Arme("Arc court",new int[]{7,7}, Arme.Type.DISTANCE, new int[]{1,6},16 );
         ArrayList<Equipement> lstEquipement = new ArrayList<>(Arrays.asList(arme1,arme2,arme3,arme4,armure1,armure2)    );
 
-        Donjon donjon = new Donjon(lstMonstre,lstEquipement,lstObstacle,dimension );
+        Donjon donjon = new Donjon(lstMonstre,lstEquipement,lstObstacle,dimension);
         return donjon;
     }
     public static Donjon getDonjonParDefault2(){

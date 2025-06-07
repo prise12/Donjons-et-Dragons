@@ -12,18 +12,25 @@ import java.util.Optional;
 
 public class Donjon {
 
-    private ArrayList<Entite> m_lstEntite = new ArrayList<Entite>();
-    private ArrayList<Equipement> m_lstEquipement = new ArrayList<Equipement>();
-    private ArrayList<int[]> m_lstObstacle = new ArrayList<int[]>();
+    private ArrayList<Entite> m_lstEntite;
+    private ArrayList<Equipement> m_lstEquipement ;
+    private ArrayList<int[]> m_lstObstacle;
     private String[][] m_donjon;
     private int[] m_dimensionMap;
 
-    public Donjon() {}
+    public Donjon() {
+        this.m_lstEntite = new ArrayList<Entite>();
+        this.m_lstEquipement = new ArrayList<Equipement>();
+        this.m_lstObstacle = new ArrayList<int[]>();
+
+    }
     public Donjon(int[] dimensionMap) {
         this.m_dimensionMap = dimensionMap;
+        this.m_lstEntite = new ArrayList<Entite>();
+        this.m_lstEquipement = new ArrayList<Equipement>();
+        this.m_lstObstacle = new ArrayList<int[]>();
     }
     public boolean m_finDonjon = false;
-    
     public Donjon(ArrayList<Entite> lstEntite, ArrayList<Equipement> lstEquipement, ArrayList<int[]> lstObstacles, int[] dimensionMap) {
         
         this.m_lstEntite = lstEntite;
@@ -51,7 +58,6 @@ public class Donjon {
 
 
         for(int i = 0; i<  m_dimensionMap[0]; i++ ){
-
             map += i+" ";
             int nbChiffres = String.valueOf(Math.abs(i)).length();
             for(int j =0; j < 3 - nbChiffres; j++){
@@ -78,7 +84,9 @@ public class Donjon {
         //On genere les creatures, objets, obstacles dans la map
         if(! m_lstEntite.isEmpty()) {
             for (Entite entite : m_lstEntite) {
-                this.m_donjon[entite.getCoo()[0]][entite.getCoo()[1]] = entite.getNom().substring(0, 3);
+                String nom = entite.getNom();
+                String nomCourt = nom.length() >= 3 ? nom.substring(0, 3) : (" " + nom + " ");
+                this.m_donjon[entite.getCoo()[0]][entite.getCoo()[1]] = nomCourt;
             }
         }
         if(! m_lstEquipement.isEmpty()) {
@@ -94,51 +102,40 @@ public class Donjon {
 
     }
 
-    public boolean addEntitee(Entite entite) {
+    public void addEntitee(Entite entite) {
         //on verfifie que les coordonée peuvent etre contenue dans la map et qu'il n'y ai pas autre chose à cette endrois
-        if(this.verfifierCoo(entite.getCoo())) {
-            this.m_lstEntite.add(entite);
-            return true;
-        }
-        return false;
+        this.m_lstEntite.add(entite);
     }
 
 
 
-    public boolean addEquipement(Equipement equipement) {
-            if (this.verfifierCoo(equipement.getCoo())) {
+    public void addEquipement(Equipement equipement) {
                 this.m_lstEquipement.add(equipement);
-                return true;
-            }
-            return false;
-
     }
 
-    public boolean addObstacles(int[] coo) {
-            if(this.verfifierCoo(coo)){
-                this.m_lstObstacle.add(coo);
-                return true;
-            }
-
-            return false;
-
+    public void addObstacles(int[] coo) {
+        this.m_lstObstacle.add(coo);
     }
 
-    public boolean verfifierCoo(int[] coo){
-        if(coo[0]> m_dimensionMap[0]-1 || coo[1]>m_dimensionMap[1]-1){ return false;}
+    public boolean verfifierCoo(int[] coo) {
+        if(coo[0] > m_dimensionMap[0]-1 || coo[1] > m_dimensionMap[1]-1 || coo[0] < 0 || coo[1] < 0) {
+            return false;
+        }
 
         for(int[] coo2 : this.m_lstObstacle) {
-            if(coo2 == coo){
+            if(coo2[0] == coo[0] && coo2[1] == coo[1]) {
                 return false;
             }
         }
+
         for(Entite entite: this.m_lstEntite) {
-            if(entite.getCoo() == coo){
+            if(entite.getCoo()[0] == coo[0] && entite.getCoo()[1] == coo[1]) {
                 return false;
             }
-        }  
+        }
+
         for(Equipement equipement : this.m_lstEquipement) {
-            if(equipement.getCoo() == coo){
+            if(equipement.getCoo()[0] == coo[0] && equipement.getCoo()[1] == coo[1]) {
                 return false;
             }
         }
@@ -165,25 +162,16 @@ public class Donjon {
 
     public ArrayList<Entite> getOrdreEntite(){
         //trie des entite en fonction de leurs initative
-        ArrayList<Entite> lstEntiteCopy = this.getLstEntite();
-        ArrayList<Entite> lstOrdreEntite = new ArrayList();
-        Entite minInitiative = lstEntiteCopy.get(0);
-        while(! lstEntiteCopy.isEmpty()){
-            for(Entite entite : lstEntiteCopy){
-                if(minInitiative.getInitiative() < minInitiative.getInitiative()){
-                    minInitiative = entite;
-                }
-            }
-            lstOrdreEntite.add(minInitiative);
-            lstEntiteCopy.remove(minInitiative);
-        }
+        ArrayList<Entite> lstOrdreEntite = new ArrayList<>(this.m_lstEntite);
+        lstOrdreEntite.sort((e1, e2) -> Integer.compare(e2.getInitiative(), e1.getInitiative()));
         return lstOrdreEntite;
+
     }
 
-    public Entite getCase(int[] coo){
-        if(! m_lstEntite.isEmpty()) {
+    public Entite getCase(int[] coo) {
+        if(!m_lstEntite.isEmpty()) {
             for (Entite entite : m_lstEntite) {
-                if(entite.getCoo() == coo){
+                if(entite.getCoo()[0] == coo[0] && entite.getCoo()[1] == coo[1]) {
                     return entite;
                 }
             }
@@ -198,21 +186,18 @@ public class Donjon {
         return false;
     }
 
-    public boolean isFinDonjon(){
-        boolean aMonstre = false;
+    public boolean isFinDonjon() {
+        boolean toutPersonnage = true;
+        boolean monstreVivant = false;
+
         for (Entite entite : this.m_lstEntite) {
-            if(entite instanceof Monstre monstre){
-                aMonstre = true;
-            } else if (entite instanceof Personnage personnage) {
-                if(personnage.getVie() <= 0) {
-                    return true;
-                }
+            if (entite instanceof Personnage && entite.getVie() <= 0) {
+                toutPersonnage = false;
+            } else if (entite instanceof Monstre && entite.getVie() > 0) {
+                monstreVivant = true;
             }
         }
-        if(aMonstre){
-            return true;
-        }
-        return false;
+        return !toutPersonnage || !monstreVivant;
     }
 
 }
