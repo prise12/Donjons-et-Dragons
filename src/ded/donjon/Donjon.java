@@ -25,7 +25,9 @@ public class Donjon {
 
     }
     public Donjon(int[] dimensionMap) {
-        this.m_dimensionMap = dimensionMap;
+        if(dimensionMap[0] > 25 || dimensionMap[1] > 25){
+            this.m_dimensionMap = new int[]{25,25};
+        }
         this.m_lstEntite = new ArrayList<Entite>();
         this.m_lstEquipement = new ArrayList<Equipement>();
         this.m_lstObstacle = new ArrayList<int[]>();
@@ -45,33 +47,24 @@ public class Donjon {
     }
 
 
-    public String getDonjon(){
-
-        String map = "";
-        map += "     ";
-        for(int i = 0; i<  m_dimensionMap[1]; i++ ){
-            char c = (char) (65 + i);
-            map += c ;
-            map += "  ";
+    public String getDonjon() {
+        StringBuilder map = new StringBuilder();
+        map.append("     ");
+        for (int i = 0; i < m_dimensionMap[1]; i++) {
+            map.append(String.format("%-3s", (char)('A' + i))); // Lettres alignées
         }
-        map += "\n";
+        map.append("\n");
 
+        for (int i = 0; i < m_dimensionMap[0]; i++) {
+            // Numéro de ligne avec alignement
+            map.append(String.format("%-3d ", i));
 
-        for(int i = 0; i<  m_dimensionMap[0]; i++ ){
-            map += i+" ";
-            int nbChiffres = String.valueOf(Math.abs(i)).length();
-            for(int j =0; j < 3 - nbChiffres; j++){
-                map += " ";
+            for (int j = 0; j < m_dimensionMap[1]; j++) {
+                map.append(String.format("%-3s", m_donjon[i][j]));
             }
-
-            for(int j = 0; j<  m_dimensionMap[1]; j++ ) {
-                map += m_donjon[i][j];
-            }
-            map += "\n";
+            map.append("\n");
         }
-
-        return map;
-
+        return map.toString();
     }
 
     public void genererDonjon(){
@@ -107,8 +100,6 @@ public class Donjon {
         this.m_lstEntite.add(entite);
     }
 
-
-
     public void addEquipement(Equipement equipement) {
                 this.m_lstEquipement.add(equipement);
     }
@@ -143,7 +134,6 @@ public class Donjon {
         return true;
     }
 
-
     public int[] getDimensionMap() {
         return this.m_dimensionMap;
     }
@@ -168,7 +158,7 @@ public class Donjon {
 
     }
 
-    public Entite getCase(int[] coo) {
+    public Entite getCaseEntite(int[] coo) {
         if(!m_lstEntite.isEmpty()) {
             for (Entite entite : m_lstEntite) {
                 if(entite.getCoo()[0] == coo[0] && entite.getCoo()[1] == coo[1]) {
@@ -178,12 +168,22 @@ public class Donjon {
         }
         return null;
     }
-
-    public boolean touche(Entite entite1, Entite entite2, int portee){
-        if(Math.abs(entite1.getCoo()[0]-entite2.getCoo()[0]) <= portee && Math.abs(entite1.getCoo()[1]-entite2.getCoo()[1]) <= portee ){
-            return true;
+    public Equipement getCaseEquipement(int[] coo) {
+        if(!m_lstEquipement.isEmpty()) {
+            for (Equipement equipement : m_lstEquipement) {
+                if(equipement.getCoo()[0] == coo[0] && equipement.getCoo()[1] == coo[1]) {
+                    return equipement;
+                }
+            }
         }
-        return false;
+        return null;
+    }
+
+
+    public boolean touche(int portee, int[] coo1, int[] coo2) {
+        int dx = coo1[0] - coo2[0];
+        int dy = coo1[1] - coo2[1];
+        return dx*dx + dy*dy <= portee*portee;
     }
 
     public boolean isFinDonjon() {
@@ -199,5 +199,14 @@ public class Donjon {
         }
         return !toutPersonnage || !monstreVivant;
     }
-
+    public void supprimerEquipement(Equipement equipement) {
+        this.m_lstEquipement.remove(equipement);
+    }
+    public void supprimerMonstre() {
+        for (Entite entite : this.m_lstEntite) {
+            if (entite instanceof Monstre monstre && monstre.getVie() <= 0 ) {
+                this.m_lstEntite.remove(monstre);
+            }
+        }
+    }
 }

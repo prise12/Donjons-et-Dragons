@@ -70,17 +70,22 @@ public class Personnage extends Entite{
     public Classe getClasse(){return this.m_classe;}
 
     public int getClasseArmureEquipe(){
-        return this.m_armureEquipe.get().getClasse();
+        return this.m_armureEquipe.isPresent()? this.m_armureEquipe.get().getClasse() : 0;
     }
-    public int getPorteeArmeEquipe(){return this.m_armeEquipe.get().getPortee();}
+    public int getPorteeArmeEquipe(){return this.m_armeEquipe.isPresent()? this.m_armeEquipe.get().getPortee() : 0;}
 
-    public Arme getArmeEquipe(){return this.m_armeEquipe.get();}
-    public Armure getArmureEquipe(){return this.m_armureEquipe.get();}
+    public Arme getArmeEquipe(){return ! (this.m_armeEquipe == null)? this.m_armeEquipe.get() : null ;}
+    public Armure getArmureEquipe(){return ! (this.m_armureEquipe == null)? this.m_armureEquipe.get() : null;}
     public ArrayList<Equipement> getInventaire(){return this.m_inventaire;}
 
     @Override
-    public int getVitesse(){
-        return this.m_vitesse - this.m_armureEquipe.get().getRalentissement() - this.m_armeEquipe.get().getRalentissement();
+    public int getVitesse() {
+        int vitesseBase = this.m_vitesse;
+        int ralentissementArmure = (this.m_armureEquipe != null && this.m_armureEquipe.isPresent()) ? this.m_armureEquipe.get().getRalentissement() : 0;
+        int ralentissementArme = (this.m_armeEquipe != null && this.m_armeEquipe.isPresent()) ? this.m_armeEquipe.get().getRalentissement() : 0;
+
+        int vitesseFinale = vitesseBase - ralentissementArmure - ralentissementArme;
+        return Math.max(vitesseFinale, 0);
     }
 
     public void guerison(int pv){

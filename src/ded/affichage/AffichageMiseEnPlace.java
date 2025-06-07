@@ -90,8 +90,6 @@ public class AffichageMiseEnPlace {
         lstEspece.add(new Espece("Gobelin"));
 
         ajouterElements(donjon, lstEspece);
-
-        clearTerminalDonjon(donjon);
         return donjon;
     }
 
@@ -114,6 +112,7 @@ public class AffichageMiseEnPlace {
                     donjon.addObstacles(mettreEnPlaceObstacle(donjon));
                     break;
             }
+            clearTerminalDonjon(donjon);
         } while (choix != 4);
     }
 
@@ -165,6 +164,7 @@ public class AffichageMiseEnPlace {
 
     public static int[] mettreEnPlaceObstacle(Donjon donjon) {
         System.out.println("\nNouvel obstacle");
+        System.out.println("\nPosition de l'obstacle : ");
         int[] coo = demanderCoordonnees();
         return donjon.verfifierCoo(coo) ? coo : mettreEnPlaceObstacle(donjon);
     }
@@ -234,6 +234,7 @@ public class AffichageMiseEnPlace {
 
         Espece espece = choisirEspece(lstEspece);
         int[] stats = demanderStats();
+        System.out.println("\nPosition du monstre : ");
         int[] coo = demanderCoordonnees();
 
         if (donjon.verfifierCoo(coo)) {
@@ -247,8 +248,7 @@ public class AffichageMiseEnPlace {
         System.out.println("1. Choisir existant\n2. Créer nouvelle espèce");
         System.out.print("Choix : ");
 
-        return (m_scanner.nextInt() == 1) ?
-                choisirParmisEspece(lstEspece) : mettreEnPlaceEspece(lstEspece);
+        return (m_scanner.nextInt() == 1) ? choisirParmisEspece(lstEspece) : mettreEnPlaceEspece(lstEspece);
     }
 
     private static int[] demanderStats() {
