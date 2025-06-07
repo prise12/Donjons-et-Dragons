@@ -7,6 +7,7 @@ import ded.entite.race.*;
 import ded.entite.classe.*;
 import ded.objet.Arme;
 import ded.objet.Armure;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,8 +16,9 @@ public class Affichage{
 
 
     private static final Scanner m_scanner = new Scanner(System.in);
+    private static ArrayList<Personnage> lstPersonnage = new ArrayList<Personnage>();
 
-    public static void MetreEnPlacePersonnage(ArrayList<Entite> lstPersonnage) {
+    public static void metreEnPlacePersonnage() {
         for(int i = 0; i < 4; i++)
         {
             Race race = null;
@@ -26,7 +28,7 @@ public class Affichage{
 
             // Choix de la race
             System.out.println("Choisir une race :\n1. Humain\n2. Elfe\n3. Halfelin\n4. Nain");
-            int  choixRace =  m_scanner.nextInt();
+            int choixRace =  m_scanner.nextInt();
             switch (choixRace) {
                 case 1 : race = new Humain();
                 case 2 : race = new Elfe();
@@ -40,19 +42,19 @@ public class Affichage{
 
             // Choix de la classe
             System.out.println("Choisir une classe :\n1. Guerrier\n2. Mage\n3. Voleur\n4. Clerc");
-            String choixClasse = (String) m_scanner.nextLine();
+            int choixClasse =  m_scanner.nextInt();
             switch (choixClasse) {
-                case "1" : classe = new Guerrier();
-                case "2" : classe = new Magicien();
-                case "3" : classe = new Roublard();
-                case "4" : classe = new Clerc();
+                case 1 : classe = new Guerrier();
+                case 2 : classe = new Magicien();
+                case 3 : classe = new Roublard();
+                case 4 : classe = new Clerc();
                 default : {
                     System.out.println("Aucune classe choisi, Guerrier assigné par default.");
                     classe = new Guerrier();
                 }
             }
             Personnage p = new Personnage(nom,null,classe, race);
-            lstPersonnage.add(p);
+            Affichage.lstPersonnage.add(p);
 
         }
     }
@@ -85,6 +87,21 @@ public class Affichage{
             int choix2 = m_scanner.nextInt();
             donjon.setDiemensionMap(new int[]{choix,choix2});
             Affichage.clearTerminalDonjon(donjon);
+
+            //placer les personnages
+            int i = 0;
+            boolean flag2 = true;
+            while (i<4 && flag2){
+                System.out.println("1. Ajouter Personnage\n2. Continuer la mise en place du donjon");
+                choix = m_scanner.nextInt();
+                switch (choix) {
+                    case 1 : for(Personnage personnage : Affichage.lstPersonnage){
+                            Affichage.placerPersonnage(donjon, personnage);
+                            break;
+                    }
+                    case 2 : flag2 = false;
+                }
+            }
 
             //ajout des monstres
             ArrayList<Espece> lstEspece = new ArrayList<Espece>();
@@ -127,13 +144,29 @@ public class Affichage{
         Affichage.clearTerminalDonjon(donjon);
     }
 
-    public static void clearTerminalDonjon(Donjon donjon){
+    public static void clearTerminalDonjon(@NotNull Donjon donjon){
         System.out.flush();
         donjon.genererDonjon();
         System.out.println( donjon.getDonjon());
     }
 
-    public static void mettreEnPlaceObstacle(Donjon donjon){
+    public static void placerPersonnage(Donjon donjon, Personnage personnage) {
+            System.out.println("Choisir les coordonees du personnage" + personnage);
+            System.out.println("X :");
+            int  choix1 = m_scanner.nextInt();
+            System.out.println("Y :");
+            int  choix2 = m_scanner.nextInt();
+            if(donjon.verfifierCoo(new int[]{choix1,choix2})){
+                personnage.setCoo(new int[]{choix1,choix2});
+            }
+            else{
+                System.out.println("Coordonnee invalide, coordonnee deja occupee ou hors des dimension de la map");
+                placerPersonnage(donjon, personnage);
+            }
+        }
+    }
+
+    public static void mettreEnPlaceObstacle(@NotNull Donjon donjon){
         System.out.println("Choisir les coordonées de l'obstacle:");
         System.out.println("X :");
         int  choix1 = m_scanner.nextInt();
@@ -287,7 +320,4 @@ public class Affichage{
         }
     }
 
-    public static void affichageTour(){
-
-    }
 }
