@@ -12,9 +12,8 @@ import ded.objet.Equipement;
 
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.ArrayList;
 
-public class Tour {
+public class AffichageTour {
     private static final Scanner m_scanner = new Scanner(System.in);
 
 
@@ -24,7 +23,7 @@ public class Tour {
         while (!finDonjon) {
             System.out.println("Bienvenue dans le Donjon");
             for (Entite entite : donjon.getOrdreEntite()) {
-                Affichage.clearTerminalDonjon(donjon);
+                AffichageMiseEnPlace.clearTerminalDonjon(donjon);
                 System.out.println("C'est au tour de " + entite.getNom());
                 System.out.println("Initative : " + entite.getInitiative());
                 System.out.println("Vie : " + entite.getVie());
@@ -60,30 +59,30 @@ public class Tour {
                     System.out.println("Il vous reste"  + (3 - (i-1)) +" action." );
 
                     System.out.println(actions);
-                    int choix = Tour.m_scanner.nextInt();
+                    int choix = AffichageTour.m_scanner.nextInt();
                     switch (choix) {
                         case 2:
-                            Tour.attaquer(donjon, entite);
+                            AffichageTour.attaquer(donjon, entite);
                             break;
                         case 1:
-                            Tour.deplacer(donjon, entite);
+                            AffichageTour.deplacer(donjon, entite);
                             break;
                         case 3:
                             if (estClerc) {
-                                Tour.guerison(donjon, entite);
+                                AffichageTour.guerison(donjon, entite);
                             } else if (estMagicien) {
-                                Tour.guerison(donjon, entite);
+                                AffichageTour.guerison(donjon, entite);
                             }
                         case 4:
                             if (estMagicien) {
-                                Tour.boogieWoogie(donjon);
+                                AffichageTour.boogieWoogie(donjon);
                                 break;
                             } else {
                                 System.out.println("Aucune attaque selectioner, action sauter.");
                             }
                         case 5:
                             if (estMagicien) {
-                                Tour.armeMagique(donjon, entite);
+                                AffichageTour.armeMagique(donjon, entite);
                                 break;
                             } else {
                                 System.out.println("Aucune attaque selectioner, action sauter.");
@@ -99,10 +98,10 @@ public class Tour {
     public static void attaquer(Donjon donjon, Entite entite) {
         System.out.println("Choisir une case à attaquer.");
         System.out.println("X :");
-        int coo1 = Tour.m_scanner.nextInt();
+        int coo1 = AffichageTour.m_scanner.nextInt();
         System.out.println("Y :");
-        int coo2 = Tour.m_scanner.nextInt();
-        Tour.m_scanner.nextLine();
+        int coo2 = AffichageTour.m_scanner.nextInt();
+        AffichageTour.m_scanner.nextLine();
         int attaque = 0;
         int degat = 0;
         Entite entite2 = donjon.getCase(new int[]{coo1,coo2});
@@ -120,11 +119,11 @@ public class Tour {
                 int portee = 0;
                 while (flag){
                     System.out.println("Attaque au coprs à corps ? (o/n)");
-                    String cac = Tour.m_scanner.nextLine();
+                    String cac = AffichageTour.m_scanner.nextLine();
                     if(Objects.equals(cac, "o")){
                         flag = false;
                         System.out.println("Choisir portee.");
-                        portee = Tour.m_scanner.nextInt();
+                        portee = AffichageTour.m_scanner.nextInt();
                     } else if (Objects.equals(cac, "n")) {
                         flag = false;
                         portee = 1;
@@ -133,9 +132,9 @@ public class Tour {
 
                 System.out.println("Choisir degat.");
                 System.out.println("Nombre de des");
-                int des = Tour.m_scanner.nextInt();
+                int des = AffichageTour.m_scanner.nextInt();
                 System.out.println("Nombre de faces:");
-                int faces = Tour.m_scanner.nextInt();
+                int faces = AffichageTour.m_scanner.nextInt();
                 attaque = monstre.getAttaque(portee,new int[]{des,faces});
                 degat = monstre.getDegat(new int[]{des,faces});
             }
@@ -159,10 +158,10 @@ public class Tour {
     public static void armeMagique(Donjon donjon,Entite entite) {
         System.out.println("Choisissez la case du Personnage possedant l'arme que vous voulez rendre magique.");
         System.out.println("X :");
-        int coo1 = Tour.m_scanner.nextInt();
+        int coo1 = AffichageTour.m_scanner.nextInt();
         System.out.println("Y :");
-        int coo2 = Tour.m_scanner.nextInt();
-        Tour.m_scanner.nextLine();
+        int coo2 = AffichageTour.m_scanner.nextInt();
+        AffichageTour.m_scanner.nextLine();
         Entite entite2 = donjon.getCase(new int[]{coo1,coo2});
         if(entite2 != null && entite2 instanceof Personnage personnage) {
             System.out.println("Choisissez parmis ses armes.");
@@ -179,7 +178,7 @@ public class Tour {
                     i++;
                 }
             }
-            int index = Tour.m_scanner.nextInt();
+            int index = AffichageTour.m_scanner.nextInt();
             if(equipeArme){
                 if(index == 0){
                     personnage.getArmeEquipe().addBonusMagique();
@@ -217,10 +216,10 @@ public class Tour {
     public static void boogieWoogie(Donjon donjon) {
         System.out.println("Choisissez la case de la première entite que vous voulez echangez.");
         System.out.println("X :");
-        int coo11 = Tour.m_scanner.nextInt();
+        int coo11 = AffichageTour.m_scanner.nextInt();
         System.out.println("Y :");
-        int coo12 = Tour.m_scanner.nextInt();
-        Tour.m_scanner.nextLine();
+        int coo12 = AffichageTour.m_scanner.nextInt();
+        AffichageTour.m_scanner.nextLine();
         Entite entite1 = donjon.getCase(new int[]{coo11,coo12});
         if(entite1 == null) {
             System.out.println("La case ne contient pas d'entite");
@@ -228,10 +227,10 @@ public class Tour {
         }
         System.out.println("Choisissez la case de la deuxième entite que vous voulez echangez.");
         System.out.println("X :");
-        int coo21 = Tour.m_scanner.nextInt();
+        int coo21 = AffichageTour.m_scanner.nextInt();
         System.out.println("Y :");
-        int coo22 = Tour.m_scanner.nextInt();
-        Tour.m_scanner.nextLine();
+        int coo22 = AffichageTour.m_scanner.nextInt();
+        AffichageTour.m_scanner.nextLine();
         Entite entite2 = donjon.getCase(new int[]{coo11,coo12});
         if(entite2 == null) {
             System.out.println("La case ne contient pas d'entite");
@@ -246,10 +245,10 @@ public class Tour {
     public static void guerison(Donjon donjon, Entite entite) {
         System.out.println("Choisissez la case du personnage que vous voulez guerir.");
         System.out.println("X :");
-        int coo11 = Tour.m_scanner.nextInt();
+        int coo11 = AffichageTour.m_scanner.nextInt();
         System.out.println("Y :");
-        int coo12 = Tour.m_scanner.nextInt();
-        Tour.m_scanner.nextLine();
+        int coo12 = AffichageTour.m_scanner.nextInt();
+        AffichageTour.m_scanner.nextLine();
         Entite entite1 = donjon.getCase(new int[]{coo11,coo12});
         if(entite1 != null && entite1 instanceof Personnage personnage) {
             int pv = Des.lancer(10);
@@ -264,7 +263,7 @@ public class Tour {
 
     public static void deplacer(Donjon donjon, Entite entite) {
         System.out.println("Choisiser la distance de deplacement: ");
-        int distance = Tour.m_scanner.nextInt();
+        int distance = AffichageTour.m_scanner.nextInt();
         if(distance < 0){
             System.out.println("Distance positive !");
             deplacer(donjon, entite);
@@ -276,7 +275,7 @@ public class Tour {
         System.out.println("3. gauche :");
         System.out.println("4. droite :");
         int[] direction = null;
-        switch (Tour.m_scanner.nextInt()) {
+        switch (AffichageTour.m_scanner.nextInt()) {
             case 1: direction = new int[]{0,1}; break;
             case 2: direction = new int[]{1,0}; break;
             case 3: direction = new int[]{0,-1}; break;

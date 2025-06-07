@@ -1,5 +1,6 @@
 package ded;
 
+
 import ded.donjon.Donjon;
 import ded.donjon.DonjonParDefault;
 import ded.entite.*;
@@ -9,14 +10,23 @@ import ded.objet.Arme;
 import ded.objet.Armure;
 import org.jetbrains.annotations.NotNull;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
+
+
+
+
 
 public class Affichage{
 
 
+
+
     private static final Scanner m_scanner = new Scanner(System.in);
     private static ArrayList<Personnage> lstPersonnage = new ArrayList<Personnage>();
+
 
     public static void metreEnPlacePersonnage() {
         for(int i = 0; i < 4; i++)
@@ -25,6 +35,7 @@ public class Affichage{
             Classe classe = null;
             System.out.println("Choisir le nom du personnage n °" + (i+1) + ":");
             String nom = m_scanner.nextLine();
+
 
             // Choix de la race
             System.out.println("Choisir une race :\n1. Humain\n2. Elfe\n3. Halfelin\n4. Nain");
@@ -39,6 +50,7 @@ public class Affichage{
                     race = new Humain();
                 }
             }
+
 
             // Choix de la classe
             System.out.println("Choisir une classe :\n1. Guerrier\n2. Mage\n3. Voleur\n4. Clerc");
@@ -56,13 +68,17 @@ public class Affichage{
             Personnage p = new Personnage(nom,null,classe, race);
             Affichage.lstPersonnage.add(p);
 
+
         }
     }
+
 
     public static void MetreEnPlaceDonjon(Donjon donjon) {
         System.out.println("Metre en place le donjon" );
 
+
         Boolean flag = false;
+
 
         //metre en place donjon choisis
         System.out.println("Choisir un donjon :\n1. Donjon par default 1\n2. Donjon par default 2\n3. Donjon par default 3\n4. Mettre en place le donjon");
@@ -78,6 +94,7 @@ public class Affichage{
             }
         }
 
+
         if(flag){
             //Dimension de la map
             System.out.println("Choisir dimension map :");
@@ -88,6 +105,7 @@ public class Affichage{
             donjon.setDiemensionMap(new int[]{choix,choix2});
             Affichage.clearTerminalDonjon(donjon);
 
+
             //placer les personnages
             int i = 0;
             boolean flag2 = true;
@@ -96,19 +114,20 @@ public class Affichage{
                 choix = m_scanner.nextInt();
                 switch (choix) {
                     case 1 : for(Personnage personnage : Affichage.lstPersonnage){
-                            Affichage.placerPersonnage(donjon, personnage);
-                            break;
+                        Affichage.placerPersonnage(donjon, personnage);
+                        break;
                     }
                     case 2 : flag2 = false;
                 }
             }
 
+
             //ajout des monstres
             ArrayList<Espece> lstEspece = new ArrayList<Espece>();
             lstEspece.add(new Espece("Gobelin"));
             System.out.println("Ajouter equipement:");
-            boolean flag2 = true;
-            while (flag2){
+            flag2 = true;
+            while (flag){
                 System.out.println("1. Ajouter Monstre\n2. Continuer la mise en place du donjon");
                 choix = m_scanner.nextInt();
                 switch (choix) {
@@ -117,67 +136,75 @@ public class Affichage{
                 }
             }
 
+
             //ajout des equipements
             System.out.println("Ajouter equipement:");
-            boolean flag3 = true;
-            while (flag3){
+            flag2 = true;
+            while (flag2){
                 System.out.println("1. Ajouter Arme\n2. Ajouter Armure \n3. Continuer la mise en place du donjon");
                 choix = m_scanner.nextInt();
                 switch (choix) {
                     case 1 : Affichage.mettreEnPlaceArme(donjon);break;
                     case 2 : Affichage.mettreEnPlaceArmure(donjon); break;
-                    case 3 : flag3 = false;
+                    case 3 : flag2 = false;
                 }
             }
             System.out.println("Ajouter obstacles:");
-            boolean flag4 = true;
-            while (flag4){
+            flag2 = true;
+            while (flag2){
                 System.out.println("1. Ajouter Obstacle\n2. Continuer mise en place donjon");
                 System.out.println("");
                 choix = m_scanner.nextInt();
                 switch (choix) {
                     case 1 : Affichage.mettreEnPlaceObstacle(donjon);break;
-                    case 2 : flag4 = false;
+                    case 2 : flag2 = false;
                 }
             }
         }
         Affichage.clearTerminalDonjon(donjon);
     }
 
-    public static void clearTerminalDonjon(@NotNull Donjon donjon){
+
+    public static void clearTerminalDonjon(Donjon donjon){
         System.out.flush();
         donjon.genererDonjon();
         System.out.println( donjon.getDonjon());
     }
 
+
     public static void placerPersonnage(Donjon donjon, Personnage personnage) {
-            System.out.println("Choisir les coordonees du personnage" + personnage);
-            System.out.println("X :");
-            int  choix1 = m_scanner.nextInt();
-            System.out.println("Y :");
-            int  choix2 = m_scanner.nextInt();
-            if(donjon.verfifierCoo(new int[]{choix1,choix2})){
-                personnage.setCoo(new int[]{choix1,choix2});
-            }
-            else{
-                System.out.println("Coordonnee invalide, coordonnee deja occupee ou hors des dimension de la map");
-                placerPersonnage(donjon, personnage);
-            }
+        System.out.println("Choisir les coordonees du personnage " + personnage);
+        System.out.println("X :");
+        int  choix1 = m_scanner.nextInt();
+        System.out.println("Y :");
+        int  choix2 = m_scanner.nextInt();
+        if(donjon.verfifierCoo(new int[]{choix1,choix2})){
+            personnage.setCoo(new int[]{choix1,choix2});
+        }
+        else{
+            System.out.println("Coordonnee invalide, coordonnee deja occupee ou hors des dimension de la map");
+            placerPersonnage(donjon, personnage);
         }
     }
 
-    public static void mettreEnPlaceObstacle(@NotNull Donjon donjon){
+
+
+    public static void mettreEnPlaceObstacle(Donjon donjon){
         System.out.println("Choisir les coordonées de l'obstacle:");
         System.out.println("X :");
         int  choix1 = m_scanner.nextInt();
         System.out.println("Y :");
         int  choix2 = m_scanner.nextInt();
         donjon.addObstacles(new int[]{choix1, choix2});
-        if(! donjon.addObstacles(new int[]{choix1, choix2})){
+        if(donjon.verfifierCoo(new int[]{choix1, choix2})){
+            donjon.addObstacles(new int[]{choix1,choix2});
+        }
+        else {
             System.out.println("Les coordonées appartienent deja à quelque chose sur la map ou sont hors des dimensions.");
             mettreEnPlaceObstacle(donjon);
         }
     }
+
 
     public static void mettreEnPlaceArme(Donjon donjon){
         System.out.println("Choisir une arme parmis celle-ci:\n"+
@@ -191,13 +218,13 @@ public class Affichage{
         int choix =  m_scanner.nextInt();
         Arme arme;
         switch (choix) {
-            case 1 : arme = new Arme("Baton",null, Arme.Type.COURANTE, new int[]{1,6},1 );
-            case 2 : arme = new Arme("Masse d'armes",null, Arme.Type.COURANTE, new int[]{1,6},1 );
-            case 3 : arme = new Arme("Epee longue",null, Arme.Type.GUERRE, new int[]{1,8},1 );
-            case 4 : arme = new Arme("Rapière",null, Arme.Type.GUERRE, new int[]{1,8},1 );
-            case 5 : arme = new Arme("Arbalete legere",null, Arme.Type.DISTANCE, new int[]{1,8},16 );
-            case 6 : arme = new Arme("Fronde",null, Arme.Type.DISTANCE, new int[]{1,4},6 );
-            case 7 : arme = new Arme("Arc court",null, Arme.Type.DISTANCE, new int[]{1,6},16 );
+            case 1 : arme = new Arme("Baton",null, Arme.Type.COURANTE, new int[]{1,6},1 );break;
+            case 2 : arme = new Arme("Masse d'armes",null, Arme.Type.COURANTE, new int[]{1,6},1 );break;
+            case 3 : arme = new Arme("Epee longue",null, Arme.Type.GUERRE, new int[]{1,8},1 );break;
+            case 4 : arme = new Arme("Rapière",null, Arme.Type.GUERRE, new int[]{1,8},1 );break;
+            case 5 : arme = new Arme("Arbalete legere",null, Arme.Type.DISTANCE, new int[]{1,8},16 );break;
+            case 6 : arme = new Arme("Fronde",null, Arme.Type.DISTANCE, new int[]{1,4},6 );break;
+            case 7 : arme = new Arme("Arc court",null, Arme.Type.DISTANCE, new int[]{1,6},16 );break;
             default : {
                 System.out.println("Aucune option choisis, Baton choisis.");
                 arme = new Arme("Baton",null, Arme.Type.COURANTE, new int[]{1,6},1 );
@@ -209,19 +236,23 @@ public class Affichage{
         System.out.println("Y :");
         int  choix2 = m_scanner.nextInt();
         arme.setCoo(new int[]{choix1,choix2} );
-        if(! donjon.addEquipement(arme)){
+        if(donjon.verfifierCoo(new int[]{choix1, choix2})){
+            donjon.addEquipement(arme);
+        }
+        else {
             System.out.println("Les coordonées appartienent deja à quelque chose sur la map ou sont hors des dimensions.");
-            mettreEnPlaceArme(donjon);
+            mettreEnPlaceObstacle(donjon);
         }
     }
     public static void mettreEnPlaceArmure(Donjon donjon){
+
 
         System.out.println("Choisir une armure parmis celle-ci:\n"+
                 "1.armure d'écailles, classe d'armure: 9\n" +
                 "2.demi-plate,        classe d'armure: 10\n" +
                 "3.cotte de mailles,  classe d'armure: 11\n" +
                 "4.harnois: classe d'armure: 12\n" );
-        int choix = m_scanner.nextInt();
+        int choix = this.m_scanner.nextInt();
         Armure armure;
         switch (choix) {
             case 1 : armure = new Armure("Cotte de mailles",null, Armure.Type.LOURDE,11);
@@ -240,26 +271,36 @@ public class Affichage{
         int  choix2 = m_scanner.nextInt();
         armure.setCoo(new int[]{choix1,choix2});
 
-        if(! donjon.addEquipement(armure)){
+
+        if(donjon.verfifierCoo(new int[]{choix1, choix2})){
+            donjon.addEquipement(armure);
+        }
+        else {
             System.out.println("Les coordonées appartienent deja à quelque chose sur la map ou sont hors des dimensions.");
             mettreEnPlaceArmure(donjon);
         }
     }
+
 
     public static void mettreEnPlaceMonstre(Donjon donjon, ArrayList<Espece> lstEspece){
         Entite monstre;
         Espece espece;
         int[] stats = new int[5];
 
+
+        //COnsomer
+        m_scanner.nextLine();
         //nom du monstre
         System.out.println("Choisir le nom du Monstre :");
         String nom = m_scanner.nextLine();
         m_scanner.nextLine();
 
+
         //espece du monstre
         System.out.println("Choisir une espece :\n1. Choisir d'une espece existante :\n2. Créer une nouvelle espece :");
         int choix = m_scanner.nextInt();
         m_scanner.nextLine();
+
 
         switch (choix) {
             case 1 : espece = Affichage.choisirParmisEspece(lstEspece);break;
@@ -269,6 +310,7 @@ public class Affichage{
                 espece = lstEspece.get(0);
             }
         }
+
 
         //Les caracteristique du monstre
         System.out.println("Classe d'armure :");
@@ -284,6 +326,7 @@ public class Affichage{
         System.out.println("Initiative :");
         stats[4] = m_scanner.nextInt();
 
+
         //Coordonées du monstre
         System.out.println("Choisir les coordonées du Monstre:");
         System.out.println("X :");
@@ -292,8 +335,15 @@ public class Affichage{
         int  choix2 = m_scanner.nextInt();
         int[] coo = new int[]{choix1,choix2};
 
+
         monstre = new Monstre("oui", coo, espece, classeArmure, stats);
-        donjon.addEntitee(monstre);
+        if(donjon.verfifierCoo(coo)){
+            donjon.addObstacles(coo);
+        }
+        else {
+            System.out.println("Les coordonées appartienent deja à quelque chose sur la map ou sont hors des dimensions.");
+            mettreEnPlaceMonstre(donjon, lstEspece);
+        }
     }
     public static Espece mettreEnPlaceEspece(ArrayList<Espece> lstEspece){
         System.out.println("Choisir nom Espece:");
@@ -319,5 +369,5 @@ public class Affichage{
             return lstEspece.get(0);
         }
     }
-
 }
+
