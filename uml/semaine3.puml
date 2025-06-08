@@ -1,0 +1,387 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+scale 1
+
+skinparam style strictuml
+hide empty members
+skinparam defaultFontName "Consolas"
+skinparam classFontSize 12
+skinparam classAttributeIconSize 0
+hide empty methods
+hide empty fields
+skinparam class {
+    RoundCorner 20
+    BackgroundColor #FAFAFA
+    BorderColor #333333
+    Shadowing true
+}
+top to bottom direction
+skinparam dpi 150
+scale 1.2
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 30
+
+
+package ded {
+    package affichage {
+        class AffichageMiseEnPlace {
+            - {static} m_scanner : Scanner
+            - {static} lstPersonnage : ArrayList<Personnage>
+            + {static} mettreEnPlacePersonnage()
+            + {static} creerDonjon() : Donjon
+            + {static} mettreEnPlaceDonjon() : Donjon
+            + {static} clearTerminalDonjon(donjon: Donjon)
+            # {static} choisirRace() : Race
+            # {static} choisirClasse() : Classe
+            # {static} ajouterElements(donjon: Donjon, lstEspece: ArrayList<Espece>)
+            # {static} ajouterEquipement(donjon: Donjon)
+            # {static} placerPersonnages(donjon: Donjon) : Donjon
+            # {static} demanderCoordonnees() : int[]
+            # {static} mettreEnPlaceObstacle(donjon: Donjon) : int[]
+            # {static} mettreEnPlaceArme(donjon: Donjon) : Equipement
+            # {static} mettreEnPlaceArmure(donjon: Donjon) : Equipement
+            # {static} mettreEnPlaceMonstre(donjon: Donjon, lstEspece: ArrayList<Espece>) : Entite
+            # {static} demanderStats() : int[]
+            # {static} mettreEnPlaceEspece(lstEspece: ArrayList<Espece>) : Espece
+            # {static} choisirParmisEspece(lstEspece: ArrayList<Espece>) : Espece
+            # {static} choisirEspece(lstEspece: ArrayList<Espece>) : Espece
+        }
+
+        class AffichageTour {
+            - {static} m_scanner : Scanner
+            + {static} afficherDonjon(donjon: Donjon, nDonjon: Integer)
+            + {static} afficherActionPrecedente(commentaireActionPrecedente: String)
+            + {static} afficherAction(entite: Entite, estMagicien: Boolean, estClerc: Boolean)
+            + {static} attaquer(donjon: Donjon, entite: Entite) : String
+            + {static} deplacer(donjon: Donjon, entite: Entite) : String
+            + {static} equiper(personnage: Personnage) : String
+            + {static} recuperer(donjon: Donjon, personnage: Personnage) : String
+            + {static} guerison(donjon: Donjon, entite: Entite) : String
+            + {static} armeMagique(donjon: Donjon, entite: Entite) : String
+            + {static} boogieWoogie(donjon: Donjon) : String
+            + {static} actionMj(donjon: Donjon, entite: Entite)
+            + {static} mjAjouterObstacle(donjon: Donjon)
+            + {static} mjInfligerDegat(entite: Entite)
+            + {static} mjDeplacerEntite(donjon: Donjon, entite: Entite)
+            # {static} obtenirChoixUtilisateur(min: Integer, max: Integer) : Integer
+            # {static} obtenirCoordonnees() : int[]
+            # {static} demanderNombre(message: String) : Integer
+            # {static} demanderPorteeAttaque() : Integer
+            # {static} demanderDesDegats() : int[]
+            + {static} affichageStats(entite: Entite)
+            + {static} affichageInventaire(personnage: Personnage)
+            + {static} afficherErreur(message: String)
+            + {static} clearTerminalDonjon(donjon: Donjon)
+        }
+    }
+
+    package donjon {
+        class Donjon {
+            - m_lstEntite : ArrayList<Entite>
+            - m_lstEquipement : ArrayList<Equipement>
+            - m_lstObstacle : ArrayList<int[]>
+            - m_donjon : String[][]
+            - m_dimensionMap : int[]
+            - m_finDonjon : Boolean
+            + <<create>> Donjon()
+            + <<create>> Donjon(dimensionMap: int[])
+            + <<create>> Donjon(lstEntite: ArrayList<Entite>, lstEquipement: ArrayList<Equipement>, lstObstacles: ArrayList<int[]>, dimensionMap: int[])
+            + getDonjon() : String
+            + genererDonjon()
+            + addEntitee(entite: Entite)
+            + addEquipement(equipement: Equipement)
+            + addObstacles(coo: int[])
+            + verfifierCoo(coo: int[]) : Boolean
+            + touche(portee: Integer, coo1: int[], coo2: int[]) : Boolean
+            + isFinDonjon() : Boolean
+            + supprimerEquipement(equipement: Equipement)
+            + supprimerMonstre()
+            + deplacerDirection(entite: Entite, direction: int[], distance: Integer) : Boolean
+            + getDimensionMap() : Integer[2]
+            + setDimensionMap(dimensionMap: int[])
+            + getLstEntite() : ArrayList<Entite>
+            + setLstEntite(lstEntite: ArrayList<Entite>)
+            + getOrdreEntite() : ArrayList<Entite>
+            + getCaseEntite(coo: Integer[2]) : Entite
+            + getCaseEquipement(coo: Integer[2]) : Equipement
+        }
+
+        class DonjonParDefault {
+            + {static} getDonjonParDefault1() : Donjon
+            + {static} getDonjonParDefault2() : Donjon
+            + {static} getDonjonParDefault3() : Donjon
+        }
+    }
+
+    package entite {
+        abstract class Entite <<abstract>> {
+            - m_nom : String
+            - m_coo : Integer[2]
+            - m_vie : Integer
+            - m_vitesse : Integer
+            - m_force : Integer
+            - m_dexterite : Integer
+            - m_initiative : Integer
+            - m_classeArmure : Integer
+            - m_portee : Integer
+            + <<create>> Entite(nom: String, coo: Integer[2], stats: Integer[2])
+            + setDegat(degat: Integer)
+            + setAttaque(degat: Integer) : Boolean
+            + getDexterite() : Integer
+            + getForce() : Integer
+            + getVitesse() : Integer
+            + getVie() : Integer
+            + getClasseArmure() : Integer
+            + getPortee() : Integer
+            + getNom() : String
+            + setCoo(coo: Integer[2])
+            + getCoo() : Integer[2]
+            + getInitiative() : Integer
+        }
+
+        class Espece {
+            - m_nom : String
+            + <<create>> Espece(nom: String)
+            + getNom() : String
+        }
+
+        class Monstre extends Entite {
+            - m_espece : Espece
+            + <<create>> Monstre(nom: String, coo: Integer[2], espece: Espece, classeA: Integer, stats: Integer[2])
+            + getClasseArmure() : Integer
+            + getEspece() : Espece
+            + getAttaque(portee: Integer, degat: Integer[2]) : Integer
+            + getDegat(degat: int[]) : Integer
+        }
+
+        class Personnage extends Entite {
+            - m_armeEquipe : Optional<Arme>
+            - m_armureEquipe : Optional<Armure>
+            - m_inventaire : ArrayList<Equipement>
+            - m_classe : Classe
+            - m_race : Race
+            + <<create>> Personnage(nom: String, coo: Integer[2], classe: Classe, race: Race)
+            + getAttaque() : Integer
+            + getDegat() : Integer
+            + recupererEquipement(equipement: Equipement)
+            + equiperEquipement(index: Integer)
+            + getClasse() : Classe
+            + getClasseArmureEquipe() : Integer
+            + getPorteeArmeEquipe() : Integer
+            + getArmeEquipe() : Arme
+            + getArmureEquipe() : Armure
+            + getInventaire() : ArrayList<Equipement>
+            + getVitesse() : Integer
+            + guerison(pv: Integer)
+        }
+
+        package classe {
+            abstract class Classe <<abstract>> {
+                        - m_nom : String
+                        - m_vie : Integer
+                        - m_lstEquipement : ArrayList<Equipement>
+                        + <<create>> Classe(vie: Integer)
+                        + getVie() : Integer
+                        + getEquipement() : ArrayList<Equipement>
+                    }
+
+                    class Clerc extends Classe {
+                        + <<create>> Clerc()
+                        - {static} m_vie : Integer = 16
+                        - {static} m_nom : String = "Clerc"
+                        - {static} m_lstEquipement : ArrayList<Equipement>
+                    }
+
+                    class Guerrier extends Classe {
+                        + <<create>> Guerrier()
+                        - {static} m_vie : Integer = 20
+                        - {static} m_nom : String = "Guerrier"
+                        - {static} m_lstEquipement : ArrayList<Equipement>
+                    }
+
+                    class Magicien extends Classe {
+                        + <<create>> Magicien()
+                        - {static} m_vie : Integer = 12
+                        - {static} m_nom : String = "Magicien"
+                        - {static} m_lstEquipement : ArrayList<Equipement>
+                        + boogieWoogie(entite1: Entite, entite2: Entite)
+                        + armeMagique(arme: Arme)
+                    }
+
+                    class Roublard extends Classe {
+                        + <<create>> Roublard()
+                        - {static} m_vie : Integer = 16
+                        - {static} m_nom : String = "Roublard"
+                        - {static} m_lstEquipement : ArrayList<Equipement>
+                    }
+        }
+
+        package race {
+                    abstract class Race <<abstract>> {
+                        - m_nom : String
+                        - m_bonusVie : Integer
+                        - m_bonusVitesse : Integer
+                        - m_bonusForce : Integer
+                        - m_bonusDexterite : Integer
+                        - m_bonusInitiative : Integer
+                        + <<create>> Race(bonusVie: Integer, bonusVitesse: Integer, bonusForce: Integer, bonusDexterite: Integer, bonusInitiative: Integer)
+                        + getVie() : Integer
+                        + getVitesse() : Integer
+                        + getForce() : Integer
+                        + getDexterite() : Integer
+                        + getInitiative() : Integer
+                        + getNom() : String
+                    }
+
+                    class Elfe extends Race {
+                        + <<create>> Elfe()
+                        - {static} m_bonusDexterite : Integer = 6
+                        - {static} m_nom : String = "Elfe"
+                    }
+
+                    class Halfelin extends Race {
+                        + <<create>> Halfelin()
+                        - {static} m_bonusDexterite : Integer = 4
+                        - {static} m_bonusInitiative : Integer = 2
+                        - {static} m_nom : String = "Halfelin"
+                    }
+
+                    class Humain extends Race {
+                        + <<create>> Humain()
+                        - {static} m_bonusVie : Integer = 2
+                        - {static} m_bonusVitesse : Integer = 2
+                        - {static} m_bonusForce : Integer = 2
+                        - {static} m_bonusDexterite : Integer = 2
+                        - {static} m_bonusInitiative : Integer = 2
+                        - {static} m_nom : String = "Humain"
+                    }
+
+                    class Nain extends Race {
+                        + <<create>> Nain()
+                        - {static} m_bonusVitesse : Integer = 6
+                        - {static} m_nom : String = "Nain"
+                    }
+        }
+    }
+
+    package objet {
+        abstract class Equipement <<abstract>> {
+            - m_nom : String
+            - m_ralentissement : Integer
+            - m_coo : Optional<int[]>
+            + <<create>> Equipement(nom: String, coo: int[])
+            + getNom() : String
+            + getRalentissement() : Integer
+            + setCoo(coo: int[])
+            + getCoo() : int[]
+        }
+
+        class Arme extends Equipement {
+            - m_degat : int[]
+            - m_portee : Integer
+            - m_force : Integer
+            - m_bonusMagique : Integer
+            - m_type : Type
+            + <<create>> Arme(nom: String, coo: int[], type: Type, degat: int[], portee: Integer)
+            + getDegat() : int[]
+            + getPortee() : Integer
+            + getType() : Type
+            + getBonusMagique() : Integer
+            + addBonusMagique()
+        }
+
+        class Armure extends Equipement {
+            - m_classe : Integer
+            - m_type : Type
+            + <<create>> Armure(nom: String, coo: int[], type: Type, classe: Integer)
+            + getClasse() : Integer
+            + getType() : Type
+        }
+    }
+
+    class Des {
+        - {static} jetD : Random
+        + {static} lancer(faces: Integer) : Integer
+        + {static} lancerMulti(nbDes: Integer, faces: Integer) : Integer
+        + {static} lancerBonus(nbDes: Integer, faces: Integer, bonus: Integer) : Integer
+    }
+}
+
+' 1. Relations d'héritage
+Entite <|-- Personnage
+Entite <|-- Monstre
+
+Classe <|-- Clerc
+Classe <|-- Guerrier
+Classe <|-- Magicien
+Classe <|-- Roublard
+
+Race <|-- Elfe
+Race <|-- Halfelin
+Race <|-- Humain
+Race <|-- Nain
+
+Equipement <|-- Arme
+Equipement <|-- Armure
+
+' 2. Relations de composition/agrégation
+Donjon "1" *--> "*\n-m_lstEntite" Entite : contient >
+Donjon "1" *--> "*\n-m_lstEquipement" Equipement : contient >
+Donjon "1" *--> "*\n-m_lstObstacle" Integer : contient >
+
+Personnage *-> "1\n-m_classe" Classe : a pour classe >
+Personnage *-> "1\n-m_race" Race : a pour race >
+Personnage o-> "*\n-m_inventaire" Equipement : possède >
+Personnage o-> "0..1\n-m_armeEquipe" Arme : équipée >
+Personnage o-> "0..1\n-m_armureEquipe" Armure : équipée >
+
+Monstre *-> "1\n-m_espece" Espece : est de type >
+
+' 3. Relations d'utilisation (dépendances)
+AffichageMiseEnPlace ..> Personnage : <<uses>>
+AffichageMiseEnPlace ..> Donjon : <<uses>>
+AffichageMiseEnPlace ..> DonjonParDefault : <<uses>>
+AffichageMiseEnPlace ..> Equipement : <<uses>>
+AffichageMiseEnPlace ..> Arme : <<uses>>
+AffichageMiseEnPlace ..> Armure : <<uses>>
+AffichageMiseEnPlace ..> Espece : <<uses>>
+
+AffichageTour ..> Donjon : <<uses>>
+AffichageTour ..> Entite : <<uses>>
+AffichageTour ..> Personnage : <<uses>>
+AffichageTour ..> Monstre : <<uses>>
+AffichageTour ..> Equipement : <<uses>>
+AffichageTour ..> Arme : <<uses>>
+AffichageTour ..> Armure : <<uses>>
+AffichageTour ..> Des : <<uses>>
+
+DonjonParDefault ..> Donjon : <<uses>>
+DonjonParDefault ..> Entite : <<uses>>
+DonjonParDefault ..> Monstre : <<uses>>
+DonjonParDefault ..> Espece : <<uses>>
+DonjonParDefault ..> Equipement : <<uses>>
+DonjonParDefault ..> Arme : <<uses>>
+DonjonParDefault ..> Armure : <<uses>>
+
+' 4. Relations spécifiques aux équipements de départ
+Clerc "1" *--> "1\n-m_lstEquipement" Armure : "Armure d'écaille" >
+Clerc "1" *--> "1\n-m_lstEquipement" Arme : "Masse d'armes" >
+Clerc "1" *--> "1\n-m_lstEquipement" Arme : "Arbalète légère" >
+
+Guerrier "1" *--> "1\n-m_lstEquipement" Armure : "Cotte de mailles" >
+Guerrier "1" *--> "1\n-m_lstEquipement" Arme : "Épée longue" >
+Guerrier "1" *--> "1\n-m_lstEquipement" Arme : "Arbalète légère" >
+
+Magicien "1" *--> "1\n-m_lstEquipement" Arme : "Bâton" >
+Magicien "1" *--> "1\n-m_lstEquipement" Arme : "Fronde" >
+
+Roublard "1" *--> "1\n-m_lstEquipement" Arme : "Rapière" >
+Roublard "1" *--> "1\n-m_lstEquipement" Arme : "Arc court" >
+
+' 5. Relations d'énumération
+Arme "1" *--> "1\n-m_type" Arme.Type : est de type >
+Armure "1" *--> "1\n-m_type" Armure.Type : est de type >
+}
+
+@enduml

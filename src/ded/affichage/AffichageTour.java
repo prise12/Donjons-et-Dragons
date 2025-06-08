@@ -41,8 +41,8 @@ public class AffichageTour {
             for (Entite entite : donjon.getOrdreEntite()) {
                 if (entite.getVie() <= 0) continue;
 
-                boolean estMagicien = false;
-                boolean estClerc = false;
+                boolean estMagicien = entite instanceof Personnage p && p.getClasse() instanceof Magicien;
+                boolean estClerc = entite instanceof Personnage p && p.getClasse() instanceof Clerc;
 
                 clearTerminalDonjon(donjon);
                 System.out.println("----------C'est au tour de " + entite.getNom()+"----------");
@@ -53,7 +53,8 @@ public class AffichageTour {
                     System.out.println("----" + entite.getNom() + "----");
                     System.out.println("\nAction " + action + "/3");
 
-                    afficherAction(entite, estMagicien, estClerc);
+                    afficherAction(entite);
+
 
                     int choix = obtenirChoixUtilisateur(0, estMagicien ? 8 : estClerc ? 6 : entite instanceof Personnage ? 5 : 3);
                     switch (choix) {
@@ -108,19 +109,15 @@ public class AffichageTour {
     /**
      * Affiche les options d'action disponibles pour une entité.
      */
-    public static void afficherAction(Entite entite, boolean estMagicien, boolean estClerc) {
+    public static void afficherAction(Entite entite) {
         String actions = "Choisissez parmi ces actions:\n0. Passer action\n1. Commentaire de l'action précédente\n2. Se déplacer\n3. Attaquer";
-        estMagicien = false;
-        estClerc = false;
 
         if (entite instanceof Personnage personnage) {
             affichageInventaire(personnage);
             actions += "\n4. Equiper équipement\n5. Recuperer équipement";
             if (personnage.getClasse() instanceof Magicien) {
-                estMagicien = true;
                 actions += "\n6. Guérison\n7. Boogie Woogie\n8. Arme Magique";
             } else if (personnage.getClasse() instanceof Clerc) {
-                estClerc = true;
                 actions += "\n6. Guérison";
             }
         }
@@ -144,6 +141,10 @@ public class AffichageTour {
 
             if (!donjon.touche(entite.getPortee(), entite.getCoo(), cible.getCoo())){
                 System.out.println("La cible est hors de portée.");
+                return commentaireAction;
+            }
+            if (entite.getClass() == cible.getClass()){
+                System.out.println("La cible est un alié.");
                 return commentaireAction;
             }
 
@@ -245,7 +246,7 @@ public class AffichageTour {
         return commentaireAction;
     }
 
-    // ===================== SORTS & POUVOIRS =====================
+    // ===================== SORTS =====================
 
     public static String guerison(Donjon donjon, Entite entite) {
         System.out.println("\nChoisissez la case du personnage à guérir (X Y):");
@@ -261,7 +262,8 @@ public class AffichageTour {
         int pv = Des.lancer(10);
         personnage.guerison(pv);
         commentaireAction = personnage.getNom() + " a récupéré " + pv + " PV.";
-        commentaireAction = "PV actuels: " + personnage.getVie();
+        commentaireAction += "PV actuels: " + personnage.getVie();
+        System.out.println(commentaireAction);
         return commentaireAction;
     }
 
