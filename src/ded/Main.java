@@ -11,10 +11,10 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String rouge = "\u001B[0m";
-        System.out.println(rouge + "oui" + "\u001B[0m");
-        AffichageMiseEnPlace.metreEnPlacePersonnage();
-        Donjon d1 = AffichageMiseEnPlace.creerDonjon();
-        AffichageTour.jeuDonjon(d1);
+        for(int i = 1; i<=3; i++) {
+            AffichageMiseEnPlace.metreEnPlacePersonnage();
+            Donjon d1 = AffichageMiseEnPlace.creerDonjon();
+            AffichageTour.afficherDonjon(d1,i);
+        }
     }
 }

@@ -61,14 +61,7 @@ public abstract class Entite {
     }
     public int getInitiative(){return this.m_initiative;}
 
-    public boolean deplacerDirection(int[] direction, int distance){
-        if( 0 > distance || distance > this.m_vitesse){
-            return false;
-        }
-        this.m_coo[0] = this.m_coo[0] + (direction[0] * distance);
-        this.m_coo[1] = this.m_coo[1] + (direction[1] * distance);
-        return true;
-    }
+
 
 
 }

@@ -12,10 +12,22 @@ import ded.objet.Equipement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Classe responsable de l’affichage et de la mise en place
+ * des éléments du jeu tels que les personnages, le donjon,
+ * les monstres, les obstacles et les équipements.
+ */
 public class AffichageMiseEnPlace {
+
+    // ===================== ATTRIBUTS =====================
     private static final Scanner m_scanner = new Scanner(System.in);
     private static final ArrayList<Personnage> lstPersonnage = new ArrayList<>();
 
+    // ===================== MÉTHODES PUBLIQUES =====================
+
+    /**
+     * Permet à l’utilisateur de créer un ou plusieurs personnages.
+     */
     public static void metreEnPlacePersonnage() {
         System.out.print("Nombre de personnages : ");
         int nbPersonnage = m_scanner.nextInt();
@@ -31,10 +43,66 @@ public class AffichageMiseEnPlace {
             m_scanner.nextLine();
 
             lstPersonnage.add(new Personnage(nom, null, classe, race));
-
         }
     }
 
+    /**
+     * Crée un donjon à partir de choix de l’utilisateur (prédéfini ou personnalisé).
+     * @return le donjon créé avec les personnages placés
+     */
+    public static Donjon creerDonjon() {
+        System.out.println("\nConfiguration du donjon :");
+        System.out.println("1. Donjon par défaut 1");
+        System.out.println("2. Donjon par défaut 2");
+        System.out.println("3. Donjon par défaut 3");
+        System.out.println("4. Donjon personnalisé");
+        System.out.print("Choix : ");
+
+        int choix = m_scanner.nextInt();
+        switch (choix) {
+            case 2: return placerPersonnages(DonjonParDefault.getDonjonParDefault2());
+            case 3: return placerPersonnages(DonjonParDefault.getDonjonParDefault3());
+            case 4: return placerPersonnages(metreEnPlaceDonjon());
+            default: return placerPersonnages(DonjonParDefault.getDonjonParDefault1());
+        }
+    }
+
+    /**
+     * Crée un donjon personnalisé en demandant ses dimensions.
+     * @return un donjon vide configuré
+     */
+    public static Donjon metreEnPlaceDonjon() {
+        System.out.println("\nDimensions du donjon :");
+        System.out.print("Largeur (X) : ");
+        int x = m_scanner.nextInt();
+        System.out.print("Hauteur (Y) : ");
+        int y = m_scanner.nextInt();
+
+        Donjon donjon = new Donjon();
+        donjon.setDiemensionMap(new int[]{x, y});
+
+        ArrayList<Espece> lstEspece = new ArrayList<>();
+        lstEspece.add(new Espece("Gobelin"));
+
+        ajouterElements(donjon, lstEspece);
+        return donjon;
+    }
+
+    /**
+     * Rafraîchit l'affichage du donjon dans le terminal.
+     * @param donjon le donjon à afficher
+     */
+    public static void clearTerminalDonjon(Donjon donjon) {
+        donjon.genererDonjon();
+        System.out.println(donjon.getDonjon());
+    }
+
+    // ===================== MÉTHODES PRIVÉES =====================
+
+    /**
+     * Permet de choisir une race pour un personnage.
+     * @return la race choisie
+     */
     private static Race choisirRace() {
         System.out.println("Races disponibles :");
         System.out.println("1. Humain\n2. Elfe\n3. Halfelin\n4. Nain");
@@ -48,6 +116,10 @@ public class AffichageMiseEnPlace {
         }
     }
 
+    /**
+     * Permet de choisir une classe pour un personnage.
+     * @return la classe choisie
+     */
     private static Classe choisirClasse() {
         System.out.println("Classes disponibles :");
         System.out.println("1. Guerrier\n2. Mage\n3. Voleur\n4. Clerc");
@@ -61,38 +133,9 @@ public class AffichageMiseEnPlace {
         }
     }
 
-    public static Donjon creerDonjon() {
-        System.out.println("\nConfiguration du donjon :");
-        System.out.println("1. Donjon par défaut 1");
-        System.out.println("2. Donjon par défaut 2");
-        System.out.println("3. Donjon par défaut 3");
-        System.out.println("4. Donjon personnalisé");
-        System.out.print("Choix : ");
-
-        int choix = m_scanner.nextInt();
-        switch (choix) {
-            case 2: return placerPersonnages(DonjonParDefault.getDonjonParDefault2());
-            case 3: return placerPersonnages( DonjonParDefault.getDonjonParDefault3());
-            case 4: return placerPersonnages( metreEnPlaceDonjon());
-            default: return placerPersonnages( DonjonParDefault.getDonjonParDefault1());
-        }
-    }
-
-    public static Donjon metreEnPlaceDonjon() {
-        System.out.println("\nDimensions du donjon :");
-        System.out.print("Largeur (X) : ");
-        int x = m_scanner.nextInt();
-        System.out.print("Hauteur (Y) : ");
-        int y = m_scanner.nextInt();
-
-        Donjon donjon = new Donjon(new int[]{x, y});
-        ArrayList<Espece> lstEspece = new ArrayList<>();
-        lstEspece.add(new Espece("Gobelin"));
-
-        ajouterElements(donjon, lstEspece);
-        return donjon;
-    }
-
+    /**
+     * Permet à l’utilisateur d’ajouter des entités au donjon (monstre, équipement, obstacle).
+     */
     private static void ajouterElements(Donjon donjon, ArrayList<Espece> lstEspece) {
         int choix;
         do {
@@ -102,20 +145,17 @@ public class AffichageMiseEnPlace {
             choix = m_scanner.nextInt();
 
             switch (choix) {
-                case 1:
-                    donjon.addEntitee(mettreEnPlaceMonstre(donjon, lstEspece));
-                    break;
-                case 2:
-                    ajouterEquipement(donjon);
-                    break;
-                case 3:
-                    donjon.addObstacles(mettreEnPlaceObstacle(donjon));
-                    break;
+                case 1: donjon.addEntitee(mettreEnPlaceMonstre(donjon, lstEspece)); break;
+                case 2: ajouterEquipement(donjon); break;
+                case 3: donjon.addObstacles(mettreEnPlaceObstacle(donjon)); break;
             }
             clearTerminalDonjon(donjon);
         } while (choix != 4);
     }
 
+    /**
+     * Ajoute une arme ou une armure dans le donjon.
+     */
     private static void ajouterEquipement(Donjon donjon) {
         System.out.println("\nType d'équipement :");
         System.out.println("1. Arme\n2. Armure");
@@ -129,8 +169,10 @@ public class AffichageMiseEnPlace {
         }
     }
 
+    /**
+     * Place les personnages dans le donjon à des positions valides.
+     */
     private static Donjon placerPersonnages(Donjon donjon) {
-        clearTerminalDonjon(donjon);
         for (Personnage personnage : lstPersonnage) {
             boolean place = false;
             while (!place) {
@@ -149,11 +191,10 @@ public class AffichageMiseEnPlace {
         return donjon;
     }
 
-    public static void clearTerminalDonjon(Donjon donjon) {
-        donjon.genererDonjon();
-        System.out.println(donjon.getDonjon());
-    }
-
+    /**
+     * Demande des coordonnées à l’utilisateur.
+     * @return tableau contenant X et Y
+     */
     private static int[] demanderCoordonnees() {
         System.out.print("X : ");
         int x = m_scanner.nextInt();
@@ -162,6 +203,9 @@ public class AffichageMiseEnPlace {
         return new int[]{x, y};
     }
 
+    /**
+     * Crée un nouvel obstacle et vérifie la validité de sa position.
+     */
     public static int[] mettreEnPlaceObstacle(Donjon donjon) {
         System.out.println("\nNouvel obstacle");
         System.out.println("\nPosition de l'obstacle : ");
@@ -169,6 +213,9 @@ public class AffichageMiseEnPlace {
         return donjon.verfifierCoo(coo) ? coo : mettreEnPlaceObstacle(donjon);
     }
 
+    /**
+     * Crée une arme à placer dans le donjon selon un choix utilisateur.
+     */
     public static Equipement mettreEnPlaceArme(Donjon donjon) {
         System.out.println("\nTypes d'armes :");
         System.out.println("1. Bâton (1d6, 1 case)");
@@ -200,6 +247,9 @@ public class AffichageMiseEnPlace {
         return null;
     }
 
+    /**
+     * Crée une armure à placer dans le donjon selon un choix utilisateur.
+     */
     public static Equipement mettreEnPlaceArmure(Donjon donjon) {
         System.out.println("\nTypes d'armures :");
         System.out.println("1. Armure d'écailles (CA 9)");
@@ -225,15 +275,18 @@ public class AffichageMiseEnPlace {
         return null;
     }
 
+    /**
+     * Crée un monstre et demande ses caractéristiques à l’utilisateur.
+     */
     public static Entite mettreEnPlaceMonstre(Donjon donjon, ArrayList<Espece> lstEspece) {
         m_scanner.nextLine();
-
         System.out.println("\nNouveau monstre");
         System.out.print("Nom : ");
         String nom = m_scanner.nextLine();
 
         Espece espece = choisirEspece(lstEspece);
         int[] stats = demanderStats();
+
         System.out.println("\nPosition du monstre : ");
         int[] coo = demanderCoordonnees();
 
@@ -243,14 +296,10 @@ public class AffichageMiseEnPlace {
         return null;
     }
 
-    private static Espece choisirEspece(ArrayList<Espece> lstEspece) {
-        System.out.println("\nType de monstre :");
-        System.out.println("1. Choisir existant\n2. Créer nouvelle espèce");
-        System.out.print("Choix : ");
-
-        return (m_scanner.nextInt() == 1) ? choisirParmisEspece(lstEspece) : mettreEnPlaceEspece(lstEspece);
-    }
-
+    /**
+     * Demande les statistiques d’un monstre à l’utilisateur.
+     * @return tableau contenant toutes les caractéristiques
+     */
     private static int[] demanderStats() {
         System.out.println("\nCaractéristiques :");
         System.out.print("Classe d'armure : ");
@@ -269,6 +318,10 @@ public class AffichageMiseEnPlace {
         return new int[]{vie, vitesse, force, dex, init, ca};
     }
 
+    /**
+     * Permet de créer une nouvelle espèce de monstre.
+     * @return l’espèce créée
+     */
     public static Espece mettreEnPlaceEspece(ArrayList<Espece> lstEspece) {
         m_scanner.nextLine();
         System.out.print("Nom de l'espèce : ");
@@ -278,6 +331,10 @@ public class AffichageMiseEnPlace {
         return e;
     }
 
+    /**
+     * Permet de choisir une espèce existante dans la liste.
+     * @return espèce sélectionnée
+     */
     public static Espece choisirParmisEspece(ArrayList<Espece> lstEspece) {
         System.out.println("\nEspèces disponibles :");
         for (int i = 0; i < lstEspece.size(); i++) {
@@ -286,5 +343,17 @@ public class AffichageMiseEnPlace {
         System.out.print("Choix : ");
         int choix = m_scanner.nextInt() - 1;
         return lstEspece.get(choix >= 0 && choix < lstEspece.size() ? choix : 0);
+    }
+
+    /**
+     * Menu de sélection ou création d’espèce de monstre.
+     */
+    private static Espece choisirEspece(ArrayList<Espece> lstEspece) {
+        System.out.println("\nType de monstre :");
+        System.out.println("1. Choisir existant\n2. Créer nouvelle espèce");
+        System.out.print("Choix : ");
+
+        return (m_scanner.nextInt() == 1) ?
+                choisirParmisEspece(lstEspece) : mettreEnPlaceEspece(lstEspece);
     }
 }
