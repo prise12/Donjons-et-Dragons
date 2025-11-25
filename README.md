@@ -84,19 +84,40 @@ Les rendus hebdomadaires doivent être effectués sur une branche nommée rendu<
 Structure du Dépôt
 
 .
+├── Phase_2.md
 ├── README.md
-├── .gitignore
-├── src/
-    ├── Main.java
-    ├── ...
-├── uml/
-    ├── semaine1.puml
-    ├──...
+├── src
+│   └── ded
+│       ├── affichage
+│       │   ├── AffichageMiseEnPlace.java
+│       │   └── AffichageTour.java
+│       ├── Des.java
+│       ├── donjon
+│       │   ├── Donjon.java
+│       │   └── DonjonParDefault.java
+│       ├── entite
+│       │   ├── classe
+│       │   │   ├── Classe.java
+│       │   │   ├── Clerc.java
+│       │   │   ├── Guerrier.java
+│       │   │   ├── Magicien.java
+│       │   │   └── Roublard.java
+│       │   ├── Entite.java
+│       │   ├── Espece.java
+│       │   ├── Monstre.java
+│       │   ├── Personnage.java
+│       │   └── race
+│       │       ├── Elfe.java
+│       │       ├── Halfelin.java
+│       │       ├── Humain.java
+│       │       ├── Nain.java
+│       │       └── Race.java
+│       ├── Main.java
+│       └── objet
+│           ├── Arme.java
+│           ├── Armure.java
+│           └── Equipement.java
+├── tests
+└── uml
+    └── semaine3.puml
 
-Rendu Évalué (18 mai)
-
-Seront évalués : le Diagramme de classes complet de la phase 1 et le Code (cohérence avec l'UML).
-
-Consignes
-
-La qualité de la conception et du code est primordiale. Le code doit être lisible et facile à modifier ou étendre, notamment en prévision de la phase 2.
