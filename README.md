@@ -83,6 +83,7 @@ Les rendus hebdomadaires doivent être effectués sur une branche nommée rendu<
 
 Structure du Dépôt
 
+```text
 .
 ├── Phase_2.md
 ├── README.md
